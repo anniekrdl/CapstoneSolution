@@ -1,6 +1,4 @@
-﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using Data.Services;
 using Logic.Interfaces;
 using Logic.Managers;
