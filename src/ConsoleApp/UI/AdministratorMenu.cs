@@ -1,6 +1,6 @@
 
-using Core.Models;
-using Core.Interfaces;
+using Core.DTOs;
+using Logic.Interfaces;
 using ConsoleApp.Helpers;
 namespace ConsoleApp.UI;
 
@@ -53,7 +53,7 @@ public class AdministratorMenu
 
     private async Task ShowOrders()
     {
-        List<Order> orders = await _orderManager.GetOrders();
+        List<OrderDTO> orders = await _orderManager.GetOrders();
         await _presenter.ShowOrders(orders);
         AdminOrderMenu();
     }
@@ -62,19 +62,19 @@ public class AdministratorMenu
     {
         var options = new List<(int, string, Action)>
             {
-                (1, "Accepteer een bestelling", new Action(() => UpdateOrder(OrderStatus.GEACCEPTEERD).Wait())),
-                (2, "Weiger een bestelling", new Action(() => UpdateOrder(OrderStatus.GEWEIGERD).Wait())),
-                (3, "Sluit een bestelling af", new Action(() => UpdateOrder(OrderStatus.AFGEROND).Wait())),
+                (1, "Accepteer een bestelling", new Action(() => UpdateOrder(OrderStatusDTO.GEACCEPTEERD).Wait())),
+                (2, "Weiger een bestelling", new Action(() => UpdateOrder(OrderStatusDTO.GEWEIGERD).Wait())),
+                (3, "Sluit een bestelling af", new Action(() => UpdateOrder(OrderStatusDTO.AFGEROND).Wait())),
                 (4, "Terug naar hoofdmenu", () => { }),
             };
 
         MenuHelper.ShowMenu("Orderbeheer Menu", options);
     }
 
-    private async Task UpdateOrder(OrderStatus status)
+    private async Task UpdateOrder(OrderStatusDTO status)
     {
         int orderId = MenuHelper.GetUserInputInt($"Wat is de id van de bestelling? ");
-        Order? order = await _orderManager.GetOrderById(orderId);
+        OrderDTO? order = await _orderManager.GetOrderById(orderId);
 
         if (order != null)
         {
@@ -107,13 +107,13 @@ public class AdministratorMenu
     private async Task SearchProduct()
     {
         string searchTerm = MenuHelper.GetUserInput("Wat is je zoekterm? ");
-        List<Product> productsFound = await _catalogusManager.SearchProductBySearchterm(searchTerm);
+        List<ProductDTO> productsFound = await _catalogusManager.SearchProductBySearchterm(searchTerm);
         _presenter.ShowProducts(productsFound);
     }
 
     private async Task ShowCatalog()
     {
-        List<Product> products = await _catalogusManager.GetAllProducts();
+        List<ProductDTO> products = await _catalogusManager.GetAllProducts();
         _presenter.ShowProducts(products);
         //show catalog options
         AdminCatalogMenu();
@@ -141,10 +141,10 @@ public class AdministratorMenu
     private async Task EditProduct()
     {
         int id = MenuHelper.GetUserInputInt("Wat is de id van het product dat u wilt bewerken? ");
-        Product? product = await _catalogusManager.GetProductById(id);
+        ProductDTO? product = await _catalogusManager.GetProductById(id);
         if (product != null)
         {
-            Product updatedProduct = EditProductMenu(product);
+            ProductDTO updatedProduct = EditProductMenu(product);
             await _catalogusManager.EditProduct(updatedProduct);
         }
     }
@@ -152,7 +152,7 @@ public class AdministratorMenu
     private async Task DeleteProduct()
     {
         int id = MenuHelper.GetUserInputInt("Wat is de id van het product dat u wilt verwijderen? ");
-        Product? p1 = await _catalogusManager.GetProductById(id);
+        ProductDTO? p1 = await _catalogusManager.GetProductById(id);
         if (p1 != null)
         {
             await _catalogusManager.RemoveProduct(p1);
@@ -173,13 +173,13 @@ public class AdministratorMenu
         _presenter.ShowAllCategories();
         int categoryId = MenuHelper.GetUserInputInt("De categorie-ID van het product: ");
         string imageUrl = MenuHelper.GetUserInput("De url voor de afbeelding van het product: ");
-        Product p = new Product(null, name, description, price, stock, categoryId, imageUrl);
+        ProductDTO p = new ProductDTO(null, name, description, price, stock, categoryId, imageUrl);
         await _catalogusManager.AddProduct(p);
     }
 
-    private Product EditProductMenu(Product product)
+    private ProductDTO EditProductMenu(ProductDTO product)
     {
-        Product productCopy = new Product(product.Id, product.Name, product.Description, product.Price, product.Stock, product.CategoryId, product.ImageUrl);
+        ProductDTO productCopy = new ProductDTO(product.Id, product.Name, product.Description, product.Price, product.Stock, product.CategoryId, product.ImageUrl);
 
         bool editing = true;
         while (editing)

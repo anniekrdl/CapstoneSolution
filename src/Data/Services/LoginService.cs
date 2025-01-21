@@ -1,5 +1,5 @@
-using Core.Interfaces;
-using Core.Models;
+using Data.Interfaces;
+using Data.Models;
 namespace Data.Services
 {
 
@@ -14,21 +14,9 @@ namespace Data.Services
 
 
 
-        public async Task<User?> Login(string UserName)
+        public async Task<CustomerEntity?> Login(string UserName)
         {
-
-
-            //check if customer exists - load customer from database.
-            //if admin (dan administrator ipv customer laden)
-            if (UserName == "admin")
-            {
-                // administrator
-                Administrator admin = new Administrator();
-                return admin;
-
-            }
-
-            List<Customer> user = await _databaseService.SearchCustomer(UserName);
+            List<CustomerEntity> user = await _databaseService.SearchCustomer(UserName);
             if (user.Count > 0)
             {
                 return user[0];

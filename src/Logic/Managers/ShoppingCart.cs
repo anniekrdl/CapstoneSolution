@@ -1,6 +1,8 @@
-using Core.Models;
-using Core.Interfaces;
-using Data.Services;
+using Core.DTOs;
+using Data.Interfaces;
+using Data.Models;
+using Logic.Interfaces;
+using Logic.Mappers;
 namespace Logic.Managers
 {
     public class ShoppingCart : IShoppingCart
@@ -12,11 +14,12 @@ namespace Logic.Managers
 
             _cartDatabaseService = cartDatabaseService;
         }
-        public async Task<bool> AddShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        public async Task<bool> AddShoppingCartItem(ShoppingCartItemDTO shoppingCartItem)
         {
             try
             {
-                await _cartDatabaseService.AddShoppingCartItem(shoppingCartItem);
+                // DTO to entity
+                await _cartDatabaseService.AddShoppingCartItem(shoppingCartItem.ToShoppingCartEntity());
                 return true;
 
             }
@@ -26,11 +29,11 @@ namespace Logic.Managers
             }
         }
 
-        public async Task<bool> RemoveShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        public async Task<bool> RemoveShoppingCartItem(ShoppingCartItemDTO shoppingCartItem)
         {
             try
             {
-                await _cartDatabaseService.RemoveShoppingCartItem(shoppingCartItem);
+                await _cartDatabaseService.RemoveShoppingCartItem(shoppingCartItem.ToShoppingCartEntity());
                 return true;
             }
             catch
@@ -40,18 +43,18 @@ namespace Logic.Managers
         }
 
 
-        public async Task<ShoppingCartItem?> SearchById(int Id, ICatalogusManager catalogusManager)
+        public async Task<ShoppingCartItemDTO?> SearchById(int Id, ICatalogusManager catalogusManager)
         {
-            ShoppingCartItem? shoppingCartItem = await _cartDatabaseService.SearchById(Id);
+            ShoppingCartItemEntity? shoppingCartItem = await _cartDatabaseService.SearchById(Id);
 
             if (shoppingCartItem != null)
             {
                 // add Product
-                Product? product = await catalogusManager.GetProductById(shoppingCartItem.ProductId);
+                ProductDTO? product = await catalogusManager.GetProductById(shoppingCartItem.ProductId);
 
                 if (product != null)
                 {
-                    shoppingCartItem.setProduct(product);
+                    shoppingCartItem.setProduct(product.ToProductEntity());
                 }
                 else
                 {
@@ -60,18 +63,19 @@ namespace Logic.Managers
 
             }
 
-            return shoppingCartItem;
+            return shoppingCartItem?.ToShoppingCartItemDTO();
 
         }
 
-        public async Task<bool> EmptyShoppingCart(List<ShoppingCartItem> items)
+        public async Task<bool> EmptyShoppingCart(List<ShoppingCartItemDTO> items)
         {
 
             try
             {
-                foreach (ShoppingCartItem item in items)
+                foreach (ShoppingCartItemDTO item in items)
                 {
-                    await _cartDatabaseService.RemoveShoppingCartItem(item);
+
+                    await _cartDatabaseService.RemoveShoppingCartItem(item.ToShoppingCartEntity());
 
                 }
 
@@ -85,29 +89,29 @@ namespace Logic.Managers
 
         }
 
-        public async Task<List<ShoppingCartItem>> GetAllItemsByCustomerId(int id, ICatalogusManager catalogusManager)
+        public async Task<List<ShoppingCartItemDTO>> GetAllItemsByCustomerId(int id, ICatalogusManager catalogusManager)
         {
 
 
-            List<ShoppingCartItem> shoppingCartItems = await _cartDatabaseService.GetAllShoppingCartItemsByCustomerId(id);
+            List<ShoppingCartItemEntity> shoppingCartItems = await _cartDatabaseService.GetAllShoppingCartItemsByCustomerId(id);
 
 
-            foreach (ShoppingCartItem item in shoppingCartItems)
+            foreach (ShoppingCartItemEntity item in shoppingCartItems)
             {
 
-                Product? p = await catalogusManager.GetProductById(item.ProductId);
+                ProductDTO? p = await catalogusManager.GetProductById(item.ProductId);
 
                 if (p != null)
                 {
 
-                    item.setProduct(p);
+                    item.setProduct(p.ToProductEntity());
 
                 }
 
 
 
             }
-            return shoppingCartItems;
+            return shoppingCartItems.Select(item => item.ToShoppingCartItemDTO()).ToList();
 
         }
 

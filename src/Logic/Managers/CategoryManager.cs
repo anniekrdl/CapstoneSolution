@@ -1,6 +1,8 @@
-using Core.Interfaces;
-using Core.Models;
-using Data.Services;
+using Core.DTOs;
+using Data.Interfaces;
+using Data.Models;
+using Logic.Interfaces;
+using Logic.Mappers;
 namespace Logic.Managers
 {
 
@@ -16,25 +18,30 @@ namespace Logic.Managers
 
         }
 
-        public async void AddCategory(Category category)
+        public async void AddCategory(CategoryDTO category)
         {
-            await _categoryDatabaseService.AddCategory(category);
+            // convert DTO to entity
+
+            await _categoryDatabaseService.AddCategory(category.ToCategoryEntity());
         }
 
-        public async void RemoveCategory(Category category)
+        public async void RemoveCategory(CategoryDTO category)
         {
-            await _categoryDatabaseService.RemoveCategory(category);
+            await _categoryDatabaseService.RemoveCategory(category.ToCategoryEntity());
         }
 
-        public async Task<List<Category>> GetCategories()
+        public async Task<List<CategoryDTO>> GetCategories()
         {
 
-            return await _categoryDatabaseService.GetAllCategories();
+            var categories = await _categoryDatabaseService.GetAllCategories();
+
+            return categories.Select(c => c.ToCategoryDTO()).ToList();
         }
 
-        public async Task<List<Category>> SearchCategorie(string searchTerm)
+        public async Task<List<CategoryDTO>> SearchCategorie(string searchTerm)
         {
-            return await _categoryDatabaseService.SearchCategory(searchTerm);
+            var categories = await _categoryDatabaseService.SearchCategory(searchTerm);
+            return categories.Select(c => c.ToCategoryDTO()).ToList();
         }
 
     }

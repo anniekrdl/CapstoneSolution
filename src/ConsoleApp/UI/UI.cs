@@ -1,8 +1,8 @@
 using Core.Interfaces;
-using Core.Models;
 using Logic.Managers;
 using ConsoleApp.Helpers;
 using Logic.Interfaces;
+using Core.DTOs;
 namespace ConsoleApp.UI
 {
     class UI
@@ -17,7 +17,7 @@ namespace ConsoleApp.UI
         private readonly IShoppingCart _shoppingCart;
         private readonly ILoginManager _loginManager;
         private readonly Presenter _presenter;
-        User? user = null;
+        UserDTO? user = null;
 
         public UI(ICatalogusManager catalogusManager, ICategoryManager categoryManager, IOrderManager orderManager, IShoppingCart shoppingCart, ILoginManager loginManager, Presenter presenter)
         {
@@ -29,7 +29,7 @@ namespace ConsoleApp.UI
             _presenter = presenter;
         }
 
-        public async Task<User> TryToLogin()
+        public async Task<UserDTO> TryToLogin()
         {
             while (true)
             {
@@ -43,7 +43,7 @@ namespace ConsoleApp.UI
                     // Probeer in te loggen
                     // loginmanagers als DI
                     // 
-                    User? loggedInCustomer = await _loginManager.UserLogin(loginName);
+                    UserDTO? loggedInCustomer = await _loginManager.UserLogin(loginName);
 
                     if (loggedInCustomer != null)
                     {

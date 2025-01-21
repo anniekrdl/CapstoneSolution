@@ -1,5 +1,5 @@
-using Core.Models;
-using Core.Interfaces;
+using Data.Interfaces;
+using Data.Models;
 namespace Data.Services
 {
 
@@ -13,10 +13,10 @@ namespace Data.Services
             _databaseService = databaseService;
         }
 
-        public async Task<List<Order>> GetOrders()
+        public async Task<List<OrderEntity>> GetOrders()
         {
 
-            List<Order> orders = new List<Order>();
+            List<OrderEntity> orders = new List<OrderEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -27,7 +27,7 @@ namespace Data.Services
             while (reader.Read())
             {
 
-                Order order = new Order(
+                OrderEntity order = new OrderEntity(
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("klant_id"),
                     reader.GetDateOnly("datum"),
@@ -63,9 +63,9 @@ namespace Data.Services
             return customersFound;
         }
 
-        public async Task<List<Order>> GetOrdersByCustomerId(int customerId)
+        public async Task<List<OrderEntity>> GetOrdersByCustomerId(int customerId)
         {
-            List<Order> orders = new List<Order>();
+            List<OrderEntity> orders = new List<OrderEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -79,7 +79,7 @@ namespace Data.Services
 
             while (await reader.ReadAsync())
             {
-                Order order = new Order(
+                OrderEntity order = new OrderEntity(
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("klant_id"),
                     reader.GetDateOnly("datum"),
@@ -93,10 +93,10 @@ namespace Data.Services
             return orders;
         }
 
-        public async Task<Order?> GetOrdersByOrderId(int Id)
+        public async Task<OrderEntity?> GetOrdersByOrderId(int Id)
         {
 
-            List<Order> orderList = new List<Order>();
+            List<OrderEntity> orderList = new List<OrderEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -110,7 +110,7 @@ namespace Data.Services
             using var reader = await command.ExecuteReaderAsync();
             if (await reader.ReadAsync())
             {
-                orderList.Add(new Order(
+                orderList.Add(new OrderEntity(
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("klant_id"),
                     DateOnly.FromDateTime(reader.GetDateTime("datum")),
@@ -129,7 +129,7 @@ namespace Data.Services
             }
         }
 
-        public async Task<bool> AddOrder(Order order)
+        public async Task<bool> AddOrder(OrderEntity order)
         {
             try
             {
@@ -161,7 +161,7 @@ namespace Data.Services
 
         }
 
-        public async Task<bool> UpdateOrder(Order order)
+        public async Task<bool> UpdateOrder(OrderEntity order)
         {
             try
             {

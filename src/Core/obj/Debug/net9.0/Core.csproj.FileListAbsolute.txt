@@ -9,3 +9,4 @@ C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSoluti
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Core\obj\Debug\net9.0\refint\Core.dll
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Core\obj\Debug\net9.0\Core.pdb
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Core\obj\Debug\net9.0\ref\Core.dll
+C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Core\obj\Debug\net9.0\Core.sourcelink.json

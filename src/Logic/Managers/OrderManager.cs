@@ -1,6 +1,8 @@
-using Core.Interfaces;
-using Core.Models;
-using Data.Services;
+using Core.DTOs;
+using Data.Interfaces;
+using Data.Models;
+using Logic.Interfaces;
+using Logic.Mappers;
 namespace Logic.Managers
 {
     public class OrderManager : IOrderManager
@@ -21,9 +23,11 @@ namespace Logic.Managers
 
         }
 
-        public async Task<Order?> GetOrderById(int id)
+        public async Task<OrderDTO?> GetOrderById(int id)
         {
-            return await _orderDatabaseService.GetOrdersByOrderId(id);
+            var order = await _orderDatabaseService.GetOrdersByOrderId(id);
+            return order?.ToOrderDTO();
+
 
         }
 
@@ -32,7 +36,7 @@ namespace Logic.Managers
             int orderId = 0;
 
             //new order      
-            Order order = new Order(null, customerId, null, OrderStatus.AANGEMAAKT);
+            OrderEntity order = new OrderEntity(null, customerId, null, OrderStatus.AANGEMAAKT);
             await _orderDatabaseService.AddOrder(order);
 
             // find orderId
@@ -40,9 +44,9 @@ namespace Logic.Managers
             //Console.WriteLine($"Orders found total: {foundOrders.Count}. Id: {foundOrders.First()}");
             foreach (int foundOrder in foundOrders)
             {
-                Order? order1 = await GetOrderById(foundOrder);
+                OrderDTO? order1 = await GetOrderById(foundOrder);
 
-                if (order1 != null && order1.OrderStatus == OrderStatus.AANGEMAAKT)
+                if (order1 != null && order1.OrderStatus == OrderStatusDTO.AANGEMAAKT)
                 {
                     orderId = foundOrder;
                     break;
@@ -54,20 +58,29 @@ namespace Logic.Managers
 
         }
 
-        public async Task<List<OrderItem>> GetOrderItemsByOrderId(int orderId)
+        public async Task<List<OrderItemDTO>> GetOrderItemsByOrderId(int orderId)
         {
 
             //orderItems
-            return await _orderItemDatabaseService.GetOrderItemByOrderId(orderId);
+            List<OrderItemEntity> orderItems = await _orderItemDatabaseService.GetOrderItemByOrderId(orderId);
+            return orderItems.Select(item => item.ToOrderItemDTO()).ToList();
 
         }
 
-        public async Task<List<Order>> GetOrders()
+        public async Task<List<OrderDTO>> GetOrders()
         {
-            return await _orderDatabaseService.GetOrders();
+            var orders = await _orderDatabaseService.GetOrders();
+            return orders.Select(o => new OrderDTO
+            {
+                Id = o.Id,
+                CustomerId = o.CustomerId,
+                Date = o.Date,
+                OrderStatus = (OrderStatusDTO)o.OrderStatus,
+            }).ToList();
+
         }
 
-        public async Task<bool> PlaceOrderFromShoppingCart(List<ShoppingCartItem> items, int? customerId)
+        public async Task<bool> PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
         {
             if (items.Count != 0)
             {
@@ -79,17 +92,15 @@ namespace Logic.Managers
 
                         foreach (IProductItem item in items)
                         {
-                            OrderItem orderItem = new OrderItem(null, orderId, item.ProductId, item.NumberOfItems, item.Product);
+                            OrderItemEntity orderItem = new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, item.Product);
 
                             await _orderItemDatabaseService.AddOrderItem(orderItem);
                             //update Order status
 
-                            Order? order = await GetOrderById(orderId);
-
-
+                            OrderDTO? order = await GetOrderById(orderId);
                             if (order != null)
                             {
-                                order.UpdateOrderStatus(OrderStatus.GEPLAATST);
+                                order.UpdateOrderStatus(OrderStatusDTO.GEPLAATST);
                                 await UpdateOrder(order);
                             }
 
@@ -128,11 +139,11 @@ namespace Logic.Managers
 
         }
 
-        public async Task<bool> UpdateOrderStatus(Order order, OrderStatus orderStatus)
+        public async Task<bool> UpdateOrderStatus(OrderDTO order, OrderStatusDTO orderStatus)
         {
-            OrderStatus currentStatus = order.OrderStatus;
+            OrderStatusDTO currentStatus = order.OrderStatus;
 
-            if ((currentStatus == OrderStatus.GEPLAATST && (orderStatus == OrderStatus.GEWEIGERD || orderStatus == OrderStatus.GEACCEPTEERD)) || (currentStatus == OrderStatus.GEACCEPTEERD && orderStatus == OrderStatus.AFGEROND))
+            if ((currentStatus == OrderStatusDTO.GEPLAATST && (orderStatus == OrderStatusDTO.GEWEIGERD || orderStatus == OrderStatusDTO.GEACCEPTEERD)) || (currentStatus == OrderStatusDTO.GEACCEPTEERD && orderStatus == OrderStatusDTO.AFGEROND))
             {
                 order.UpdateOrderStatus(orderStatus);
                 await UpdateOrder(order);
@@ -153,15 +164,26 @@ namespace Logic.Managers
         }
 
 
-        public async Task<bool> UpdateOrder(Order order)
+        public async Task<bool> UpdateOrder(OrderDTO order)
         {
-            return await _orderDatabaseService.UpdateOrder(order);
+            //TODO kan dit 2 kanten op?
+            OrderEntity entity = order.ToOrderEntity();
+
+            return await _orderDatabaseService.UpdateOrder(entity);
         }
 
 
-        public async Task<List<Order>> GetOrdersByCustomerId(int customerId)
+        public async Task<List<OrderDTO>> GetOrdersByCustomerId(int customerId)
         {
-            return await _orderDatabaseService.GetOrdersByCustomerId(customerId);
+            var orderList = await _orderDatabaseService.GetOrdersByCustomerId(customerId);
+
+            return orderList.Select(o => new OrderDTO
+            {
+                Id = o.Id,
+                CustomerId = o.CustomerId,
+                Date = o.Date,
+                OrderStatus = (OrderStatusDTO)o.OrderStatus
+            }).ToList();
         }
 
 

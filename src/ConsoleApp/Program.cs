@@ -1,5 +1,5 @@
-﻿using Core.Interfaces;
-using Data.Services;
+﻿using Data.Services;
+using Data.Interfaces;
 using Logic.Interfaces;
 using Logic.Managers;
 using Microsoft.Extensions.DependencyInjection;

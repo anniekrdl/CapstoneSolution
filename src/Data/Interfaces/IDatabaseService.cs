@@ -1,5 +1,5 @@
 using MySqlConnector;
-namespace Core.Interfaces
+namespace Data.Interfaces
 {
     public interface IDatabaseService
     {

@@ -1,6 +1,8 @@
-using Core.Models;
-using Core.Interfaces;
-using Data.Services;
+using Core.DTOs;
+using Data.Interfaces;
+using Data.Models;
+using Logic.Interfaces;
+using Logic.Mappers;
 
 namespace Logic.Managers
 {
@@ -14,18 +16,18 @@ namespace Logic.Managers
             _databaseService = databaseService;
         }
 
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<CustomerDTO>> GetCustomers()
         {
-            List<Customer> customers = await _databaseService.GetCustomers();
-            return customers;
+            List<CustomerEntity> customers = await _databaseService.GetCustomers();
+            return customers.Select(c => c.ToCustomerDTO()).ToList();
 
         }
 
         //add customer to database
-        public async Task AddCustomer(Customer customer)
+        public async Task AddCustomer(CustomerDTO customer)
         {
 
-            await _databaseService.AddCustomer(customer);
+            await _databaseService.AddCustomer(customer.ToCustomerEntity());
         }
 
         //remove customer from database
@@ -36,11 +38,11 @@ namespace Logic.Managers
 
 
         //search customer in database
-        public async Task<List<Customer>> SearchCustomer(string userName)
+        public async Task<List<CustomerDTO>> SearchCustomer(string userName)
         {
 
-            List<Customer> customers = await _databaseService.SearchCustomer(userName);
-            return customers;
+            List<CustomerEntity> customers = await _databaseService.SearchCustomer(userName);
+            return customers.Select(c => c.ToCustomerDTO()).ToList();
 
         }
 

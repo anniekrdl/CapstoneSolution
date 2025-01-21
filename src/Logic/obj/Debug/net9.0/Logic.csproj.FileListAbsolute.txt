@@ -15,3 +15,6 @@ C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSoluti
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Logic\obj\Debug\net9.0\refint\Logic.dll
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Logic\obj\Debug\net9.0\Logic.pdb
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Logic\obj\Debug\net9.0\ref\Logic.dll
+C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Logic\obj\Debug\net9.0\Logic.sourcelink.json
+C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Logic\bin\Debug\net9.0\Logic.runtimeconfig.json
+C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\Logic\obj\Debug\net9.0\Logic.genruntimeconfig.cache

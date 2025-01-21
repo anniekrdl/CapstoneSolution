@@ -1,5 +1,6 @@
-using Core.Models;
+using Logic.Interfaces;
 using Core.Interfaces;
+using Core.DTOs;
 
 namespace ConsoleApp.Helpers;
 
@@ -17,7 +18,7 @@ public class Presenter
         _catalogusManager = catalogusManager;
 
     }
-    public void ShowShoppingCartItems(List<ShoppingCartItem> items)
+    public void ShowShoppingCartItems(List<ShoppingCartItemDTO> items)
     {
         double totalPrice = 0;
         Console.WriteLine(@"
@@ -46,7 +47,7 @@ public class Presenter
 
     public async void ShowAllCategories()
     {
-        List<Category> categories = await _categoryManager.GetCategories();
+        List<CategoryDTO> categories = await _categoryManager.GetCategories();
         Console.WriteLine(@"
             
         Categorieën:
@@ -64,7 +65,7 @@ public class Presenter
         }
     }
 
-    public void ShowProduct(Product product)
+    public void ShowProduct(ProductDTO product)
     {
         Console.WriteLine(@"
             
@@ -76,7 +77,7 @@ public class Presenter
         Console.WriteLine($"{product.Id,-4} | {product.Name,-20} | €{product.Price / 100.0,-12:F2} | {product.Description}");
     }
 
-    public void ShowProducts(List<Product> products)
+    public void ShowProducts(List<ProductDTO> products)
     {
         Console.WriteLine(@"
             
@@ -85,7 +86,7 @@ public class Presenter
              ID  | Productnaam         | Prijs       | Beschikbaar
             --------------------------------------------------------");
         //List<Product> products = await GetAllProducts();
-        foreach (Product p in products)
+        foreach (ProductDTO p in products)
         {
             string productName = p.Name.PadRight(20);
             string productId = (p.Id.ToString() ?? "").PadRight(4);
@@ -96,7 +97,7 @@ public class Presenter
 
     }
 
-    public async Task ShowOrders(List<Order> orders)
+    public async Task ShowOrders(List<OrderDTO> orders)
     {
 
         Console.WriteLine(@"
@@ -105,7 +106,7 @@ public class Presenter
             ID  | Datum         | Status       |
             -----------------------------------");
 
-        foreach (Order order in orders)
+        foreach (OrderDTO order in orders)
         {
             string orderId = (order.Id ?? 0).ToString().PadRight(4);
             string date = (order.Date.ToString() ?? "").PadRight(14);
@@ -113,17 +114,17 @@ public class Presenter
 
             //orderItems
 
-            List<OrderItem> orderItemsList = await _orderManager.GetOrderItemsByOrderId(order.Id ?? 0);
+            List<OrderItemDTO> orderItemsList = await _orderManager.GetOrderItemsByOrderId(order.Id ?? 0);
 
 
 
             Console.WriteLine($@"
             {orderId}| {date}| {status}
             ");
-            foreach (OrderItem orderItem in orderItemsList)
+            foreach (OrderItemDTO orderItem in orderItemsList)
             {
                 //search product 
-                Product? product = await _catalogusManager.GetProductById(orderItem.ProductId);
+                ProductDTO? product = await _catalogusManager.GetProductById(orderItem.ProductId);
                 //TODO product is null
                 if (product != null)
                 {

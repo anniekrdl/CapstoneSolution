@@ -1,9 +1,13 @@
-using Core.Models;
+using Core.DTOs;
+using Data
+
+
+.Models;
 namespace Logic.Interfaces;
 
 public interface ILoginManager
 {
-    Task<User?> UserLogin(string UserName);
+    Task<UserDTO?> UserLogin(string UserName);
 }
 
 

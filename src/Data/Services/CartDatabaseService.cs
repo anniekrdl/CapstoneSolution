@@ -1,5 +1,5 @@
-using Core.Interfaces;
-using Core.Models;
+using Data.Interfaces;
+using Data.Models;
 namespace Data.Services
 {
     public class CartDatabaseService : ICartDatabaseService
@@ -10,9 +10,9 @@ namespace Data.Services
             _databaseService = databaseService;
 
         }
-        public async Task<List<ShoppingCartItem>> GetAllShoppingCartItemsByCustomerId(int Id)
+        public async Task<List<ShoppingCartItemEntity>> GetAllShoppingCartItemsByCustomerId(int Id)
         {
-            var items = new List<ShoppingCartItem>();
+            var items = new List<ShoppingCartItemEntity>();
             try
             {
                 using var connection = _databaseService.GetConnection();
@@ -26,7 +26,7 @@ namespace Data.Services
                 while (await reader.ReadAsync())
                 {
 
-                    var item = new ShoppingCartItem(
+                    var item = new ShoppingCartItemEntity(
                         reader.GetInt32("huidige_bestelling_id"),
                         reader.GetInt32("klant_id"),
                         reader.GetInt32("product_id"),
@@ -55,7 +55,7 @@ namespace Data.Services
 
         }
 
-        public async Task<bool> AddShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        public async Task<bool> AddShoppingCartItem(ShoppingCartItemEntity shoppingCartItem)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Data.Services
 
         }
 
-        public async Task<bool> RemoveShoppingCartItem(ShoppingCartItem shoppingCartItem)
+        public async Task<bool> RemoveShoppingCartItem(ShoppingCartItemEntity shoppingCartItem)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace Data.Services
             }
         }
 
-        public async Task<ShoppingCartItem?> SearchById(int Id)
+        public async Task<ShoppingCartItemEntity?> SearchById(int Id)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace Data.Services
 
                 if (await reader.ReadAsync())
                 {
-                    return new ShoppingCartItem(
+                    return new ShoppingCartItemEntity(
                         reader.GetInt32("huidige_bestelling_id"),
                         reader.GetInt32("klant_id"),
                         reader.GetInt32("product_id"),

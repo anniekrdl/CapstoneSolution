@@ -1,6 +1,6 @@
-using Core.Interfaces;
-using Core.Models;
+using Logic.Interfaces;
 using ConsoleApp.Helpers;
+using Core.DTOs;
 namespace ConsoleApp.UI;
 
 public class CustomerMenu
@@ -8,12 +8,12 @@ public class CustomerMenu
     private readonly ICatalogusManager _catalogusManager;
     private readonly IShoppingCart _shoppingCart;
     private readonly IOrderManager _orderManager;
-    private User _user;
+    private UserDTO _user;
     private bool _exitProgram = false;
     private readonly Presenter _presenter;
 
 
-    public CustomerMenu(ICatalogusManager catalogusManager, IShoppingCart shoppingCart, IOrderManager orderManager, User user, Presenter presenter)
+    public CustomerMenu(ICatalogusManager catalogusManager, IShoppingCart shoppingCart, IOrderManager orderManager, UserDTO user, Presenter presenter)
     {
         _catalogusManager = catalogusManager;
         _shoppingCart = shoppingCart;
@@ -55,7 +55,7 @@ public class CustomerMenu
 
     private async Task ShowOrders()
     {
-        List<Order> orders = await _orderManager.GetOrdersByCustomerId((int)(_user.Id ?? 0));
+        List<OrderDTO> orders = await _orderManager.GetOrdersByCustomerId((int)(_user.Id ?? 0));
         await _presenter.ShowOrders(orders);
 
 
@@ -68,7 +68,7 @@ public class CustomerMenu
     {
         if (_user.Id != null)
         {
-            List<ShoppingCartItem> items = await _shoppingCart.GetAllItemsByCustomerId((int)_user.Id, _catalogusManager);
+            List<ShoppingCartItemDTO> items = await _shoppingCart.GetAllItemsByCustomerId((int)_user.Id, _catalogusManager);
             _presenter.ShowShoppingCartItems(items);
             CustomerShoppingCartMenu();
         }
@@ -97,7 +97,7 @@ public class CustomerMenu
         //remove product from shoppingCart
         int choice = MenuHelper.GetUserInputInt("Wat is de Id van het product dat je wilt verwijderen? ");
         //get item
-        ShoppingCartItem? shoppingCartItem = await _shoppingCart.SearchById(choice, _catalogusManager);
+        ShoppingCartItemDTO? shoppingCartItem = await _shoppingCart.SearchById(choice, _catalogusManager);
         //Console.WriteLine($"items found: {shoppingCartItem.Count}");
         if (shoppingCartItem != null)
         {
@@ -117,7 +117,7 @@ public class CustomerMenu
 
     private async Task PlaceOrderFromShoppingCart()
     {
-        List<ShoppingCartItem> items = await _shoppingCart.GetAllItemsByCustomerId((int)(_user.Id ?? 0), _catalogusManager);
+        List<ShoppingCartItemDTO> items = await _shoppingCart.GetAllItemsByCustomerId((int)(_user.Id ?? 0), _catalogusManager);
         bool orderPlaced = await _orderManager.PlaceOrderFromShoppingCart(items, _user.Id);
         //empty shoppingcart
         if (orderPlaced)
@@ -135,14 +135,14 @@ public class CustomerMenu
     private async Task SearchProduct()
     {
         string searchTerm = MenuHelper.GetUserInput("Wat is je zoekterm? ");
-        List<Product> productsFound = await _catalogusManager.SearchProductBySearchterm(searchTerm);
+        List<ProductDTO> productsFound = await _catalogusManager.SearchProductBySearchterm(searchTerm);
 
         _presenter.ShowProducts(productsFound);
     }
 
     private async Task ShowCatalog()
     {
-        List<Product> products = await _catalogusManager.GetAllProducts();
+        List<ProductDTO> products = await _catalogusManager.GetAllProducts();
         _presenter.ShowProducts(products);
         //show catalog options
         CustomerCatalogMenu();
@@ -171,7 +171,7 @@ public class CustomerMenu
     private async Task ViewProduct()
     {
         int Id = MenuHelper.GetUserInputInt("Wat is de Id van het product dat je wilt bekijken? ");
-        Product? product = await _catalogusManager.GetProductById(Id);
+        ProductDTO? product = await _catalogusManager.GetProductById(Id);
         if (product != null)
         {
             _presenter.ShowProduct(product);
@@ -188,7 +188,7 @@ public class CustomerMenu
         //TODO
         if (_user.Id != null)
         {
-            ShoppingCartItem shoppingCartItem = new ShoppingCartItem(null, (int)_user.Id, productId, null, numberOfItems);
+            ShoppingCartItemDTO shoppingCartItem = new ShoppingCartItemDTO(null, (int)_user.Id, productId, null, numberOfItems);
             await _shoppingCart.AddShoppingCartItem(shoppingCartItem);
         }
     }

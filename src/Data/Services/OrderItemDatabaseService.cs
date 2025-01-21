@@ -1,5 +1,5 @@
-using Core.Interfaces;
-using Core.Models;
+using Data.Interfaces;
+using Data.Models;
 namespace Data.Services
 {
 
@@ -13,10 +13,10 @@ namespace Data.Services
 
         }
 
-        public async Task<List<OrderItem>> GetOrderItems()
+        public async Task<List<OrderItemEntity>> GetOrderItems()
         {
 
-            List<OrderItem> orderItems = new List<OrderItem>();
+            List<OrderItemEntity> orderItems = new List<OrderItemEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -28,7 +28,7 @@ namespace Data.Services
             {
 
 
-                OrderItem orderItem = new OrderItem(
+                OrderItemEntity orderItem = new OrderItemEntity(
                     reader.GetInt32("detail_id"),
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("product_id"),
@@ -44,11 +44,11 @@ namespace Data.Services
 
         }
 
-        public async Task<List<OrderItem>> GetOrderItemByOrderId(int Id)
+        public async Task<List<OrderItemEntity>> GetOrderItemByOrderId(int Id)
         {
             //order_id
 
-            List<OrderItem> orderList = new List<OrderItem>();
+            List<OrderItemEntity> orderList = new List<OrderItemEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -62,7 +62,7 @@ namespace Data.Services
             using var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
             {
-                orderList.Add(new OrderItem(
+                orderList.Add(new OrderItemEntity(
                     reader.GetInt32("detail_id"),
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("product_id"),
@@ -74,11 +74,11 @@ namespace Data.Services
             return orderList;
         }
 
-        public async Task<OrderItem> GetOrderItemById(int Id)
+        public async Task<OrderItemEntity> GetOrderItemById(int Id)
         {
             //detail_id
 
-            List<OrderItem> orderList = new List<OrderItem>();
+            List<OrderItemEntity> orderList = new List<OrderItemEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -92,7 +92,7 @@ namespace Data.Services
             using var reader = await command.ExecuteReaderAsync();
             if (await reader.ReadAsync())
             {
-                orderList.Add(new OrderItem(
+                orderList.Add(new OrderItemEntity(
                     reader.GetInt32("detail_id"),
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("product_id"),
@@ -106,7 +106,7 @@ namespace Data.Services
 
 
 
-        public async Task<bool> AddOrderItem(OrderItem orderItem)
+        public async Task<bool> AddOrderItem(OrderItemEntity orderItem)
         {
 
 
@@ -142,7 +142,7 @@ namespace Data.Services
         }
 
 
-        public async Task<bool> UpdateOrderItem(OrderItem orderItem)
+        public async Task<bool> UpdateOrderItem(OrderItemEntity orderItem)
         {
             try
             {

@@ -1,5 +1,5 @@
-using Core.Interfaces;
-using Core.Models;
+using Data.Interfaces;
+using Data.Models;
 
 namespace Data.Services
 {
@@ -14,9 +14,9 @@ namespace Data.Services
             _databaseService = databaseService;
         }
 
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<CustomerEntity>> GetCustomers()
         {
-            List<Customer> customers = new List<Customer>();
+            List<CustomerEntity> customers = new List<CustomerEntity>();
 
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
@@ -28,7 +28,7 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                Customer customer = new Customer(
+                CustomerEntity customer = new CustomerEntity(
                     id: reader.GetInt32("klant_id"),
                     userName: reader.GetString("gebruikersnaam"),
                     name: reader.GetString("voornaam"),
@@ -47,7 +47,7 @@ namespace Data.Services
 
         }
 
-        public async Task AddCustomer(Customer customer)
+        public async Task AddCustomer(CustomerEntity customer)
         {
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
@@ -81,9 +81,9 @@ namespace Data.Services
             await command.ExecuteNonQueryAsync();
         }
 
-        public async Task<List<Customer>> SearchCustomer(string userName)
+        public async Task<List<CustomerEntity>> SearchCustomer(string userName)
         {
-            List<Customer> customers = new List<Customer>();
+            List<CustomerEntity> customers = new List<CustomerEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
             using var command = connection.CreateCommand();
@@ -94,7 +94,7 @@ namespace Data.Services
             while (reader.Read())
             {
 
-                Customer customer = new Customer(
+                CustomerEntity customer = new CustomerEntity(
                     id: reader.GetInt32("klant_id"),
                     userName: reader.GetString("gebruikersnaam"),
                     name: reader.GetString("voornaam"),

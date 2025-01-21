@@ -1,7 +1,8 @@
-
-using Core.Models;
+using Core.DTOs;
+using Data.Interfaces;
+using Data.Models;
 using Logic.Interfaces;
-using Core.Interfaces;
+using Logic.Mappers;
 
 namespace Logic.Managers;
 
@@ -16,17 +17,25 @@ public class LoginManager : ILoginManager
     }
 
 
-    public async Task<User?> UserLogin(string username)
+    public async Task<UserDTO?> UserLogin(string username)
     {
         try
         {
+            if (username == "admin")
+            {
+                return new AdministratorDTO();
+            }
+            else
+            {
+                // Probeer in te loggen
+                CustomerEntity? loggedInCustomer = await _loginService.Login(username);
 
-            User? loggedInCustomer = null;
-            // Probeer in te loggen
-            loggedInCustomer = await _loginService.Login(username);
 
-            return loggedInCustomer;
+                //entity to DTO
 
+                return loggedInCustomer?.ToCustomerDTO();
+
+            }
 
         }
         catch (Exception ex)

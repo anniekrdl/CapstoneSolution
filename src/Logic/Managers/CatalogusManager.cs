@@ -1,6 +1,8 @@
-using Core.Interfaces;
-using Core.Models;
-using Data.Services;
+using Core.DTOs;
+using Data.Interfaces;
+using Data.Models;
+using Logic.Interfaces;
+using Logic.Mappers;
 namespace Logic.Managers
 {
     public class CatalogusManager : ICatalogusManager
@@ -14,21 +16,23 @@ namespace Logic.Managers
             _productDatabaseService = productDatabaseService;
         }
 
-        public async Task<List<Product>> GetAllProducts()
+        public async Task<List<ProductDTO>> GetAllProducts()
         {
             var products = await _productDatabaseService.GetAllProducts();
-            return products;
+            return products.Select(p => p.ToProductDTO()).ToList();
+
 
         }
 
-        public async Task<bool> AddProduct(Product product)
+        public async Task<bool> AddProduct(ProductDTO product)
         {
+            //Product DTO map to Entity 
+            ProductEntity p = product.ToProductEntity();
 
-
-            return await _productDatabaseService.AddProduct(product);
+            return await _productDatabaseService.AddProduct(p);
         }
 
-        public async Task<bool> RemoveProduct(Product product)
+        public async Task<bool> RemoveProduct(ProductDTO product)
         {
             //TODO
             if (product.Id != null)
@@ -42,26 +46,32 @@ namespace Logic.Managers
 
         }
 
-        public async Task<bool> EditProduct(Product product)
+        public async Task<bool> EditProduct(ProductDTO product)
         {
-            return await _productDatabaseService.EditProduct(product);
+            // dto to entity
+            ProductEntity productEntity = product.ToProductEntity();
+            return await _productDatabaseService.EditProduct(productEntity);
         }
 
-        public async Task<Product?> GetProductById(int Id)
+        public async Task<ProductDTO?> GetProductById(int Id)
         {
             var products = await _productDatabaseService.SearchProductById(Id);
             if (products.Count > 0)
             {
-                return products[0];
+                // convert to ProductDTO's
+                var productsDTO = products.Select(p => p.ToProductDTO()).ToList();
+
+                return productsDTO[0];
             }
             return null;
 
         }
 
-        public async Task<List<Product>> SearchProductBySearchterm(string searchterm)
+        public async Task<List<ProductDTO>> SearchProductBySearchterm(string searchterm)
         {
             var products = await _productDatabaseService.SearchProductBySearchTerm(searchterm);
-            return products;
+
+            return products.Select(p => p.ToProductDTO()).ToList();
         }
 
 

@@ -1,5 +1,6 @@
 using MySqlConnector;
-using Core.Interfaces;
+using Data.Interfaces;
+
 
 namespace Data.Services
 {

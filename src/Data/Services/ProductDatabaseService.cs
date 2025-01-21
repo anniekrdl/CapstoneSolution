@@ -1,5 +1,5 @@
-using Core.Interfaces;
-using Core.Models;
+using Data.Interfaces;
+using Data.Models;
 using MySqlConnector;
 
 namespace Data.Services
@@ -16,17 +16,17 @@ namespace Data.Services
         }
 
 
-        public async Task<List<Product>> GetAllProducts()
+        public async Task<List<ProductEntity>> GetAllProducts()
         {
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
             var query = "SELECT * FROM product";
             var command = new MySqlCommand(query, connection);
             var reader = await command.ExecuteReaderAsync();
-            var products = new List<Product>();
+            var products = new List<ProductEntity>();
             while (await reader.ReadAsync())
             {
-                products.Add(new Product(
+                products.Add(new ProductEntity(
                  reader.GetInt32("product_id"),
                  reader.GetString("naam"),
                  reader.GetString("beschrijving"),
@@ -43,7 +43,7 @@ namespace Data.Services
 
         }
 
-        public async Task<bool> AddProduct(Product product)
+        public async Task<bool> AddProduct(ProductEntity product)
         {
 
             try
@@ -76,7 +76,7 @@ namespace Data.Services
 
         }
 
-        public async Task<bool> EditProduct(Product product)
+        public async Task<bool> EditProduct(ProductEntity product)
         {
             try
             {
@@ -136,9 +136,9 @@ namespace Data.Services
 
         }
 
-        public async Task<List<Product>> SearchProductById(int Id)
+        public async Task<List<ProductEntity>> SearchProductById(int Id)
         {
-            List<Product> products = new List<Product>();
+            List<ProductEntity> products = new List<ProductEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -152,7 +152,7 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                var product = new Product(
+                var product = new ProductEntity(
                     reader.GetInt32("product_id"),
                     reader.GetString("naam"),
                     reader.GetString("beschrijving"),
@@ -170,9 +170,9 @@ namespace Data.Services
 
         }
 
-        public async Task<List<Product>> SearchProductBySearchTerm(string searchTerm)
+        public async Task<List<ProductEntity>> SearchProductBySearchTerm(string searchTerm)
         {
-            List<Product> products = new List<Product>();
+            List<ProductEntity> products = new List<ProductEntity>();
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
 
@@ -186,7 +186,7 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                var product = new Product(
+                var product = new ProductEntity(
                     reader.GetInt32("product_id"),
                     reader.GetString("naam"),
                     reader.GetString("beschrijving"),

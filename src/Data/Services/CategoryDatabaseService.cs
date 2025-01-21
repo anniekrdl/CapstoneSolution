@@ -1,5 +1,6 @@
-using Core.Interfaces;
-using Core.Models;
+using Data.Interfaces;
+using Data.Models;
+
 namespace Data.Services
 {
 
@@ -16,10 +17,10 @@ namespace Data.Services
 
 
 
-        public async Task<List<Category>> GetAllCategories()
+        public async Task<List<CategoryEntity>> GetAllCategories()
         {
 
-            List<Category> categories = new List<Category>();
+            List<CategoryEntity> categories = new List<CategoryEntity>();
 
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
@@ -32,7 +33,7 @@ namespace Data.Services
             while (reader.Read())
             {
 
-                Category category = new Category(
+                CategoryEntity category = new CategoryEntity(
                     reader.GetInt32("categorie_id"),
                     reader.GetString("naam"),
                     reader.GetString("beschrijving")
@@ -49,7 +50,7 @@ namespace Data.Services
 
         }
 
-        public async Task AddCategory(Category category)
+        public async Task AddCategory(CategoryEntity category)
         {
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
@@ -63,7 +64,7 @@ namespace Data.Services
             await command.ExecuteNonQueryAsync();
         }
 
-        public async Task RemoveCategory(Category category)
+        public async Task RemoveCategory(CategoryEntity category)
         {
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
@@ -80,10 +81,10 @@ namespace Data.Services
 
         }
 
-        public async Task<List<Category>> SearchCategory(string searchTerm)
+        public async Task<List<CategoryEntity>> SearchCategory(string searchTerm)
         {
 
-            List<Category> categories = new List<Category>();
+            List<CategoryEntity> categories = new List<CategoryEntity>();
 
             using var connection = _databaseService.GetConnection();
             await connection.OpenAsync();
@@ -97,7 +98,7 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                var category = new Category(
+                var category = new CategoryEntity(
                     reader.GetInt32("categorie_id"),
                     reader.GetString("naam"),
                     reader.GetString("beschrijving")
