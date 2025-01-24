@@ -1,8 +1,7 @@
-using Core.Interfaces;
 namespace Core.DTOs
 {
 
-    public class OrderItemDTO : IProductItem
+    public class OrderItemDTO
     {
         public int? Id { get; private set; }
         public int OrderId { get; private set; }

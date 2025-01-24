@@ -125,6 +125,10 @@ public class CustomerMenu
             await _shoppingCart.EmptyShoppingCart(items);
 
         }
+        else
+        {
+            Console.WriteLine("Het is niet gelukt om je bestelling te plaatsen");
+        }
     }
 
     private void Exit()

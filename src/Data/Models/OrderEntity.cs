@@ -1,11 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Data.Models
 {
+    [Table("bestelling")]
     public class OrderEntity
     {
 
+        [Column("bestelling_id")]
+        [Key, Required]
         public int? Id { get; private set; }
+        [Column("klant_id")]
+        [ForeignKey("klant")]
+        [Required]
         public int CustomerId { get; private set; }
+        [Column("datum")]
+        [Required]
         public DateOnly? Date { get; private set; }
+        [Column("status")]
+        [Required]
         public OrderStatus OrderStatus { get; private set; }
 
 

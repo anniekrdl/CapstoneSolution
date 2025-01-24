@@ -90,9 +90,12 @@ namespace Logic.Managers
                     {
                         int orderId = await CreateOrderId(customerId.Value);
 
-                        foreach (IProductItem item in items)
+
+                        //Cannot convert to IProductItem??
+                        foreach (var item in items)
                         {
-                            OrderItemEntity orderItem = new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, item.Product);
+                            //Console.WriteLine($"Item is {item.Id} ");
+                            OrderItemEntity orderItem = new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, item.Product?.ToProductEntity());
 
                             await _orderItemDatabaseService.AddOrderItem(orderItem);
                             //update Order status
@@ -155,10 +158,6 @@ namespace Logic.Managers
 
                 return false;
             }
-
-
-
-
 
 
         }

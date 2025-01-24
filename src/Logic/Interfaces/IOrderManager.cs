@@ -1,5 +1,4 @@
 using Core.DTOs;
-using Data.Models;
 namespace Logic
 .Interfaces;
 

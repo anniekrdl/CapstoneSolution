@@ -1,9 +1,11 @@
 using Logic.Interfaces;
-using Core.Interfaces;
 using Core.DTOs;
 
 namespace ConsoleApp.Helpers;
 
+/// <summary>
+/// Provides methods to present various data to the console.
+/// </summary>
 public class Presenter
 {
 
@@ -11,6 +13,12 @@ public class Presenter
     private readonly ICategoryManager _categoryManager;
     private readonly ICatalogusManager _catalogusManager;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Presenter"/> class.
+    /// </summary>
+    /// <param name="orderManager">The order manager.</param>
+    /// <param name="categoryManager">The category manager.</param>
+    /// <param name="catalogusManager">The catalogus manager.</param>
     public Presenter(IOrderManager orderManager, ICategoryManager categoryManager, ICatalogusManager catalogusManager)
     {
         _orderManager = orderManager;
@@ -18,6 +26,11 @@ public class Presenter
         _catalogusManager = catalogusManager;
 
     }
+
+    /// <summary>
+    /// Displays the shopping cart items.
+    /// </summary>
+    /// <param name="items">The list of shopping cart items.</param>
     public void ShowShoppingCartItems(List<ShoppingCartItemDTO> items)
     {
         double totalPrice = 0;
@@ -44,7 +57,9 @@ public class Presenter
         TotaalPrijs winkelwagen: €{totalPrice,-12:F2}");
     }
 
-
+    /// <summary>
+    /// Displays all categories.
+    /// </summary>
     public async void ShowAllCategories()
     {
         List<CategoryDTO> categories = await _categoryManager.GetCategories();
@@ -65,6 +80,10 @@ public class Presenter
         }
     }
 
+    /// <summary>
+    /// Displays the details of a product.
+    /// </summary>
+    /// <param name="product">The product to display.</param>
     public void ShowProduct(ProductDTO product)
     {
         Console.WriteLine(@"
@@ -77,6 +96,10 @@ public class Presenter
         Console.WriteLine($"{product.Id,-4} | {product.Name,-20} | €{product.Price / 100.0,-12:F2} | {product.Description}");
     }
 
+    /// <summary>
+    /// Displays a list of products.
+    /// </summary>
+    /// <param name="products">The list of products to display.</param>
     public void ShowProducts(List<ProductDTO> products)
     {
         Console.WriteLine(@"
@@ -97,6 +120,10 @@ public class Presenter
 
     }
 
+    /// <summary>
+    /// Displays a list of orders.
+    /// </summary>
+    /// <param name="orders">The list of orders to display.</param>
     public async Task ShowOrders(List<OrderDTO> orders)
     {
 
@@ -138,8 +165,5 @@ public class Presenter
 
 
     }
-
-
-
 
 }

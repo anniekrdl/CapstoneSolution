@@ -1,7 +1,6 @@
-using Core.Interfaces;
 namespace Core.DTOs
 {
-    public class ShoppingCartItemDTO : IProductItem
+    public class ShoppingCartItemDTO
     {
         public int? Id { get; set; }
         public int CustomerId { get; private set; }

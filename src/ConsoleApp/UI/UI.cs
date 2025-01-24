@@ -1,5 +1,3 @@
-using Core.Interfaces;
-using Logic.Managers;
 using ConsoleApp.Helpers;
 using Logic.Interfaces;
 using Core.DTOs;

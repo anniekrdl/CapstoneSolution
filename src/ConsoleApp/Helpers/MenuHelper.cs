@@ -1,9 +1,15 @@
 namespace ConsoleApp.Helpers;
 
-//static betekend aan te roepen vanuit class zonder instantie hoeven aan te maken
+/// <summary>
+/// Provides helper methods for displaying menus and getting user input.
+/// </summary>
 public static class MenuHelper
 {
-
+    /// <summary>
+    /// Displays a menu with the given title and options.
+    /// </summary>
+    /// <param name="menuTitle">The title of the menu.</param>
+    /// <param name="options">The list of options, each containing an option number, text, and action.</param>
     public static void ShowMenu(string menuTitle, List<(int OptionNumber, string Text, Action Action)> options)
     {
         Console.WriteLine($"{menuTitle}\n");
@@ -26,6 +32,11 @@ public static class MenuHelper
 
     }
 
+    /// <summary>
+    /// Prompts the user with a question and returns the input as a string.
+    /// </summary>
+    /// <param name="question">The question to ask the user.</param>
+    /// <returns>The user's input as a string.</returns>
     public static string GetUserInput(string question)
     {
 
@@ -48,6 +59,11 @@ public static class MenuHelper
 
     }
 
+    /// <summary>
+    /// Prompts the user with a question and returns the input as an integer.
+    /// </summary>
+    /// <param name="question">The question to ask the user.</param>
+    /// <returns>The user's input as an integer.</returns>
     public static int GetUserInputInt(string question)
     {
 
@@ -77,9 +93,5 @@ public static class MenuHelper
 
 
     }
-
-
-
-
 
 }
