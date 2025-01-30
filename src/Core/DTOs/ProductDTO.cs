@@ -11,6 +11,8 @@ namespace Core.DTOs
         public int CategoryId { get; set; }
         public string ImageUrl { get; set; }
 
+        public ProductDTO() { }
+
         public ProductDTO(int? id, string name, string description, int price, int stock, int categoryId, string imageUrl)
         {
             Id = id;

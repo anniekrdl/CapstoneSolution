@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -27,6 +29,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
                     </ul>
+                    <form method="post" asp-page="/Index" asp-page-handler="Logout" class="d-inline">
+                        <button type="submit" class="text-dark nav-link btn btn-link border-0 p-0">Logout</button>
+                    </form>
+
                 </div>
             </div>
         </nav>

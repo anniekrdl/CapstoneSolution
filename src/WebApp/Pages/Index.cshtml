@@ -29,8 +29,11 @@
 
 
     } else {
-        // button add product
-        <button type="submit" class="btn btn-primary w-50 my-4">Voeg product toe</button>
+        @if (Model.LoggedInUser.IsAdmin()){
+             // button add product
+            <a asp-page="/AddProduct" class="btn btn-primary w-50 my-4">Nieuw product toevoegen</a>
+        }
+       
          <div class="row g-3">
          @foreach (ProductDTO product in Model.Producten)
         {
@@ -49,7 +52,10 @@
                     <hr>
                     
                     <p class="card-text py-1 text-start" style="height: 6rem;">@product.Description</p>
-                    <a href="#" class="btn btn-primary">Klik hier voor meer</a>
+                    <form method="get" asp-page="Details" asp-route-id="@product.Id">
+                        <button type="submit" class="btn btn-primary" >Details</button>
+                    </form>
+                    
                     </div>
                 </div>
             </div>

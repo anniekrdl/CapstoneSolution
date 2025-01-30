@@ -21,7 +21,7 @@ public class CategoryManagerEF : ICategoryManager
 
     public async Task<List<CategoryDTO>> GetCategories()
     {
-        var categories = await _webshopContext.Categories.ToListAsync();
+        var categories = _webshopContext.Categories.ToList();
         return categories.Select(c => c.ToCategoryDTO()).ToList();
 
     }

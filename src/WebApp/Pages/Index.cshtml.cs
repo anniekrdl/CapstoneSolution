@@ -20,12 +20,13 @@ public class IndexModel : PageModel
     public readonly ISessionManager _sessionManager;
 
     [BindProperty]
-    public string Username { get; set; }
-    //Werkt niet met userDTO
+    public required string Username { get; set; }
+
+
 
     public UserDTO? LoggedInUser => _sessionManager.LoggedInUser;
 
-    public List<CategoryDTO> Categories { get; set; }
+
     // required Hierdoor moet de property worden geïnitialiseerd, bijvoorbeeld via een object-initializer.
     public required List<ProductDTO> Producten { get; set; }
 
@@ -49,16 +50,16 @@ public class IndexModel : PageModel
 
     }
 
+    public IActionResult OnPostLogoutAsync()
+    {
+        //post from _layout naar Index, met handler 'Logout'.  
+        _sessionManager.LoggedInUser = null;
+        return RedirectToPage("/Index");
+    }
+
+
     public async Task<IActionResult> OnPostAsync()
     {
-
-        //checks for annotation validation
-        if (ModelState.IsValid)
-        {
-
-        }
-
-
         //Login
         var user = await _loginManager.UserLogin(Username);
         if (user != null)
@@ -69,7 +70,9 @@ public class IndexModel : PageModel
             return Page();
 
         }
-        return RedirectToPage();
+        return Page();
+
+
 
 
     }
@@ -80,7 +83,7 @@ public class IndexModel : PageModel
 
         Producten = products;
 
-        Categories = await _catalogusManager.GetAllCategories();
+
 
 
     }
