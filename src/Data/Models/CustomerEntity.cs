@@ -7,7 +7,7 @@ namespace Data.Models
     [Table("klant")]
     public class CustomerEntity
     {
-        [Column("bestelling_id")]
+        [Column("klant_id")]
         [Key, Required]
         public int? Id { get; set; }
         [Column("voornaam")]
@@ -33,7 +33,12 @@ namespace Data.Models
         [Column("woonplaats")]
         [Required, StringLength(50)]
         public string City { get; set; }
-        public string Role { get; init; } = "Customer";
+        //public string Role { get; init; } = "Customer";
+
+
+        //EF Core vereist een parameterloze constructor
+        public CustomerEntity() { }
+
 
         public CustomerEntity(int? id, string userName, string name, string lastname, string email, string street, int number, string city, string? addition = null)
         {

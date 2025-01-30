@@ -5,6 +5,7 @@ using Data.Services;
 using Logic.Interfaces;
 using Logic.Managers;
 using Microsoft.EntityFrameworkCore;
+using WebApp.Managers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,11 @@ builder.Services.AddDbContext<WebshopContext>(options =>
 
 //Add ProductDatabaseServiceEF
 builder.Services.AddTransient<ICatalogusManager, CatalogusManagerEF>();
+builder.Services.AddTransient<ICategoryManager, CategoryManagerEF>();
+builder.Services.AddTransient<ILoginManager, LoginManagerEF>();
+builder.Services.AddTransient<ICustomerManager, CustomerManagerEF>();
+//Singleton betekend 1 instance in de hele applicatie
+builder.Services.AddSingleton<ISessionManager, SessionManager>();
 
 
 
@@ -45,5 +51,7 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+
 
 app.Run();

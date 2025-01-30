@@ -29,7 +29,7 @@ namespace Data.Models
         [Required, StringLength(50)]
         public string ImageUrl { get; set; }
 
-
+        public ProductEntity() { }
 
         public ProductEntity(int? id, string name, string description, int price, int stock, int categoryId, string imageUrl)
         {

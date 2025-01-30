@@ -141,5 +141,6 @@ namespace Logic.Mappers
                 shoppingCartItem.NumberOfItems
             );
         }
+
     }
 }

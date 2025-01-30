@@ -1,20 +1,67 @@
-﻿@page
+﻿
+@page
 @model IndexModel
+@using Core.DTOs
 
 @{
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <div>
-         @foreach (string product in Model.Producten)
+    <h1 class="display-4">Bikepacking Webshop</h1>
+
+    @if(Model.LoggedInUser == null)
+    {
+         <div class="container d-flex justify-content-center" >
+        <!-- Bootstrap form in het midden van het scherm -->
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Login</h2>
+            <form method="post">
+                <div class="mb-3">
+                    <label for="Username" class="form-label">Voer gebruikersnaam in:</label>
+                    <input type="text" class="form-control" asp-for="Username" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Inloggen</button>
+            </form>
+        </div>
+    </div>
+        
+
+
+    } else {
+        // button add product
+        <button type="submit" class="btn btn-primary w-50 my-4">Voeg product toe</button>
+         <div class="row g-3">
+         @foreach (ProductDTO product in Model.Producten)
         {
-            <tr>
-                <td scope="row">@product</td>
+
+            <div class="col">
+                 <div class="card" style="width: 21rem;">
+                    <div class="image-container  ratio ratio-4x3" >
+                        <img src="@product.ImageUrl" class="card-img-top img-fluid" alt="@product.Name" style=" object-fit: cover;">
+                    </div>
+
+                    <div class="card-body">
                 
-            </tr>
+                    <h6 class="card-title text-start col">@product.Name</h6>
+                    <div class="card-text text-start col fst-italic">@String.Format("€ {0:0.00}", product.Price / 100.0)</div>
+
+                    <hr>
+                    
+                    <p class="card-text py-1 text-start" style="height: 6rem;">@product.Description</p>
+                    <a href="#" class="btn btn-primary">Klik hier voor meer</a>
+                    </div>
+                </div>
+            </div>
+
+            
+            
+   
         }
    
     </div>
+
+    }
+
+   
     </div>

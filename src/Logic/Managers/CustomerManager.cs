@@ -42,6 +42,7 @@ namespace Logic.Managers
         {
 
             List<CustomerEntity> customers = await _databaseService.SearchCustomer(userName);
+
             return customers.Select(c => c.ToCustomerDTO()).ToList();
 
         }

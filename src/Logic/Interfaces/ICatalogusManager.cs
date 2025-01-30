@@ -12,6 +12,7 @@ public interface ICatalogusManager
     Task<bool> EditProduct(ProductDTO product);
     Task<ProductDTO?> GetProductById(int Id);
     Task<List<ProductDTO>> SearchProductBySearchterm(string searchterm);
+    Task<List<CategoryDTO>> GetAllCategories();
 
 
 }

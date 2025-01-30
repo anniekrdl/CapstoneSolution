@@ -16,6 +16,7 @@ namespace Core.DTOs
             Role = role;
         }
 
+
         public bool IsAdmin()
         {
             return Role.Equals("Administrator");

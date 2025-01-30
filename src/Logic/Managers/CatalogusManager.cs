@@ -74,8 +74,9 @@ namespace Logic.Managers
             return products.Select(p => p.ToProductDTO()).ToList();
         }
 
-
-
-
+        public Task<List<CategoryDTO>> GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
