@@ -50,7 +50,7 @@ namespace Logic.Managers
             if (shoppingCartItem != null)
             {
                 // add Product
-                ProductDTO? product = await catalogusManager.GetProductById(shoppingCartItem.ProductId);
+                ProductDTO? product = catalogusManager.GetProductById(shoppingCartItem.ProductId);
 
                 if (product != null)
                 {
@@ -99,7 +99,7 @@ namespace Logic.Managers
             foreach (ShoppingCartItemEntity item in shoppingCartItems)
             {
 
-                ProductDTO? p = await catalogusManager.GetProductById(item.ProductId);
+                ProductDTO? p = catalogusManager.GetProductById(item.ProductId);
 
                 if (p != null)
                 {

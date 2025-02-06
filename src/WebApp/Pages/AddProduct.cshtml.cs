@@ -13,9 +13,9 @@ namespace WebApp.Pages
     public class AddProductModel : PageModel
     {
         [BindProperty]
-        public required ProductDTO Product { get; set; }
+        public required ProductDTO? Product { get; set; }
         [BindProperty]
-        public string PriceString { get; set; }
+        public required string PriceString { get; set; }
 
         public required List<CategoryDTO> Categories { get; set; }
 
@@ -30,27 +30,51 @@ namespace WebApp.Pages
 
         }
 
-        public async Task OnGet()
+        public void OnGet(int? id)
         {
-            await LoadCategories();
+            if (id != null)
+            {
+                // edit product 
+                Product = _catalogusManager.GetProductById((int)id);
+                var price = Product != null ? ((float)Product.Price / 100.00).ToString() : "0.00";
+                price = price.Replace(",", ".");
+
+                PriceString = price;
+
+
+            }
+            LoadCategories();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             //save product
             if (ModelState.IsValid)
             {
 
-                Console.WriteLine($"Price string {PriceString}");
-                Console.WriteLine($"to float {float.Parse(PriceString)} to decimal {decimal.Parse(PriceString)} x100 {float.Parse(PriceString) * 100} and to int: {(int)(float.Parse(PriceString) * 100)}");
-
                 PriceString = PriceString.Replace(".", ",");
 
                 int PriceStringToInt = (int)(float.Parse(PriceString) * 100);
-                Product.Price = PriceStringToInt;
+                if (Product != null)
+                {
+                    Product.Price = PriceStringToInt;
+                }
 
+                bool ProductSaved;
 
-                var ProductSaved = await _catalogusManager.AddProduct(Product);
+                if (Product != null && Product.Id != null)
+                {
+                    //save edit
+                    ProductSaved = _catalogusManager.EditProduct(Product);
+
+                }
+                else
+                {
+                    //save new product
+
+                    ProductSaved = Product != null && _catalogusManager.AddProduct(Product);
+
+                }
 
                 if (ProductSaved)
                 {
@@ -59,7 +83,7 @@ namespace WebApp.Pages
                 }
                 else
                 {
-                    await LoadCategories();
+                    LoadCategories();
                     //product not saved
                     ModelState.AddModelError("", "Fout bij opslaan van product. Probeer opnieuw.");
                     return Page();
@@ -69,15 +93,15 @@ namespace WebApp.Pages
             }
 
             //modelstate not valid 
-            await LoadCategories();
+            LoadCategories();
             return Page();
 
         }
 
 
-        private async Task LoadCategories()
+        private void LoadCategories()
         {
-            Categories = await _catalogusManager.GetAllCategories();
+            Categories = _catalogusManager.GetAllCategories();
 
         }
 

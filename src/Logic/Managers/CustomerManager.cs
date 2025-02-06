@@ -47,7 +47,10 @@ namespace Logic.Managers
 
         }
 
-
+        List<CustomerDTO> ICustomerManager.SearchCustomer(string userName)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

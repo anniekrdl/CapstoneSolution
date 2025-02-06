@@ -1,10 +1,19 @@
-﻿@page
+﻿@page "{id:int?}"
 @model WebApp.Pages.AddProductModel
 @{
 }
 
+@if (Model.Product != null && Model.Product.Id != null){
+     <h1>Product Aanpassen</h1>
+    
 
-<h1>Product Toevoegen</h1>
+} else
+{
+    <h1>Product Toevoegen</h1>
+    
+    
+}
+
 
 <form method="post">
     <!-- Naam en Beschrijving -->
@@ -54,7 +63,17 @@
 
    
    <div class="d-flex justify-content-center mt-4">
-        <button type="submit" class="btn btn-primary w-50">Product Toevoegen</button>
+        <button type="submit" class="btn btn-primary w-50">
+
+            @if(Model.Product != null && Model.Product.Id != null)
+            {
+                <span>Aanpassing opslaan</span>
+            }else
+            {
+                 <span>Product opslaan</span>
+            }
+        
+            </button>
    </div>
     <div asp-validation-summary="All" class="text-danger"></div>
     

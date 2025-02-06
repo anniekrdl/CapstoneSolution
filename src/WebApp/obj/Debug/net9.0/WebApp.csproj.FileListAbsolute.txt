@@ -18,7 +18,6 @@ C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSoluti
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\scopedcss\bundle\WebApp.styles.css
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\scopedcss\projectbundle\WebApp.bundle.scp.css
-C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\compressed\fspdjdrw69-b9sayid5wm.gz
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\compressed\15ykilufbm-61n19gt1b8.gz
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\compressed\5wk3qh7byk-xtxxf3hu2r.gz
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\compressed\y1iq0brb9j-bqjiyaj88i.gz
@@ -246,3 +245,4 @@ C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSoluti
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\WebApp.csproj.AssemblyReference.cache
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\WebApp.csproj.Up2Date
 C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\bin\Debug\net9.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\annie\Documents\GalileoAcademy\Projecten\CapstoneProject\CapstoneSolution\src\WebApp\obj\Debug\net9.0\compressed\fspdjdrw69-kv31zcefbq.gz

@@ -1,4 +1,5 @@
 using Core.DTOs;
+using Core.Enum;
 using Data.Interfaces;
 using Data.Models;
 using Logic.Interfaces;
@@ -20,7 +21,6 @@ namespace Logic.Managers
         {
             var products = await _productDatabaseService.GetAllProducts();
             return products.Select(p => p.ToProductDTO()).ToList();
-
 
         }
 
@@ -75,6 +75,41 @@ namespace Logic.Managers
         }
 
         public Task<List<CategoryDTO>> GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ProductDTO>> SearchProduct(string? searchterm = null, SortMethods sortMethod = SortMethods.NameAscending)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<ProductDTO> ICatalogusManager.SearchProduct(string? searchterm, SortMethods sortMethod)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICatalogusManager.AddProduct(ProductDTO product)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICatalogusManager.RemoveProduct(ProductDTO product)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICatalogusManager.EditProduct(ProductDTO product)
+        {
+            throw new NotImplementedException();
+        }
+
+        ProductDTO? ICatalogusManager.GetProductById(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<CategoryDTO> ICatalogusManager.GetAllCategories()
         {
             throw new NotImplementedException();
         }

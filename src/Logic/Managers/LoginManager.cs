@@ -49,4 +49,9 @@ public class LoginManager : ILoginManager
 
 
     }
+
+    UserDTO? ILoginManager.UserLogin(string UserName)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,0 +1,27 @@
+﻿@page
+@model WebApp.Pages.LoginModel
+@{ 
+    Layout = "_Layout"; // Zorg dat de layout correct wordt geladen
+}
+
+
+<div class="container d-flex justify-content-center" style="min-height: 80vh" >
+        <!-- Bootstrap form in het midden van het scherm -->
+        <div class="col-md-6">
+            <h2 class="text-center mb-4 text-dark">Login</h2>
+            <form method="post" asp-page-handler="Login">
+                <div class="mb-3">
+                    <label for="Username" class="form-label w-100 text-center text-dark">Voer gebruikersnaam in:</label>
+                    <input type="text" class="form-control" asp-for="UsernameString"/>
+                    <span class="text-danger" asp-validation-for="UsernameString"></span>
+                    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger text-center">
+                            @Model.ErrorMessage
+                        </div>
+                    }
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Inloggen</button>
+            </form>
+        </div>
+    </div>

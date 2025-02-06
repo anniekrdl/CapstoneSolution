@@ -44,6 +44,10 @@ namespace Logic.Managers
             return categories.Select(c => c.ToCategoryDTO()).ToList();
         }
 
+        List<CategoryDTO> ICategoryManager.GetCategories()
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -10,36 +10,39 @@
 <div class="text-center">
     <h1 class="display-4">Bikepacking Webshop</h1>
 
-    @if(Model.LoggedInUser == null)
-    {
-         <div class="container d-flex justify-content-center" >
-        <!-- Bootstrap form in het midden van het scherm -->
-        <div class="col-md-6">
-            <h2 class="text-center mb-4">Login</h2>
-            <form method="post">
-                <div class="mb-3">
-                    <label for="Username" class="form-label">Voer gebruikersnaam in:</label>
-                    <input type="text" class="form-control" asp-for="Username" required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Inloggen</button>
+        @if (Model.LoggedInUser != null && Model.LoggedInUser.IsAdmin()){
+             // button add product
+            <a asp-page="/AddProduct" class="btn btn-primary w-25 my-4">Nieuw product toevoegen</a>
+        }
+
+       <div class="d-flex justify-content-start align-items-center w-75 m-auto mb-3">
+            <!-- Zoekbalk en Zoeken knop -->
+            <form method="post" class="d-flex col-12">
+                <input type="text" asp-for="SearchTerm" class="form-control" placeholder="Zoek een product..." />
+                <button type="submit" class="btn btn-primary ms-2 me-5">Zoeken</button>
+
+                <!-- De select naar het einde van de row -->
+                <select asp-for="SelectedSortMethod" class="form-control ms-5" style="max-width: 200px;" onchange="this.form.submit()">
+                    @foreach (var method in Model.SortMethodsString)
+                    {
+                        <option value="@method" selected="@(Model.SelectedSortMethod == method ? "selected" : null)">@method</option>
+                    }
+                </select>
             </form>
         </div>
-    </div>
+
+
+
+        
         
 
-
-    } else {
-        @if (Model.LoggedInUser.IsAdmin()){
-             // button add product
-            <a asp-page="/AddProduct" class="btn btn-primary w-50 my-4">Nieuw product toevoegen</a>
-        }
        
-         <div class="row g-3">
+         <div class="row g-5 d-flex justify-content-center">
          @foreach (ProductDTO product in Model.Producten)
         {
 
-            <div class="col">
-                 <div class="card" style="width: 21rem;">
+            <div class="col-auto" >
+                 <div class="card" style="width: 19rem;">
                     <div class="image-container  ratio ratio-4x3" >
                         <img src="@product.ImageUrl" class="card-img-top img-fluid" alt="@product.Name" style=" object-fit: cover;">
                     </div>
@@ -67,7 +70,7 @@
    
     </div>
 
-    }
+    
 
    
     </div>

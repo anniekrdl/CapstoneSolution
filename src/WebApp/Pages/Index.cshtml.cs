@@ -1,14 +1,9 @@
 using Core.DTOs;
-using Data.EF;
-using Logic.Mappers;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Data.Services;
-using Data.Interfaces;
+using System.Text.Json;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Data.Models;
-using WebApp.Managers;
+using Core.Enum;
 
 namespace WebApp.Pages;
 
@@ -17,14 +12,21 @@ public class IndexModel : PageModel
 
     private readonly ICatalogusManager _catalogusManager;
     private readonly ILoginManager _loginManager;
-    public readonly ISessionManager _sessionManager;
 
     [BindProperty]
     public required string Username { get; set; }
 
+    [BindProperty]
+    public string SearchTerm { get; set; } = "";
+
+    public List<String> SortMethodsString { get; set; } = new List<string>();
+
+    [BindProperty]
+    public string SelectedSortMethod { get; set; }
 
 
-    public UserDTO? LoggedInUser => _sessionManager.LoggedInUser;
+
+    public UserDTO? LoggedInUser;
 
 
     // required Hierdoor moet de property worden geïnitialiseerd, bijvoorbeeld via een object-initializer.
@@ -33,58 +35,60 @@ public class IndexModel : PageModel
 
 
 
-    public IndexModel(ICatalogusManager catalogusManager, ILoginManager loginManager, ISessionManager sessionManager)
+    public IndexModel(ICatalogusManager catalogusManager, ILoginManager loginManager)
     {
         _catalogusManager = catalogusManager;
         _loginManager = loginManager;
-        _sessionManager = sessionManager;
 
 
-    }
-
-    public async Task OnGetAsync()
-    {
-
-        await LoadProducts();
-
-
-    }
-
-    public IActionResult OnPostLogoutAsync()
-    {
-        //post from _layout naar Index, met handler 'Logout'.  
-        _sessionManager.LoggedInUser = null;
-        return RedirectToPage("/Index");
-    }
-
-
-    public async Task<IActionResult> OnPostAsync()
-    {
-        //Login
-        var user = await _loginManager.UserLogin(Username);
-        if (user != null)
+        SortMethodsString = new List<string>
         {
-            _sessionManager.LoggedInUser = user;
+            "Alfabetisch oplopend",
+            "Alfabetisch aflopend",
+            "Prijs oplopend",
+            "Prijs aflopend"
+        };
 
-            await LoadProducts();
-            return Page();
+        SelectedSortMethod = SortMethodsString[0];
+
+
+    }
+
+    public void OnGet()
+    {
+
+        LoadProducts();
+    }
+    public IActionResult OnPost()
+    {
+
+        LoadProducts();
+        return Page();
+    }
+
+    private void LoadProducts()
+    {
+        // initialize user
+        var userJson = HttpContext.Session.GetString("user");
+
+        if (!string.IsNullOrEmpty(userJson))
+        {
+            LoggedInUser = JsonSerializer.Deserialize<UserDTO>(userJson);
 
         }
-        return Page();
 
+        var sortMethod = SelectedSortMethod switch
+        {
+            "Alfabetisch oplopend" => SortMethods.NameAscending,
+            "Alfabetisch aflopend" => SortMethods.NameDescending,
+            "Prijs oplopend" => SortMethods.PriceAscending,
+            "Prijs aflopend" => SortMethods.PriceDescending,
+            _ => SortMethods.NameAscending
+        };
 
-
-
-    }
-
-    private async Task LoadProducts()
-    {
-        var products = await _catalogusManager.GetAllProducts();
-
+        var products = _catalogusManager.SearchProduct(searchterm: SearchTerm, sortMethod: sortMethod);
         Producten = products;
-
-
-
-
     }
 }
+
+

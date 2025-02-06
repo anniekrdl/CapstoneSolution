@@ -7,7 +7,7 @@ public interface ICategoryManager
 
     void AddCategory(CategoryDTO category);
     void RemoveCategory(CategoryDTO category);
-    Task<List<CategoryDTO>> GetCategories();
+    List<CategoryDTO> GetCategories();
     Task<List<CategoryDTO>> SearchCategorie(string searchTerm);
 
 

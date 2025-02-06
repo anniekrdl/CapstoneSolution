@@ -38,9 +38,9 @@ public class CustomerManagerEF : ICustomerManager
         }
     }
 
-    public async Task<List<CustomerDTO>> SearchCustomer(string userName)
+    public List<CustomerDTO> SearchCustomer(string userName)
     {
-        Console.WriteLine("SEarch customer");
+
         var users = _webshopContext.Customers.Where(c => c.UserName == userName);
 
 

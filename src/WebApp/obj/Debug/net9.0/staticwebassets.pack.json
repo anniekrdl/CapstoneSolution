@@ -13,6 +13,22 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\bikepacking_fiets.png",
+      "PackagePath": "staticwebassets\\images\\bikepacking_fiets.png"
+    },
+    {
+      "Id": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets.png",
+      "PackagePath": "staticwebassets\\images\\fiets.png"
+    },
+    {
+      "Id": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets_met_tassen.png",
+      "PackagePath": "staticwebassets\\images\\fiets_met_tassen.png"
+    },
+    {
+      "Id": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\tekening_fiets_lijnen.png",
+      "PackagePath": "staticwebassets\\images\\tekening_fiets_lijnen.png"
+    },
+    {
       "Id": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

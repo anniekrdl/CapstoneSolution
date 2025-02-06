@@ -50,8 +50,8 @@ namespace Logic.Mappers
                 entity.Email,
                 entity.Street,
                 entity.Number,
-                entity.Addition,
-                entity.City
+                entity.City,
+                entity.Addition
             );
         }
 

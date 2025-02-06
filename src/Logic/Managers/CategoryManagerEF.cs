@@ -19,7 +19,7 @@ public class CategoryManagerEF : ICategoryManager
         _webshopContext.Categories.Add(category.ToCategoryEntity());
     }
 
-    public async Task<List<CategoryDTO>> GetCategories()
+    public List<CategoryDTO> GetCategories()
     {
         var categories = _webshopContext.Categories.ToList();
         return categories.Select(c => c.ToCategoryDTO()).ToList();

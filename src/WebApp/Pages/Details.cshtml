@@ -8,7 +8,9 @@
     <!-- Product Image -->
     <div class="row mb-4">
         <div class="col-12 d-flex justify-content-center align-items-center" style="height: 500px;">
-            <img src="@Model.Product.ImageUrl" class="img-fluid rounded" alt="@Model.Product.Name" style="object-fit: contain; max-height: 100%; max-width: 100%;">
+            @if (Model.Product != null){
+                <img src="@Model.Product.ImageUrl" class="img-fluid rounded" alt="@Model.Product.Name" style="object-fit: contain; max-height: 100%; max-width: 100%;">
+            }
         </div>
     </div>
 
@@ -17,7 +19,9 @@
         <div class="col-md-6 offset-md-3">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h1 class="card-title text-center">@Model.Product.Name</h1>
+                    @if(Model.Product != null){
+
+                              <h1 class="card-title text-center">@Model.Product.Name</h1>
                     <h5 class="card-title text-center">@String.Format("€ {0:0.00}", Model.Product.Price / 100.0)</h5>
 
                     <p class="card-text text-muted text-center mb-4">@Model.Product.Description</p>
@@ -28,7 +32,7 @@
                         @if (Model.LoggedInUser != null && Model.LoggedInUser.IsAdmin())
                         {
                             <div class="d-flex justify-content-evenly col-4">
-                                <a class="btn btn-primary col-4"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-primary col-4" asp-page="/AddProduct" asp-route-id="@Model.Product.Id"><i class="fa fa-edit"></i></a>
                                 <form method="post" class="col-4">
                                     <button type="submit" class="btn btn-danger w-100"><i class="fa fa-trash"></i></button>
                                 </form>
@@ -47,6 +51,9 @@
 
                         
                     </div>
+                        
+                    }
+              
                 </div>
             </div>
         </div>

@@ -7,7 +7,7 @@ namespace Logic.Interfaces;
 
 public interface ILoginManager
 {
-    Task<UserDTO?> UserLogin(string UserName);
+    UserDTO? UserLogin(string UserName);
 }
 
 

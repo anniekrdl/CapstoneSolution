@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "31R9OQEbCW/oBWLu+JI+tQ4Kv0dgbRTwN88h/Lqf7YY=",
+  "Hash": "wvnbiF4Nz0wXOHR5xdttDWzndqg8p37JAfOyAdioWhk=",
   "Source": "WebApp",
   "BasePath": "_content/WebApp",
   "Mode": "Default",
@@ -542,12 +542,12 @@
       "OriginalItemSpec": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-b9sayid5wm.gz",
+      "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-kv31zcefbq.gz",
       "SourceId": "WebApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/WebApp",
-      "RelativePath": "css/site#[.{fingerprint=b9sayid5wm}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=kv31zcefbq}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -556,8 +556,8 @@
       "RelatedAsset": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "0suozzrugb",
-      "Integrity": "0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y=",
+      "Fingerprint": "bv6vkt47co",
+      "Integrity": "h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\css\\site.css"
@@ -1417,8 +1417,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "b9sayid5wm",
-      "Integrity": "j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=",
+      "Fingerprint": "kv31zcefbq",
+      "Integrity": "IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -1443,6 +1443,90 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\bikepacking_fiets.png",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "images/bikepacking_fiets#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "p7eljjwywn",
+      "Integrity": "yyVdTMDjsFmtuiS1sKJgQNqy+YeKNK0B2n4GylVDMVU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\bikepacking_fiets.png"
+    },
+    {
+      "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets_met_tassen.png",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "images/fiets_met_tassen#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "gor9o8xhib",
+      "Integrity": "oIP7r/4tLb/mBYhVHMfXcudtIXGvbDVdHDcCVCR/pdc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\fiets_met_tassen.png"
+    },
+    {
+      "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets.png",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "images/fiets#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "m6qhys53rf",
+      "Integrity": "zgCboITslBo/d0AW48xN1nc3Vaqr8oOwloyqncoQZVE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\fiets.png"
+    },
+    {
+      "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\tekening_fiets_lijnen.png",
+      "SourceId": "WebApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\",
+      "BasePath": "_content/WebApp",
+      "RelativePath": "images/tekening_fiets_lijnen#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "kyfvv9ka5y",
+      "Integrity": "dJpWQLmSL87qqB5uDSS0TSRzF0NWn7w5Rko3ENtNwLA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\tekening_fiets_lijnen.png"
     },
     {
       "Identity": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\js\\site.js",
@@ -2728,13 +2812,13 @@
   ],
   "Endpoints": [
     {
-      "Route": "css/site.b9sayid5wm.css",
-      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-b9sayid5wm.gz",
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-kv31zcefbq.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.003134796238"
+          "Quality": "0.001101321586"
         }
       ],
       "ResponseHeaders": [
@@ -2744,19 +2828,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "318"
+          "Value": "907"
         },
         {
           "Name": "ETag",
-          "Value": "\"0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y=\""
+          "Value": "\"h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 17 Jan 2025 09:10:30 GMT"
+          "Value": "Thu, 06 Feb 2025 09:34:48 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -2772,26 +2856,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
+          "Value": "W/\"IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "b9sayid5wm"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
+          "Value": "sha256-IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64="
         }
       ]
     },
     {
-      "Route": "css/site.b9sayid5wm.css",
+      "Route": "css/site.css",
       "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2801,7 +2877,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "667"
+          "Value": "2308"
         },
         {
           "Name": "Content-Type",
@@ -2809,11 +2885,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
+          "Value": "\"IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 17 Jan 2025 09:10:30 GMT"
+          "Value": "Thu, 06 Feb 2025 09:34:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css.gz",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-kv31zcefbq.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "907"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Feb 2025 09:34:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.kv31zcefbq.css",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-kv31zcefbq.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001101321586"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "907"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Feb 2025 09:34:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "kv31zcefbq"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.kv31zcefbq.css",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2308"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 06 Feb 2025 09:34:48 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2823,7 +3044,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "b9sayid5wm"
+          "Value": "kv31zcefbq"
         },
         {
           "Name": "label",
@@ -2831,13 +3052,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
+          "Value": "sha256-IOOyMKHxOBHCj8qIAR6KrZm5fOFO3edkttucKiBQK64="
         }
       ]
     },
     {
-      "Route": "css/site.b9sayid5wm.css.gz",
-      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-b9sayid5wm.gz",
+      "Route": "css/site.kv31zcefbq.css.gz",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-kv31zcefbq.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2846,7 +3067,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "318"
+          "Value": "907"
         },
         {
           "Name": "Content-Type",
@@ -2854,11 +3075,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y=\""
+          "Value": "\"h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 17 Jan 2025 09:10:30 GMT"
+          "Value": "Thu, 06 Feb 2025 09:34:48 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2876,7 +3097,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "b9sayid5wm"
+          "Value": "kv31zcefbq"
         },
         {
           "Name": "label",
@@ -2884,144 +3105,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css",
-      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-b9sayid5wm.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.003134796238"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "318"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 17 Jan 2025 09:10:30 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css",
-      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "667"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 17 Jan 2025 09:10:30 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-j6fhJSuuyLpOSLuPJU0TsDV0iNjor5S3rDnvxJrt4bg="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css.gz",
-      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\obj\\Debug\\net9.0\\compressed\\fspdjdrw69-b9sayid5wm.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "318"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 17 Jan 2025 09:10:30 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-0FC1RbVkLkwKhJ1oi+r2Hw4Tm9av6DyJeo95YVvfA3Y="
+          "Value": "sha256-h1y3T8BTkzMnNo+1D0lJugm5QqER0xJQGDJmY51MeXQ="
         }
       ]
     },
@@ -3320,6 +3404,334 @@
         {
           "Name": "integrity",
           "Value": "sha256-wfFuuYm+Lh6RbCeeiUqxw334b/hIOkp5j9eokGUM1Y0="
+        }
+      ]
+    },
+    {
+      "Route": "images/bikepacking_fiets.p7eljjwywn.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\bikepacking_fiets.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56220"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yyVdTMDjsFmtuiS1sKJgQNqy+YeKNK0B2n4GylVDMVU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 05 Oct 2023 14:14:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "p7eljjwywn"
+        },
+        {
+          "Name": "label",
+          "Value": "images/bikepacking_fiets.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yyVdTMDjsFmtuiS1sKJgQNqy+YeKNK0B2n4GylVDMVU="
+        }
+      ]
+    },
+    {
+      "Route": "images/bikepacking_fiets.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\bikepacking_fiets.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56220"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yyVdTMDjsFmtuiS1sKJgQNqy+YeKNK0B2n4GylVDMVU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 05 Oct 2023 14:14:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yyVdTMDjsFmtuiS1sKJgQNqy+YeKNK0B2n4GylVDMVU="
+        }
+      ]
+    },
+    {
+      "Route": "images/fiets_met_tassen.gor9o8xhib.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets_met_tassen.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "409618"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oIP7r/4tLb/mBYhVHMfXcudtIXGvbDVdHDcCVCR/pdc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 26 Apr 2023 18:30:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gor9o8xhib"
+        },
+        {
+          "Name": "label",
+          "Value": "images/fiets_met_tassen.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oIP7r/4tLb/mBYhVHMfXcudtIXGvbDVdHDcCVCR/pdc="
+        }
+      ]
+    },
+    {
+      "Route": "images/fiets_met_tassen.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets_met_tassen.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "409618"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oIP7r/4tLb/mBYhVHMfXcudtIXGvbDVdHDcCVCR/pdc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 26 Apr 2023 18:30:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oIP7r/4tLb/mBYhVHMfXcudtIXGvbDVdHDcCVCR/pdc="
+        }
+      ]
+    },
+    {
+      "Route": "images/fiets.m6qhys53rf.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "351029"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zgCboITslBo/d0AW48xN1nc3Vaqr8oOwloyqncoQZVE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Apr 2023 20:28:22 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "m6qhys53rf"
+        },
+        {
+          "Name": "label",
+          "Value": "images/fiets.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zgCboITslBo/d0AW48xN1nc3Vaqr8oOwloyqncoQZVE="
+        }
+      ]
+    },
+    {
+      "Route": "images/fiets.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\fiets.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "351029"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zgCboITslBo/d0AW48xN1nc3Vaqr8oOwloyqncoQZVE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 25 Apr 2023 20:28:22 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zgCboITslBo/d0AW48xN1nc3Vaqr8oOwloyqncoQZVE="
+        }
+      ]
+    },
+    {
+      "Route": "images/tekening_fiets_lijnen.kyfvv9ka5y.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\tekening_fiets_lijnen.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "113547"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dJpWQLmSL87qqB5uDSS0TSRzF0NWn7w5Rko3ENtNwLA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 03 Feb 2024 11:02:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "kyfvv9ka5y"
+        },
+        {
+          "Name": "label",
+          "Value": "images/tekening_fiets_lijnen.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dJpWQLmSL87qqB5uDSS0TSRzF0NWn7w5Rko3ENtNwLA="
+        }
+      ]
+    },
+    {
+      "Route": "images/tekening_fiets_lijnen.png",
+      "AssetFile": "C:\\Users\\annie\\Documents\\GalileoAcademy\\Projecten\\CapstoneProject\\CapstoneSolution\\src\\WebApp\\wwwroot\\images\\tekening_fiets_lijnen.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "113547"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dJpWQLmSL87qqB5uDSS0TSRzF0NWn7w5Rko3ENtNwLA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 03 Feb 2024 11:02:42 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dJpWQLmSL87qqB5uDSS0TSRzF0NWn7w5Rko3ENtNwLA="
         }
       ]
     },

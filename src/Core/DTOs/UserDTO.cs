@@ -1,7 +1,7 @@
 namespace Core.DTOs
 {
 
-    public abstract class UserDTO
+    public class UserDTO
     {
         // init: 1 property kan maar 1x een waarde krijgen. en niet meer verandert worden daarna.
         public string UserName { get; init; }

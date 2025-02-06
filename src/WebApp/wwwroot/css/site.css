@@ -1,3 +1,10 @@
+:root{
+  --primary-color: #2d3830;
+  --primary-color-hover: #242c26;
+  --card-color: #dee4e0;
+ 
+}
+
 html {
   font-size: 14px;
 }
@@ -19,6 +26,12 @@ html {
 
 body {
   margin-bottom: 60px;
+  min-height: 800px;
+  background-image: url("https://media.istockphoto.com/id/1029783828/vector/forest-background-nature-landscape-evergreen-coniferous-trees-pine-spruce-christmas-tree.jpg?s=612x612&w=0&k=20&c=jf15FZzd0tsotrp9YaR6x01DfEsfZlHhe7p5iQ46dg8=");
+  background-repeat: repeat-x;
+  background-position: bottom;
+  background-attachment: fixed;
+  
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -29,3 +42,41 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: var(--primary-color-hover) !important;
+  border-color: var(--primary-color-hover) !important;
+}
+.btn-primary:focus {
+  background-color: var(--primary-color-hover) !important;  /* of je kunt een andere kleur kiezen */
+  border-color: var(--primary-color-hover) !important;     /* of dezelfde als bij hover */
+  box-shadow: none !important; /* Dit verwijdert de focus-schaduw die vaak de blauwe rand is */
+}
+
+
+/* Standaard rand voor form-control */
+.form-control {
+  border-color: var(--input-border-color, #ccc); /* De standaard randkleur */
+}
+
+/* Focus-rand voor form-control */
+.form-control:focus {
+  border-color: var(--primary-color); /* De primaire kleur als randkleur bij focus */
+  outline: none; /* Verwijdert de standaard focus-outline (de blauwe rand) */
+  box-shadow: 0 0 0 0.2rem rgba(73, 75, 51, 0.25); /* Optionele subtiele schaduw voor focus effect */
+}
+
+.card{
+  background-color: var(--card-color) !important;
+  border: none;
+}
+
+
+
+

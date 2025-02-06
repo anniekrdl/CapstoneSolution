@@ -15,7 +15,7 @@ public class LoginManagerEF : ILoginManager
         _webshopContext = webshopContext;
         _customerManager = customerManager;
     }
-    public async Task<UserDTO?> UserLogin(string UserName)
+    public UserDTO? UserLogin(string UserName)
     {
         if (UserName == "admin")
         {
@@ -24,13 +24,12 @@ public class LoginManagerEF : ILoginManager
         }
         else
         {
-            Console.WriteLine($" username is {UserName}");
-            var customers = await _customerManager.SearchCustomer(UserName);
+
+            var customers = _customerManager.SearchCustomer(UserName);
 
 
             if (customers.Count() > 0)
             {
-                Console.WriteLine($"{customers.Count} {customers.First()}");
                 return customers.FirstOrDefault();
             }
 

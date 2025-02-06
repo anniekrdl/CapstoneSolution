@@ -1,32 +1,38 @@
-using System.Threading.Tasks;
+using System.Text.Json;
 using Core.DTOs;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using WebApp.Managers;
 
 namespace WebApp.Pages
 {
     public class DetailsModel : PageModel
     {
         private readonly ICatalogusManager _catalogusManager;
-        private readonly ISessionManager _sessionManager;
 
         [BindProperty]
         public ProductDTO? Product { get; set; }
 
-        public UserDTO? LoggedInUser => _sessionManager.LoggedInUser;
+        public UserDTO? LoggedInUser;
 
 
-        public DetailsModel(ICatalogusManager catalogusManager, ISessionManager sessionManager)
+        public DetailsModel(ICatalogusManager catalogusManager)
         {
             _catalogusManager = catalogusManager;
-            _sessionManager = sessionManager;
+
         }
-        public async Task<IActionResult> OnGetAsync(int id)
+        public IActionResult OnGet(int id)
         {
 
-            Product = await _catalogusManager.GetProductById(id);
+            //get logged in user
+            var userJson = HttpContext.Session.GetString("user");
+            if (!string.IsNullOrEmpty(userJson))
+            {
+                LoggedInUser = JsonSerializer.Deserialize<UserDTO>(userJson);
+
+
+            }
+            Product = _catalogusManager.GetProductById(id);
             if (Product == null)
             {
                 // Handle the case when the product is not found
@@ -39,14 +45,14 @@ namespace WebApp.Pages
 
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             //Remove
             if (Product == null)
             {
                 return NotFound();
             }
-            await _catalogusManager.RemoveProduct(Product);
+            _catalogusManager.RemoveProduct(Product);
             return RedirectToPage("Index");
 
 

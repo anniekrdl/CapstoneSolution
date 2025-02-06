@@ -1,4 +1,5 @@
 using Core.DTOs;
+using Core.Enum;
 using Data.EF;
 using Data.Models;
 using Logic.Interfaces;
@@ -16,24 +17,24 @@ public class CatalogusManagerEF : ICatalogusManager
         _webshopContext = webshopContext;
 
     }
-    public async Task<bool> AddProduct(ProductDTO product)
+    public bool AddProduct(ProductDTO product)
     {
         ProductEntity p = product.ToProductEntity();
 
-        await _webshopContext.Products.AddAsync(p);
+        _webshopContext.Products.Add(p);
 
-        int result = await _webshopContext.SaveChangesAsync();
+        int result = _webshopContext.SaveChanges();
         // als SaveChangesAsync() meer dan 0 rijen heeft toegevoegd, betekent dit dat de toevoeging succesvol was, en je kunt true retourneren.
         return result > 0;
     }
 
-    public async Task<bool> EditProduct(ProductDTO product)
+    public bool EditProduct(ProductDTO product)
     {
         try
         {
 
             // Entity instance are tracked when queried from database
-            var existingProduct = await _webshopContext.Products.FindAsync(product.Id);
+            var existingProduct = _webshopContext.Products.Find(product.Id);
             if (existingProduct == null)
             {
                 // Product bestaat niet
@@ -48,7 +49,7 @@ public class CatalogusManagerEF : ICatalogusManager
             existingProduct.ImageUrl = product.ImageUrl;
 
             // Sla de wijzigingen op in de database
-            await _webshopContext.SaveChangesAsync();
+            _webshopContext.SaveChanges();
             return true;
 
         }
@@ -61,9 +62,9 @@ public class CatalogusManagerEF : ICatalogusManager
 
     }
 
-    public async Task<List<CategoryDTO>> GetAllCategories()
+    public List<CategoryDTO> GetAllCategories()
     {
-        var categories = await _webshopContext.Categories.ToListAsync();
+        var categories = _webshopContext.Categories.ToList();
         return categories.Select(c => c.ToCategoryDTO()).ToList();
     }
 
@@ -74,10 +75,10 @@ public class CatalogusManagerEF : ICatalogusManager
         return productDtos;
     }
 
-    public async Task<ProductDTO?> GetProductById(int Id)
+    public ProductDTO? GetProductById(int Id)
     {
 
-        var product = await _webshopContext.Products.FirstOrDefaultAsync(p => p.Id == Id);
+        var product = _webshopContext.Products.FirstOrDefault(p => p.Id == Id);
         if (product == null)
         {
             return null;
@@ -88,11 +89,11 @@ public class CatalogusManagerEF : ICatalogusManager
 
     }
 
-    public async Task<bool> RemoveProduct(ProductDTO product)
+    public bool RemoveProduct(ProductDTO product)
     {
         try
         {
-            var existingProduct = await _webshopContext.Products.FindAsync(product.Id);
+            var existingProduct = _webshopContext.Products.Find(product.Id);
 
             if (existingProduct == null)
             {
@@ -100,7 +101,7 @@ public class CatalogusManagerEF : ICatalogusManager
             }
 
             _webshopContext.Remove(existingProduct);
-            await _webshopContext.SaveChangesAsync();
+            _webshopContext.SaveChanges();
             return true;
 
 
@@ -113,15 +114,35 @@ public class CatalogusManagerEF : ICatalogusManager
         }
     }
 
-    public Task<List<ProductDTO>> SearchProductBySearchterm(string searchterm)
+    public List<ProductDTO> SearchProduct(string? searchterm = null, SortMethods sortMethod = SortMethods.NameAscending)
     {
-        var products = _webshopContext.Products
-           .Where(p => p.Name.Contains(searchterm))
-           .Select(p => p.ToProductDTO())
-           .ToListAsync();
+        // Check if search term exists
+        bool isSearch = !string.IsNullOrWhiteSpace(searchterm);
+
+        // Query as AsQueryable
+        var query = _webshopContext.Products.AsQueryable();
+        if (isSearch)
+        {
+            // If search term exists, search products
+            query = query.Where(p => p.Name.Contains(searchterm!));
+        }
+
+        // Apply sorting
+        query = sortMethod switch
+        {
+            SortMethods.NameAscending => query.OrderBy(p => p.Name),
+            SortMethods.NameDescending => query.OrderByDescending(p => p.Name),
+            SortMethods.PriceAscending => query.OrderBy(p => p.Price),
+            SortMethods.PriceDescending => query.OrderByDescending(p => p.Price),
+            _ => query
+        };
+
+        // List of products
+        var products = query.Select(p => p.ToProductDTO()).ToList();
 
         return products;
-
-
     }
+
+
 }
+
