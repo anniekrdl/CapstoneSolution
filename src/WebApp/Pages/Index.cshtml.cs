@@ -9,7 +9,6 @@ namespace WebApp.Pages;
 
 public class IndexModel : PageModel
 {
-
     private readonly ICatalogusManager _catalogusManager;
     private readonly ILoginManager _loginManager;
 
@@ -19,27 +18,26 @@ public class IndexModel : PageModel
     [BindProperty]
     public string SearchTerm { get; set; } = "";
 
-    public List<String> SortMethodsString { get; set; } = new List<string>();
+    public List<string> SortMethodsString { get; set; } = new List<string>();
 
     [BindProperty]
     public string SelectedSortMethod { get; set; }
 
+    private int Pagesize = 5;
+    [BindProperty]
+    public int Totalpages { get; set; }
+    [BindProperty]
+    public int CurrentPage { get; set; }
 
 
     public UserDTO? LoggedInUser;
 
-
-    // required Hierdoor moet de property worden geïnitialiseerd, bijvoorbeeld via een object-initializer.
     public required List<ProductDTO> Producten { get; set; }
-
-
-
 
     public IndexModel(ICatalogusManager catalogusManager, ILoginManager loginManager)
     {
         _catalogusManager = catalogusManager;
         _loginManager = loginManager;
-
 
         SortMethodsString = new List<string>
         {
@@ -50,23 +48,24 @@ public class IndexModel : PageModel
         };
 
         SelectedSortMethod = SortMethodsString[0];
-
-
     }
 
-    public void OnGet()
+    public void OnGet(int? pageNumber)
     {
+        Console.WriteLine($"pageNumber = {pageNumber}");
 
-        LoadProducts();
+        CurrentPage = pageNumber ?? 1;
+
+        LoadProducts(CurrentPage);
     }
+
     public IActionResult OnPost()
     {
-
-        LoadProducts();
+        LoadProducts(CurrentPage);
         return Page();
     }
 
-    private void LoadProducts()
+    private void LoadProducts(int page)
     {
         // initialize user
         var userJson = HttpContext.Session.GetString("user");
@@ -74,7 +73,6 @@ public class IndexModel : PageModel
         if (!string.IsNullOrEmpty(userJson))
         {
             LoggedInUser = JsonSerializer.Deserialize<UserDTO>(userJson);
-
         }
 
         var sortMethod = SelectedSortMethod switch
@@ -86,9 +84,13 @@ public class IndexModel : PageModel
             _ => SortMethods.NameAscending
         };
 
-        var products = _catalogusManager.SearchProduct(searchterm: SearchTerm, sortMethod: sortMethod);
-        Producten = products;
+        var totalProducts = _catalogusManager.TotalProducts();
+        Totalpages = (int)Math.Ceiling(totalProducts / (double)Pagesize);
+
+        CurrentPage = page < 1 ? 1 : (page > Totalpages ? Totalpages : page);
+
+
+        Producten = _catalogusManager.SearchProduct(CurrentPage, Pagesize, SearchTerm, sortMethod);
+
     }
 }
-
-

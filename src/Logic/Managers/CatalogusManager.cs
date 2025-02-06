@@ -84,10 +84,11 @@ namespace Logic.Managers
             throw new NotImplementedException();
         }
 
-        List<ProductDTO> ICatalogusManager.SearchProduct(string? searchterm, SortMethods sortMethod)
-        {
-            throw new NotImplementedException();
-        }
+        //     List<ProductDTO> ICatalogusManager.SearchProduct(string? searchterm, SortMethods sortMethod, int pageNumber = 1,
+        // int pageSize = 10)
+        //     {
+        //         throw new NotImplementedException();
+        //     }
 
         bool ICatalogusManager.AddProduct(ProductDTO product)
         {
@@ -110,6 +111,16 @@ namespace Logic.Managers
         }
 
         List<CategoryDTO> ICatalogusManager.GetAllCategories()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int TotalProducts()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ProductDTO> SearchProduct(int pageNumber, int pageSize, string? searchterm = null, SortMethods sortMethod = SortMethods.NameAscending)
         {
             throw new NotImplementedException();
         }

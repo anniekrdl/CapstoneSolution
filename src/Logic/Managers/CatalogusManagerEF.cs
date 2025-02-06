@@ -114,13 +114,17 @@ public class CatalogusManagerEF : ICatalogusManager
         }
     }
 
-    public List<ProductDTO> SearchProduct(string? searchterm = null, SortMethods sortMethod = SortMethods.NameAscending)
+    public List<ProductDTO> SearchProduct(int pageNumber,
+    int pageSize, string? searchterm = null, SortMethods sortMethod = SortMethods.NameAscending)
     {
         // Check if search term exists
         bool isSearch = !string.IsNullOrWhiteSpace(searchterm);
 
         // Query as AsQueryable
-        var query = _webshopContext.Products.AsQueryable();
+        var query = _webshopContext.Products
+        .Skip((pageNumber - 1) * pageSize) // Skip de producten die al op vorige pagina's staan
+        .Take(pageSize)// Neem alleen het aantal producten dat past op de huidige pagina
+        .AsQueryable();
         if (isSearch)
         {
             // If search term exists, search products
@@ -143,6 +147,9 @@ public class CatalogusManagerEF : ICatalogusManager
         return products;
     }
 
-
+    public int TotalProducts()
+    {
+        return _webshopContext.Products.Count();
+    }
 }
 

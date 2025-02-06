@@ -1,5 +1,4 @@
-﻿
-@page
+﻿@page "{pageNumber:int?}"
 @model IndexModel
 @using Core.DTOs
 
@@ -33,8 +32,7 @@
 
 
 
-        
-        
+
 
        
          <div class="row g-5 d-flex justify-content-center">
@@ -67,6 +65,15 @@
             
    
         }
+
+        <div class="pagination d-flex justify-content-center" style="gap: 10px;">
+            <a asp-page="Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : "")" style="min-width: 6rem;">Vorige</a>
+            <a asp-page="Index" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="btn btn-primary @(Model.CurrentPage == Model.Totalpages ? "disabled" : "")" style="min-width: 6rem;">Volgende</a>
+        </div>
+        <span class="mx-auto text-white">Pagina @Model.CurrentPage van @Model.Totalpages</span>
+
+
+
    
     </div>
 
