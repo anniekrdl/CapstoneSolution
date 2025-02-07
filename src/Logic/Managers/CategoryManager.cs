@@ -48,6 +48,11 @@ namespace Logic.Managers
         {
             throw new NotImplementedException();
         }
+
+        List<CategoryDTO> ICategoryManager.SearchCategorie(string searchTerm)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

@@ -41,12 +41,12 @@ public class CatalogusManagerEF : ICatalogusManager
                 return false;
             }
             // Wijzig de velden van het bestaande product
-            existingProduct.Name = product.Name;
-            existingProduct.Description = product.Description;
+            existingProduct.Name = product.Name ?? "";
+            existingProduct.Description = product.Description ?? "";
             existingProduct.Price = product.Price;
             existingProduct.Stock = product.Stock;
             existingProduct.CategoryId = product.CategoryId;
-            existingProduct.ImageUrl = product.ImageUrl;
+            existingProduct.ImageUrl = product.ImageUrl ?? "";
 
             // Sla de wijzigingen op in de database
             _webshopContext.SaveChanges();
@@ -68,9 +68,9 @@ public class CatalogusManagerEF : ICatalogusManager
         return categories.Select(c => c.ToCategoryDTO()).ToList();
     }
 
-    public async Task<List<ProductDTO>> GetAllProducts()
+    public List<ProductDTO> GetAllProducts()
     {
-        var products = await _webshopContext.Products.ToListAsync();
+        var products = _webshopContext.Products.ToList();
         var productDtos = products.Select(p => p.ToProductDTO()).ToList();
         return productDtos;
     }

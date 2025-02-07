@@ -1,14 +1,15 @@
 using Core.DTOs;
-using Data
+using Data.Models;
 
-
-.Models;
 namespace Logic.Interfaces;
 
 public interface ILoginManager
 {
     UserDTO? UserLogin(string UserName);
+
 }
+
+
 
 
 

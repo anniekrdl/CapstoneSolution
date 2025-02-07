@@ -1,11 +1,13 @@
 
+using System.Text.Json;
+using Core.DTOs;
 using Data.EF;
 using Data.Interfaces;
 using Data.Services;
 using Logic.Interfaces;
 using Logic.Managers;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+using WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,7 @@ builder.Services.AddTransient<ICatalogusManager, CatalogusManagerEF>();
 builder.Services.AddTransient<ICategoryManager, CategoryManagerEF>();
 builder.Services.AddTransient<ILoginManager, LoginManagerEF>();
 builder.Services.AddTransient<ICustomerManager, CustomerManagerEF>();
+builder.Services.AddTransient<ISessionService, SessionService>();
 
 // Services toevoegen
 builder.Services.AddDistributedMemoryCache(); // Voor session storage in geheugen
@@ -110,8 +113,11 @@ app.Use(async (context, next) =>
         return;
     }
 
-    // Json data meegeven aan session, zodat deze weer omgezet kan worden naar UserDTO in index
+
+
+    // Json data meegeven aan session, zodat deze weer omgezet kan worden naar UserDTO in inde
     string userJson = JsonSerializer.Serialize(user);
+
     context.Session.SetString("user", userJson);
 
 

@@ -51,6 +51,16 @@ namespace Logic.Managers
         {
             throw new NotImplementedException();
         }
+
+        List<CustomerDTO> ICustomerManager.GetCustomers()
+        {
+            throw new NotImplementedException();
+        }
+
+        void ICustomerManager.AddCustomer(CustomerDTO customer)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

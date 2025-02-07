@@ -124,5 +124,10 @@ namespace Logic.Managers
         {
             throw new NotImplementedException();
         }
+
+        List<ProductDTO> ICatalogusManager.GetAllProducts()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -31,12 +31,12 @@ public class CategoryManagerEF : ICategoryManager
         _webshopContext.Categories.Remove(category.ToCategoryEntity());
     }
 
-    public async Task<List<CategoryDTO>> SearchCategorie(string searchTerm)
+    public List<CategoryDTO> SearchCategorie(string searchTerm)
     {
-        var categories = await _webshopContext.Categories
+        var categories = _webshopContext.Categories
             .Where(c => c.Name.Contains(searchTerm))
             .Select(c => c.ToCategoryDTO())
-            .ToListAsync();
+            .ToList();
 
         return categories;
     }

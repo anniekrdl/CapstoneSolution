@@ -8,7 +8,7 @@ namespace Logic
 public interface ICatalogusManager
 {
 
-    Task<List<ProductDTO>> GetAllProducts();
+    List<ProductDTO> GetAllProducts();
 
     int TotalProducts();
     bool AddProduct(ProductDTO product);

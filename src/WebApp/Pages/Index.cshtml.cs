@@ -1,16 +1,19 @@
-using Core.DTOs;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using Core.DTOs;
+using Core.Enum;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Core.Enum;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using WebApp.Services;
 
 namespace WebApp.Pages;
 
 public class IndexModel : PageModel
 {
     private readonly ICatalogusManager _catalogusManager;
-    private readonly ILoginManager _loginManager;
+    private readonly ISessionService _sessionService;
+
 
     [BindProperty]
     public required string Username { get; set; }
@@ -23,7 +26,7 @@ public class IndexModel : PageModel
     [BindProperty]
     public string SelectedSortMethod { get; set; }
 
-    private int Pagesize = 5;
+    private int Pagesize = 9;
     [BindProperty]
     public int Totalpages { get; set; }
     [BindProperty]
@@ -34,10 +37,10 @@ public class IndexModel : PageModel
 
     public required List<ProductDTO> Producten { get; set; }
 
-    public IndexModel(ICatalogusManager catalogusManager, ILoginManager loginManager)
+    public IndexModel(ICatalogusManager catalogusManager, ILoginManager loginManager, ISessionService sessionService)
     {
         _catalogusManager = catalogusManager;
-        _loginManager = loginManager;
+        _sessionService = sessionService;
 
         SortMethodsString = new List<string>
         {
@@ -67,14 +70,7 @@ public class IndexModel : PageModel
 
     private void LoadProducts(int page)
     {
-        // initialize user
-        var userJson = HttpContext.Session.GetString("user");
-
-        if (!string.IsNullOrEmpty(userJson))
-        {
-            LoggedInUser = JsonSerializer.Deserialize<UserDTO>(userJson);
-        }
-
+        LoggedInUser = _sessionService.GetLoggedInUser(HttpContext);
         var sortMethod = SelectedSortMethod switch
         {
             "Alfabetisch oplopend" => SortMethods.NameAscending,

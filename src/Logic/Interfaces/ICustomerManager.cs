@@ -4,8 +4,8 @@ namespace Logic.Interfaces;
 
 public interface ICustomerManager
 {
-    Task<List<CustomerDTO>> GetCustomers();
-    Task AddCustomer(CustomerDTO customer);
+    List<CustomerDTO> GetCustomers();
+    void AddCustomer(CustomerDTO customer);
     void RemoveCustomer(int userId);
     List<CustomerDTO> SearchCustomer(string userName);
 

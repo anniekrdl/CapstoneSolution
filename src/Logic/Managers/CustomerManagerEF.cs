@@ -17,16 +17,16 @@ public class CustomerManagerEF : ICustomerManager
         _webshopContext = webshopContext;
     }
 
-    public async Task AddCustomer(CustomerDTO customer)
+    public void AddCustomer(CustomerDTO customer)
     {
-        await _webshopContext.AddAsync(customer.ToCustomerEntity());
+        _webshopContext.AddAsync(customer.ToCustomerEntity());
     }
 
-    public Task<List<CustomerDTO>> GetCustomers()
+    public List<CustomerDTO> GetCustomers()
     {
         return _webshopContext.Customers
         .Select(c => c.ToCustomerDTO())
-        .ToListAsync();
+        .ToList();
     }
 
     public void RemoveCustomer(int userId)

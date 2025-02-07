@@ -97,12 +97,12 @@ namespace Logic.Mappers
         {
             return new ProductEntity(
                 productDTO.Id,
-                productDTO.Name,
-                productDTO.Description,
+                productDTO.Name ?? "",
+                productDTO.Description ?? "",
                 productDTO.Price,
                 productDTO.Stock,
                 productDTO.CategoryId,
-                productDTO.ImageUrl
+                productDTO.ImageUrl ?? ""
             );
         }
 
