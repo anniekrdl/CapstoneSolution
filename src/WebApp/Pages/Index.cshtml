@@ -1,7 +1,7 @@
 ﻿@page "{pageNumber:int?}"
 @model IndexModel
 @using Core.DTOs
-
+@using Core.Enum
 @{
     ViewData["Title"] = "Home page";
 }
@@ -19,6 +19,7 @@
             <form method="post" class="d-flex col-12">
                 <input type="text" asp-for="SearchTerm" class="form-control" placeholder="Zoek een product..." />
                 <button type="submit" class="btn btn-primary ms-2 me-5">Zoeken</button>
+
 
                 <!-- De select naar het einde van de row -->
                 <select asp-for="SelectedSortMethod" class="form-control ms-5" style="max-width: 200px;" onchange="this.form.submit()">
@@ -67,8 +68,8 @@
         }
 
         <div class="pagination d-flex justify-content-center" style="gap: 10px;">
-            <a asp-page="Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : "")" style="min-width: 6rem;">Vorige</a>
-            <a asp-page="Index" asp-route-pageNumber="@(Model.CurrentPage + 1)" class="btn btn-primary @(Model.CurrentPage == Model.Totalpages ? "disabled" : "")" style="min-width: 6rem;">Volgende</a>
+            <a asp-page="Index" asp-route-pageNumber="@(Model.CurrentPage - 1)" asp-route-SortMethod="@Model.SelectedSortMethod" asp-route-search="@Model.SearchTerm" class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : "")" style="min-width: 6rem;">Vorige</a>
+            <a asp-page="Index" asp-route-pageNumber="@(Model.CurrentPage + 1)" asp-route-sortMethod="@Model.SelectedSortMethod" asp-route-search="@Model.SearchTerm"  class="btn btn-primary @(Model.CurrentPage == Model.Totalpages ? "disabled" : "")" style="min-width: 6rem;">Volgende</a>
         </div>
         <span class="mx-auto text-white">Pagina @Model.CurrentPage van @Model.Totalpages</span>
 

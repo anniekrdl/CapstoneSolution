@@ -64,6 +64,7 @@ app.MapRazorPages().WithStaticAssets();
 
 
 
+
 app.Use(async (context, next) =>
 {
 

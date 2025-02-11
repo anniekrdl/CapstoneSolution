@@ -10,7 +10,7 @@ public interface ICatalogusManager
 
     List<ProductDTO> GetAllProducts();
 
-    int TotalProducts();
+    int TotalProducts(string? searchterm = null);
     bool AddProduct(ProductDTO product);
     bool RemoveProduct(ProductDTO product);
     bool EditProduct(ProductDTO product);

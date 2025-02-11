@@ -26,15 +26,15 @@ namespace Data.Services
             var products = new List<ProductEntity>();
             while (await reader.ReadAsync())
             {
-                products.Add(new ProductEntity(
-                 reader.GetInt32("product_id"),
-                 reader.GetString("naam"),
-                 reader.GetString("beschrijving"),
-                 reader.GetInt32("prijs"),
-                 reader.GetInt32("voorraad"),
-                 reader.GetInt32("categorie_id"),
-                 reader.GetString("afbeelding_url")
-                 ));
+                // products.Add(new ProductEntity(
+                //  reader.GetInt32("product_id"),
+                //  reader.GetString("naam"),
+                //  reader.GetString("beschrijving"),
+                //  reader.GetInt32("prijs"),
+                //  reader.GetInt32("voorraad"),
+                //  reader.GetInt32("categorie_id"),
+                //  reader.GetString("afbeelding_url")
+                //  ));
 
 
             }
@@ -152,17 +152,17 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                var product = new ProductEntity(
-                    reader.GetInt32("product_id"),
-                    reader.GetString("naam"),
-                    reader.GetString("beschrijving"),
-                    reader.GetInt32("prijs"),
-                    reader.GetInt32("voorraad"),
-                    reader.GetInt32("categorie_id"),
-                    reader.GetString("afbeelding_url")
-                );
+                // var product = new ProductEntity(
+                //     reader.GetInt32("product_id"),
+                //     reader.GetString("naam"),
+                //     reader.GetString("beschrijving"),
+                //     reader.GetInt32("prijs"),
+                //     reader.GetInt32("voorraad"),
+                //     reader.GetInt32("categorie_id"),
+                //     reader.GetString("afbeelding_url")
+                // );
 
-                products.Add(product);
+                // products.Add(product);
             }
 
             return products;
@@ -186,17 +186,17 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                var product = new ProductEntity(
-                    reader.GetInt32("product_id"),
-                    reader.GetString("naam"),
-                    reader.GetString("beschrijving"),
-                    reader.GetInt32("prijs"),
-                    reader.GetInt32("voorraad"),
-                    reader.GetInt32("categorie_id"),
-                    reader.GetString("afbeelding_url")
-                );
+                // var product = new ProductEntity(
+                //     reader.GetInt32("product_id"),
+                //     reader.GetString("naam"),
+                //     reader.GetString("beschrijving"),
+                //     reader.GetInt32("prijs"),
+                //     reader.GetInt32("voorraad"),
+                //     reader.GetInt32("categorie_id"),
+                //     reader.GetString("afbeelding_url")
+                // );
 
-                products.Add(product);
+                // products.Add(product);
             }
 
             return products;

@@ -95,15 +95,16 @@ namespace Logic.Mappers
 
         public static ProductEntity ToProductEntity(this ProductDTO productDTO)
         {
-            return new ProductEntity(
-                productDTO.Id,
-                productDTO.Name ?? "",
-                productDTO.Description ?? "",
-                productDTO.Price,
-                productDTO.Stock,
-                productDTO.CategoryId,
-                productDTO.ImageUrl ?? ""
-            );
+            return new ProductEntity
+            {
+                Id = productDTO.Id,
+                Name = productDTO.Name ?? "",
+                Description = productDTO.Description ?? "",
+                Price = productDTO.Price,
+                Stock = productDTO.Stock,
+                CategoryId = productDTO.CategoryId,
+                ImageUrl = productDTO.ImageUrl ?? ""
+            };
         }
 
         public static CategoryEntity ToCategoryEntity(this CategoryDTO categoryDTO)

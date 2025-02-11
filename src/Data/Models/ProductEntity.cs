@@ -12,10 +12,10 @@ namespace Data.Models
         public int? Id { get; set; }
         [Column("naam")]
         [Required, MinLength(2), MaxLength(50)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Column("beschrijving")]
         [Required, MinLength(2)]
-        public string Description { get; set; }
+        public required string Description { get; set; }
         [Column("prijs")]
         [Required]
         public int Price { get; set; } //in cents'
@@ -27,7 +27,7 @@ namespace Data.Models
         public int CategoryId { get; set; }
         [Column("afbeelding_url")]
         [Required, StringLength(50)]
-        public string ImageUrl { get; set; }
+        public required string ImageUrl { get; set; }
 
         public ProductEntity() { }
 

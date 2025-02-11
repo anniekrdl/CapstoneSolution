@@ -129,5 +129,10 @@ namespace Logic.Managers
         {
             throw new NotImplementedException();
         }
+
+        public int TotalProducts(string? searchterm = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

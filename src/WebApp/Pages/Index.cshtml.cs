@@ -37,7 +37,7 @@ public class IndexModel : PageModel
 
     public required List<ProductDTO> Producten { get; set; }
 
-    public IndexModel(ICatalogusManager catalogusManager, ILoginManager loginManager, ISessionService sessionService)
+    public IndexModel(ICatalogusManager catalogusManager, ISessionService sessionService)
     {
         _catalogusManager = catalogusManager;
         _sessionService = sessionService;
@@ -53,10 +53,16 @@ public class IndexModel : PageModel
         SelectedSortMethod = SortMethodsString[0];
     }
 
-    public void OnGet(int? pageNumber)
+    public void OnGet(int? pageNumber, [FromQuery] string? sortmethod, [FromQuery] string? search)
     {
-        Console.WriteLine($"pageNumber = {pageNumber}");
-
+        if (!string.IsNullOrEmpty(search))
+        {
+            SearchTerm = search;
+        }
+        if (!string.IsNullOrEmpty(sortmethod))
+        {
+            SelectedSortMethod = sortmethod;
+        }
         CurrentPage = pageNumber ?? 1;
 
         LoadProducts(CurrentPage);
@@ -80,7 +86,7 @@ public class IndexModel : PageModel
             _ => SortMethods.NameAscending
         };
 
-        var totalProducts = _catalogusManager.TotalProducts();
+        var totalProducts = _catalogusManager.TotalProducts(SearchTerm);
         Totalpages = (int)Math.Ceiling(totalProducts / (double)Pagesize);
 
         CurrentPage = page < 1 ? 1 : (page > Totalpages ? Totalpages : page);
