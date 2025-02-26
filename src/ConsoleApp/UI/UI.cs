@@ -1,6 +1,6 @@
 using ConsoleApp.Helpers;
-using Logic.Interfaces;
 using Core.DTOs;
+using Logic.Interfaces;
 namespace ConsoleApp.UI
 {
     class UI
@@ -41,7 +41,7 @@ namespace ConsoleApp.UI
                     // Probeer in te loggen
                     // loginmanagers als DI
                     // 
-                    UserDTO? loggedInCustomer = await _loginManager.UserLogin(loginName);
+                    UserDTO? loggedInCustomer = _loginManager.UserLogin(loginName);
 
                     if (loggedInCustomer != null)
                     {
@@ -64,7 +64,7 @@ namespace ConsoleApp.UI
 
         public void TestStart()
         {
-            user = _loginManager.UserLogin("admin").Result;
+            user = _loginManager.UserLogin("admin");
 
         }
 

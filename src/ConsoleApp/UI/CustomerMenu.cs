@@ -1,6 +1,6 @@
-using Logic.Interfaces;
 using ConsoleApp.Helpers;
 using Core.DTOs;
+using Logic.Interfaces;
 namespace ConsoleApp.UI;
 
 public class CustomerMenu
@@ -139,14 +139,14 @@ public class CustomerMenu
     private async Task SearchProduct()
     {
         string searchTerm = MenuHelper.GetUserInput("Wat is je zoekterm? ");
-        List<ProductDTO> productsFound = await _catalogusManager.SearchProductBySearchterm(searchTerm);
+        //List<ProductDTO> productsFound = _catalogusManager.SearchProductBySearchterm(searchTerm);
 
-        _presenter.ShowProducts(productsFound);
+        // _presenter.ShowProducts(productsFound);
     }
 
     private async Task ShowCatalog()
     {
-        List<ProductDTO> products = await _catalogusManager.GetAllProducts();
+        List<ProductDTO> products = _catalogusManager.GetAllProducts();
         _presenter.ShowProducts(products);
         //show catalog options
         CustomerCatalogMenu();
@@ -175,7 +175,7 @@ public class CustomerMenu
     private async Task ViewProduct()
     {
         int Id = MenuHelper.GetUserInputInt("Wat is de Id van het product dat je wilt bekijken? ");
-        ProductDTO? product = await _catalogusManager.GetProductById(Id);
+        ProductDTO? product = _catalogusManager.GetProductById(Id);
         if (product != null)
         {
             _presenter.ShowProduct(product);

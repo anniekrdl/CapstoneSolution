@@ -1,0 +1,35 @@
+@{ 
+    Layout = "_Layout"; // Zorg dat de layout correct wordt geladen'
+    ViewData["Title"] = "Login";
+}
+
+<div class="container d-flex justify-content-center" style="min-height: 80vh" >
+        <!-- Bootstrap form in het midden van het scherm -->
+        <div class="col-md-6">
+            <h2 class="text-center mb-4 text-dark">Login</h2>
+            <form method="post" asp-action="Login">
+                <div class="mb-3">
+                    <label for="Username" class="form-label w-100 text-center text-dark">Voer gebruikersnaam in:</label>
+                    <input type="text" class="form-control" id=" username" name="username" />
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger text-danger">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        </div>
+                    }
+
+                   
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Inloggen</button>
+
+                
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+

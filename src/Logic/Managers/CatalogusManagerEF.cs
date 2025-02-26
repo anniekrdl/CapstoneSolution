@@ -33,13 +33,19 @@ public class CatalogusManagerEF : ICatalogusManager
         try
         {
 
+            Console.WriteLine($"product is {product.Stock}");
+            Console.WriteLine($"product id is {product.Id}");
+
             // Entity instance are tracked when queried from database
             var existingProduct = _webshopContext.Products.Find(product.Id);
             if (existingProduct == null)
             {
+                Console.WriteLine($"Product niet gevonden");
                 // Product bestaat niet
                 return false;
             }
+
+            Console.WriteLine($"exisiting product: {existingProduct}");
             // Wijzig de velden van het bestaande product
             existingProduct.Name = product.Name ?? "";
             existingProduct.Description = product.Description ?? "";

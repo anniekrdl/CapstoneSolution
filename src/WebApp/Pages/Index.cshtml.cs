@@ -15,8 +15,7 @@ public class IndexModel : PageModel
     private readonly ISessionService _sessionService;
 
 
-    [BindProperty]
-    public required string Username { get; set; }
+
 
     [BindProperty]
     public string SearchTerm { get; set; } = "";
@@ -77,6 +76,7 @@ public class IndexModel : PageModel
     private void LoadProducts(int page)
     {
         LoggedInUser = _sessionService.GetLoggedInUser(HttpContext);
+
         var sortMethod = SelectedSortMethod switch
         {
             "Alfabetisch oplopend" => SortMethods.NameAscending,
@@ -85,6 +85,7 @@ public class IndexModel : PageModel
             "Prijs aflopend" => SortMethods.PriceDescending,
             _ => SortMethods.NameAscending
         };
+
 
         var totalProducts = _catalogusManager.TotalProducts(SearchTerm);
         Totalpages = (int)Math.Ceiling(totalProducts / (double)Pagesize);

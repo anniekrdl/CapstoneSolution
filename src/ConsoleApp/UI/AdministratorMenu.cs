@@ -1,7 +1,7 @@
 
+using ConsoleApp.Helpers;
 using Core.DTOs;
 using Logic.Interfaces;
-using ConsoleApp.Helpers;
 namespace ConsoleApp.UI;
 
 public class AdministratorMenu
@@ -107,13 +107,13 @@ public class AdministratorMenu
     private async Task SearchProduct()
     {
         string searchTerm = MenuHelper.GetUserInput("Wat is je zoekterm? ");
-        List<ProductDTO> productsFound = await _catalogusManager.SearchProductBySearchterm(searchTerm);
-        _presenter.ShowProducts(productsFound);
+        //List<ProductDTO> productsFound = _catalogusManager.SearchProductBySearchterm(searchTerm);
+        //_presenter.ShowProducts(productsFound);
     }
 
     private async Task ShowCatalog()
     {
-        List<ProductDTO> products = await _catalogusManager.GetAllProducts();
+        List<ProductDTO> products = _catalogusManager.GetAllProducts();
         _presenter.ShowProducts(products);
         //show catalog options
         AdminCatalogMenu();
@@ -141,21 +141,21 @@ public class AdministratorMenu
     private async Task EditProduct()
     {
         int id = MenuHelper.GetUserInputInt("Wat is de id van het product dat u wilt bewerken? ");
-        ProductDTO? product = await _catalogusManager.GetProductById(id);
+        ProductDTO? product = _catalogusManager.GetProductById(id);
         if (product != null)
         {
             ProductDTO updatedProduct = EditProductMenu(product);
-            await _catalogusManager.EditProduct(updatedProduct);
+            _catalogusManager.EditProduct(updatedProduct);
         }
     }
 
     private async Task DeleteProduct()
     {
         int id = MenuHelper.GetUserInputInt("Wat is de id van het product dat u wilt verwijderen? ");
-        ProductDTO? p1 = await _catalogusManager.GetProductById(id);
+        ProductDTO? p1 = _catalogusManager.GetProductById(id);
         if (p1 != null)
         {
-            await _catalogusManager.RemoveProduct(p1);
+            _catalogusManager.RemoveProduct(p1);
         }
         else
         {
@@ -174,7 +174,7 @@ public class AdministratorMenu
         int categoryId = MenuHelper.GetUserInputInt("De categorie-ID van het product: ");
         string imageUrl = MenuHelper.GetUserInput("De url voor de afbeelding van het product: ");
         ProductDTO p = new ProductDTO(null, name, description, price, stock, categoryId, imageUrl);
-        await _catalogusManager.AddProduct(p);
+        _catalogusManager.AddProduct(p);
     }
 
     private ProductDTO EditProductMenu(ProductDTO product)

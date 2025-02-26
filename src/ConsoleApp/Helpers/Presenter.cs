@@ -1,5 +1,5 @@
-using Logic.Interfaces;
 using Core.DTOs;
+using Logic.Interfaces;
 
 namespace ConsoleApp.Helpers;
 
@@ -62,7 +62,7 @@ public class Presenter
     /// </summary>
     public async void ShowAllCategories()
     {
-        List<CategoryDTO> categories = await _categoryManager.GetCategories();
+        List<CategoryDTO> categories = _categoryManager.GetCategories();
         Console.WriteLine(@"
             
         Categorieën:
@@ -151,7 +151,7 @@ public class Presenter
             foreach (OrderItemDTO orderItem in orderItemsList)
             {
                 //search product 
-                ProductDTO? product = await _catalogusManager.GetProductById(orderItem.ProductId);
+                ProductDTO? product = _catalogusManager.GetProductById(orderItem.ProductId);
                 //TODO product is null
                 if (product != null)
                 {

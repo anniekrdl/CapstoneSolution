@@ -1,0 +1,75 @@
+@model WebAppMvc.Models.ProductViewModel;
+@{
+}
+
+@if (Model.Product != null && Model.Product.Id != null){
+     <h1>Product Aanpassen</h1>
+    
+
+} else
+{
+    <h1>Product Toevoegen</h1>
+    
+    
+}
+
+
+<form asp-action="Edit">
+    <!-- Naam en Beschrijving -->
+    <div class="mb-3">
+        <label for="Name" class="form-label">Naam</label>
+        <input type="text" class="form-control" id="Name" asp-for="Product.Name" required />
+    </div>
+
+    <div class="mb-3">
+        <label for="Description" class="form-label">Beschrijving</label>
+        <textarea class="form-control" id="Description" asp-for="Product.Description" rows="4" required></textarea>
+    </div>
+
+    <!-- Prijs, Voorraad en Categorie naast elkaar -->
+    <div class="row mb-3">
+       <input type="hidden" asp-for="Product.Id" />
+
+        <div class="col-md-2">
+            <label for="PriceString" class="form-label">Prijs (€)</label>
+            <!-- step specifies max decimals -->
+            <input step="0.01" type="number" class="form-control" id="PriceString" asp-for="PriceInEuros" required />
+            <small>Prijs in euro's</small>
+        </div>
+
+        <div class="col-md-2">
+            <label for="Stock" class="form-label">Voorraad</label>
+            <input type="number" class="form-control" id="Stock" asp-for="Product.Stock" required />
+        </div>
+
+        <div class="col-md-3">
+            <label for="CategoryId" class="form-label">Categorie</label>
+            <select class="form-control" id="CategoryId" asp-for="Product.CategoryId" asp-items="Model.Categories" required>
+                <option value="">Kies een categorie</option>
+                            </select>
+        </div>
+         <!-- Afbeelding URL -->
+        <div class="col-md-5">
+            <label for="ImageUrl" class="form-label">Afbeelding URL</label>
+            <input type="text" class="form-control" id="ImageUrl" asp-for="Product.ImageUrl" required />
+            <small>Bijvoorbeeld: www.example.com/product1.jpg</small>
+        </div>
+    </div>
+
+   
+   <div class="d-flex justify-content-center mt-4">
+        <button type="submit" class="btn btn-primary w-50">
+
+            @if(Model.Product != null && Model.Product.Id != null)
+            {
+                <span>Aanpassing opslaan</span>
+            }else
+            {
+                 <span>Product opslaan</span>
+            }
+        
+            </button>
+   </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    
+</form>
