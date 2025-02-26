@@ -119,17 +119,18 @@ namespace Logic.Mappers
 
         public static CustomerEntity ToCustomerEntity(this CustomerDTO customerDTO)
         {
-            return new CustomerEntity(
-                customerDTO.Id,
-                customerDTO.UserName,
-                customerDTO.Name,
-                customerDTO.LastName,
-                customerDTO.Email,
-                customerDTO.Street,
-                customerDTO.Number,
-                customerDTO.City,
-                customerDTO.Addition
-            );
+            return new CustomerEntity
+            {
+                Id = customerDTO.Id,
+                UserName = customerDTO.UserName,
+                Name = customerDTO.Name,
+                LastName = customerDTO.LastName,
+                Email = customerDTO.Email,
+                Street = customerDTO.Street,
+                Number = customerDTO.Number,
+                City = customerDTO.City,
+                Addition = customerDTO.Addition
+            };
         }
 
         public static ShoppingCartItemEntity ToShoppingCartEntity(this ShoppingCartItemDTO shoppingCartItem)

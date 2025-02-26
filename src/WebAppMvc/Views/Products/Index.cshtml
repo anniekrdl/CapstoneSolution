@@ -12,7 +12,7 @@
              // button add product
             <a asp-controller="Products" asp-action="Create" class="btn btn-primary w-25 my-4">Nieuw product toevoegen</a>
     } else {
-            <h2 class="m-5">Welkom @Model.LoggedInUser.UserName</h2>
+            <h2 class="m-5">Welkom @(Model.LoggedInUser?.UserName ?? "Gast")</h2>
 
     }
 

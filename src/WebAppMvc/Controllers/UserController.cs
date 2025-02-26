@@ -38,7 +38,7 @@ public class UserController : Controller
             new Claim(ClaimTypes.Name, user.UserName),
             
             // De unieke Id van de gebruiker (een numerieke identifier)
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            new Claim(ClaimTypes.NameIdentifier, user.Id?.ToString() ?? string.Empty)
             };
 
             // ClaimsIdentity is een object dat de claims bevat en waarmee we de gebruiker kunnen identificeren

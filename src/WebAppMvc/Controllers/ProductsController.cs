@@ -32,7 +32,11 @@ public class ProductsController : Controller
 
         IndexViewModel indexViewModel = new IndexViewModel();
 
-        var userId = User.Identity.Name;
+        var userId = User.Identity?.Name;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
         indexViewModel.LoggedInUser = _loginManager.UserLogin(userId);
 
         if (!string.IsNullOrEmpty(search))
@@ -73,7 +77,11 @@ public class ProductsController : Controller
             return NotFound();
         }
 
-        var userId = User.Identity.Name;
+        var userId = User.Identity?.Name;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
 
         DetailsViewModel detailsViewModel = new DetailsViewModel
         {
@@ -87,7 +95,7 @@ public class ProductsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(ProductViewModel productViewModel)
+    public IActionResult Create(ProductViewModel productViewModel)
     {
         Console.WriteLine($"Save Product");
 
@@ -105,7 +113,12 @@ public class ProductsController : Controller
 
         //Console.WriteLine(productViewModel.Product.CategoryId);
         //SaveProduct
-        _catalogusManager.AddProduct(productViewModel.Product);
+        if (productViewModel.Product != null)
+        {
+            _catalogusManager.AddProduct(productViewModel.Product);
+
+        }
+
 
 
         return RedirectToAction("Index");
@@ -122,6 +135,7 @@ public class ProductsController : Controller
 
         ProductViewModel productViewModel = new ProductViewModel
         {
+
             Categories = categorySelectList
         };
 
@@ -138,7 +152,7 @@ public class ProductsController : Controller
         }).ToList();
 
         var product = _catalogusManager.GetProductById(id);
-        Console.WriteLine($"product is {product.Id} name {product.Name}");
+        //Console.WriteLine($"product is {product.Id} name {product.Name}");
 
 
         ProductViewModel productViewModel = new ProductViewModel
@@ -159,10 +173,25 @@ public class ProductsController : Controller
     public IActionResult Edit(ProductViewModel productViewModel)
     {
         //save product
-        Console.WriteLine($"Edit product {productViewModel.Product.Stock} en id is {productViewModel.Product.Id}");
+        //Console.WriteLine($"Edit product {productViewModel.Product.Stock} en id is {productViewModel.Product.Id}");
 
-        _catalogusManager.EditProduct(productViewModel.Product);
-        return RedirectToAction("Index");
+        if (productViewModel.Product != null)
+        {
+            _catalogusManager.EditProduct(productViewModel.Product);
+            return RedirectToAction("Index");
+
+        }
+        var categories = _catalogusManager.GetAllCategories();
+        productViewModel.Categories = categories.Select(c => new SelectListItem
+        {
+            Value = c.Id.ToString(),
+            Text = c.Name
+        }).ToList();
+
+        return View(productViewModel);
+
+
+
 
     }
 

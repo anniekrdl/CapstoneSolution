@@ -25,7 +25,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
                         <form method="get" asp-controller="User" asp-action="Logout" class="d-inline">
                             <button type="submit" class="text-dark nav-link btn btn-link border-0 p-0">Logout</button>

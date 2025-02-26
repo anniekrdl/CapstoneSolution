@@ -28,16 +28,17 @@ namespace Data.Services
 
             while (reader.Read())
             {
-                CustomerEntity customer = new CustomerEntity(
-                    id: reader.GetInt32("klant_id"),
-                    userName: reader.GetString("gebruikersnaam"),
-                    name: reader.GetString("voornaam"),
-                    lastname: reader.GetString("achternaam"),
-                    email: reader.GetString("email"),
-                    street: reader.GetString("straat"),
-                    number: reader.GetInt32("huisnummer"),
-                    city: reader.GetString("woonplaats")
-                );
+                CustomerEntity customer = new CustomerEntity
+                {
+                    Id = reader.GetInt32("klant_id"),
+                    UserName = reader.GetString("gebruikersnaam"),
+                    Name = reader.GetString("voornaam"),
+                    LastName = reader.GetString("achternaam"),
+                    Email = reader.GetString("email"),
+                    Street = reader.GetString("straat"),
+                    Number = reader.GetInt32("huisnummer"),
+                    City = reader.GetString("woonplaats")
+                };
 
                 customers.Add(customer);
 
@@ -94,16 +95,18 @@ namespace Data.Services
             while (reader.Read())
             {
 
-                CustomerEntity customer = new CustomerEntity(
-                    id: reader.GetInt32("klant_id"),
-                    userName: reader.GetString("gebruikersnaam"),
-                    name: reader.GetString("voornaam"),
-                    lastname: reader.GetString("achternaam"),
-                    email: reader.GetString("email"),
-                    street: reader.GetString("straat"),
-                    number: reader.GetInt32("huisnummer"),
-                    city: reader.GetString("woonplaats")
-                    );
+                CustomerEntity customer = new CustomerEntity
+                {
+                    Id = reader.GetInt32("klant_id"),
+                    UserName = reader.GetString("gebruikersnaam"),
+                    Name = reader.GetString("voornaam"),
+                    LastName = reader.GetString("achternaam"),
+                    Email = reader.GetString("email"),
+                    Street = reader.GetString("straat"),
+                    Number = reader.GetInt32("huisnummer"),
+                    City = reader.GetString("woonplaats")
+                };
+
 
                 customers.Add(customer);
 

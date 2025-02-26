@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace WebAppMvc.Models;
 public class ProductViewModel
 {
-    public ProductDTO Product { get; set; }  // Dit bevat de Product-gegevens.
-    public List<SelectListItem> Categories { get; set; }
+    public ProductDTO? Product { get; set; }  // Dit bevat de Product-gegevens.
+    public required List<SelectListItem> Categories { get; set; }
     public double PriceInEuros
     {
         get

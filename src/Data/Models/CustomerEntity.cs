@@ -12,19 +12,19 @@ namespace Data.Models
         public int? Id { get; set; }
         [Column("voornaam")]
         [Required, StringLength(50)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Column("achternaam")]
         [Required, StringLength(50)]
-        public string LastName { get; set; }
+        public required string LastName { get; set; }
         [Column("gebruikersnaam")]
         [Required, Index(IsUnique = true)]
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
         [Column("email")]
         [Required, StringLength(50)]
-        public string Email { get; set; }
+        public required string Email { get; set; }
         [Column("straat")]
         [Required, StringLength(50)]
-        public string Street { get; set; }
+        public required string Street { get; set; }
         [Column("toevoeging")]
         public string? Addition { get; set; }
         [Column("huisnummer")]
@@ -32,7 +32,7 @@ namespace Data.Models
         public int Number { get; set; }
         [Column("woonplaats")]
         [Required, StringLength(50)]
-        public string City { get; set; }
+        public required string City { get; set; }
         //public string Role { get; init; } = "Customer";
 
 
