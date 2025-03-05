@@ -115,6 +115,35 @@ namespace Logic.Managers
 
         }
 
+        bool IShoppingCart.AddShoppingCartItem(ShoppingCartItemDTO shoppingCartItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IShoppingCart.RemoveShoppingCartItem(ShoppingCartItemDTO shoppingCartItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IShoppingCart.EmptyShoppingCart(List<ShoppingCartItemDTO> items)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<ShoppingCartItemDTO> IShoppingCart.GetAllItemsByCustomerId(int id, ICatalogusManager catalogusManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        ShoppingCartItemDTO? IShoppingCart.SearchById(int Id, ICatalogusManager catalogusManager)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool EditShoppingCartItem(ShoppingCartItemDTO shoppingCartItem)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

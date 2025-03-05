@@ -22,8 +22,7 @@ namespace Data.Models
         [Column("aantal")]
         [Required]
         public int NumberOfItems { get; private set; }
-
-
+        public OrderItemEntity() { }
 
         public OrderItemEntity(int? id, int orderId, int productId, int numberOfItems, ProductEntity? product)
         {

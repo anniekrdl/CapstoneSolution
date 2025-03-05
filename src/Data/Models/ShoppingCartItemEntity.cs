@@ -22,6 +22,7 @@ namespace Data.Models
         [Required, MinLength(1)]
         public int NumberOfItems { get; private set; }
 
+        public ShoppingCartItemEntity() { }
         public ShoppingCartItemEntity(int? id, int customerId, int productId, ProductEntity? product, int numberOfItems)
         {
             CustomerId = customerId;

@@ -57,7 +57,19 @@ namespace Logic.Managers
             throw new NotImplementedException();
         }
 
-        void ICustomerManager.AddCustomer(CustomerDTO customer)
+
+
+        public bool EditCustomer(CustomerDTO customer)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICustomerManager.AddCustomer(CustomerDTO customer)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ICustomerManager.RemoveCustomer(int userId)
         {
             throw new NotImplementedException();
         }

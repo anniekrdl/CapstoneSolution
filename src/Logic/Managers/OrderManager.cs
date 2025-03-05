@@ -75,7 +75,7 @@ namespace Logic.Managers
                 Id = o.Id,
                 CustomerId = o.CustomerId,
                 Date = o.Date,
-                OrderStatus = (OrderStatusDTO)o.OrderStatus,
+                OrderStatus = (OrderStatusDTO)o.OrderStatusEnum,
             }).ToList();
 
         }
@@ -181,11 +181,49 @@ namespace Logic.Managers
                 Id = o.Id,
                 CustomerId = o.CustomerId,
                 Date = o.Date,
-                OrderStatus = (OrderStatusDTO)o.OrderStatus
+                OrderStatus = (OrderStatusDTO)o.OrderStatusEnum
             }).ToList();
         }
 
+        OrderDTO? IOrderManager.GetOrderById(int id)
+        {
+            throw new NotImplementedException();
+        }
 
+        int IOrderManager.CreateOrderId(int customerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IOrderManager.PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<OrderDTO> IOrderManager.GetOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IOrderManager.UpdateOrder(OrderDTO order)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<OrderDTO> IOrderManager.GetOrdersByCustomerId(int customerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<OrderItemDTO> IOrderManager.GetOrderItemsByOrderId(int orderId)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IOrderManager.UpdateOrderStatus(OrderDTO order, OrderStatusDTO orderStatus)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

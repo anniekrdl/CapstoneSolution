@@ -12,7 +12,7 @@ namespace Logic.Mappers
                 Id = entity.Id,
                 CustomerId = entity.CustomerId,
                 Date = entity.Date,
-                OrderStatus = (OrderStatusDTO)entity.OrderStatus
+                OrderStatus = (OrderStatusDTO)entity.OrderStatusEnum
             };
         }
 

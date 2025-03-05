@@ -5,8 +5,10 @@ namespace Logic.Interfaces;
 public interface ICustomerManager
 {
     List<CustomerDTO> GetCustomers();
-    void AddCustomer(CustomerDTO customer);
-    void RemoveCustomer(int userId);
+    bool AddCustomer(CustomerDTO customer);
+    bool RemoveCustomer(int userId);
     List<CustomerDTO> SearchCustomer(string userName);
+
+    public bool EditCustomer(CustomerDTO customer);
 
 }

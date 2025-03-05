@@ -17,9 +17,19 @@ public class CustomerManagerEF : ICustomerManager
         _webshopContext = webshopContext;
     }
 
-    public void AddCustomer(CustomerDTO customer)
+    public bool AddCustomer(CustomerDTO customer)
     {
-        _webshopContext.AddAsync(customer.ToCustomerEntity());
+        try
+        {
+            _webshopContext.Add(customer.ToCustomerEntity());
+            _webshopContext.SaveChanges();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+
     }
 
     public List<CustomerDTO> GetCustomers()
@@ -29,13 +39,29 @@ public class CustomerManagerEF : ICustomerManager
         .ToList();
     }
 
-    public void RemoveCustomer(int userId)
+    public bool RemoveCustomer(int userId)
     {
-        var user = _webshopContext.Customers.FirstOrDefault(c => c.Id == userId);
-        if (user != null)
+        try
         {
-            _webshopContext.Remove(user.ToCustomerDTO());
+
+            var user = _webshopContext.Customers.FirstOrDefault(c => c.Id == userId);
+
+
+            if (user != null)
+            {
+                _webshopContext.Remove(user);
+                _webshopContext.SaveChanges();
+                return true;
+            }
+            return false;
+
         }
+        catch
+        {
+            return false;
+        }
+
+
     }
 
     public List<CustomerDTO> SearchCustomer(string userName)
@@ -48,6 +74,28 @@ public class CustomerManagerEF : ICustomerManager
         .Select(x => x.ToCustomerDTO())
         .ToList();
 
+    }
+
+    public bool EditCustomer(CustomerDTO customer)
+    {
+        var existingCustomer = _webshopContext.Customers.FirstOrDefault(c => c.Id == customer.Id);
+        if (existingCustomer != null)
+        {
+            existingCustomer.UserName = customer.UserName;
+            existingCustomer.Email = customer.Email;
+            existingCustomer.Name = customer.Name;
+            existingCustomer.LastName = customer.LastName;
+            existingCustomer.Street = customer.Street;
+            existingCustomer.Number = customer.Number;
+            existingCustomer.Addition = customer.Addition;
+            existingCustomer.City = customer.City;
+            // Update other properties as needed
+
+            _webshopContext.Update(existingCustomer);
+            _webshopContext.SaveChanges();
+            return true;
+        }
+        return false;
     }
 
 

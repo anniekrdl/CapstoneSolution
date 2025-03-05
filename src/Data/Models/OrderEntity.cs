@@ -19,21 +19,29 @@ namespace Data.Models
         public DateOnly? Date { get; private set; }
         [Column("status")]
         [Required]
-        public OrderStatus OrderStatus { get; private set; }
+        public string OrderStatus { get; private set; }
 
 
+        [NotMapped]
+        public OrderStatus OrderStatusEnum
+        {
+            get => Enum.Parse<OrderStatus>(OrderStatus);
+            private set => OrderStatus = value.ToString();
+        }
+
+        public OrderEntity() { }
         public OrderEntity(int? id, int customerId, DateOnly? date, OrderStatus orderStatus)
         {
             Id = id;
             CustomerId = customerId;
             Date = date;
-            OrderStatus = orderStatus;
+            OrderStatusEnum = orderStatus;
 
         }
 
         public void UpdateOrderStatus(OrderStatus orderStatus)
         {
-            OrderStatus = orderStatus;
+            OrderStatusEnum = orderStatus;
         }
 
 

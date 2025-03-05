@@ -24,7 +24,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        if (User.Identity.IsAuthenticated)
+        if (User.Identity != null && User.Identity.IsAuthenticated)
         {
             // De gebruiker is ingelogd, je kunt hun gegevens gebruiken, bijvoorbeeld:
             var username = User.Identity.Name;

@@ -13,12 +13,14 @@ public class WebshopContext : DbContext
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<CategoryEntity> Categories { get; set; }
     public DbSet<CustomerEntity> Customers { get; set; }
-    /*
     public DbSet<OrderEntity> Orders { get; set; }
-    public DbSet<CustomerEntity> Customers { get; set; }
-    public DbSet<CategoryEntity> Categories { get; set; }
     public DbSet<OrderItemEntity> OrderItems { get; set; }
     public DbSet<ShoppingCartItemEntity> ShoppingCartItems { get; set; }
+    /*
+    
+    public DbSet<CustomerEntity> Customers { get; set; }
+    public DbSet<CategoryEntity> Categories { get; set; }
+   
     */
 
 }
