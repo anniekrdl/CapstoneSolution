@@ -39,10 +39,8 @@ public class UserController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> LoginAttempt([FromBody] string username)
     {
-        // Probeert de gebruiker in te loggen op basis van de opgegeven gebruikersnaam
         var user = _loginManager.UserLogin(username);
 
-        // Als de gebruiker gevonden is (d.w.z. de login was succesvol)
         if (user != null)
         {
             // Claims zijn stukjes informatie die we willen opslaan voor de gebruiker
@@ -75,7 +73,7 @@ public class UserController : ControllerBase
             // We geven een ClaimsPrincipal door (dat is de gebruiker met de claims) en de authentication properties
             await HttpContext.SignInAsync("MyCookieAuth", new ClaimsPrincipal(claimsIdentity), authProperties);
 
-            // Als de login succesvol was, sturen we de gebruiker door naar de "Index" actie van de "Home" controller
+            // Als de login succesvol was, sturen een 200 Ok status code met de user info
             Console.WriteLine($"user is {user.GetType} user: {User.Identity}");
 
             return Ok(user);
@@ -84,7 +82,7 @@ public class UserController : ControllerBase
         // Als de login niet succesvol was (d.w.z. de gebruiker is niet gevonden), voegen we een foutmelding toe
         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
 
-        // En we tonen de login pagina opnieuw met de foutmelding
+        // En we tonen de Ok pagina opnieuw met de foutmelding
         return Ok("user not found");
     }
 
@@ -106,7 +104,7 @@ public class UserController : ControllerBase
             return BadRequest("User data is null");
         }
 
-        if (User.Identity.IsAuthenticated)
+        if (User.Identity != null && User.Identity.IsAuthenticated)
         {
             //var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             //var username = User.Identity.Name;
@@ -153,15 +151,20 @@ public class UserController : ControllerBase
 
     }
 
+    //as user you can only delete your own account
     [HttpDelete("delete")]
-    public IActionResult DeleteCustomer([FromBody] CustomerDTO customer)
+    public IActionResult DeleteCustomer()
     {
-
-        Console.WriteLine($"{customer.Id.Value}");
-
-        if (customer.Id != null)
+        if (User.Identity != null && User.Identity.IsAuthenticated)
         {
-            var customerDeleted = _customerManager.RemoveCustomer(customer.Id.Value);
+            var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userIdClaim == null)
+            {
+                return BadRequest("User ID not found");
+            }
+            var userId = int.Parse(userIdClaim);
+
+            var customerDeleted = _customerManager.RemoveCustomer(userId);
 
             if (customerDeleted)
             {
@@ -171,10 +174,14 @@ public class UserController : ControllerBase
             {
                 return BadRequest("Customer not Deleted");
             }
+
+
         }
         else
         {
-            return BadRequest("Customer not found");
+            return Unauthorized();
         }
+
+
     }
 }
