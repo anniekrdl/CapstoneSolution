@@ -1,5 +1,6 @@
 using System;
 using System.Security.Claims;
+using Core.DTOs;
 using Logic.Interfaces;
 using Logic.Managers;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +48,36 @@ public class OrderController : ControllerBase
         }
 
         return Ok(result);
+    }
+
+
+    [HttpPost("new")]
+    public IActionResult PostOrderForUser([FromBody] List<ShoppingCartItemDTO> shoppingCartItems)
+    {
+
+
+
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        int customerId = int.Parse(userId);
+
+        //post order from ShoppingCartItemDTO's 
+        var orderPlaced = _orderManager.PlaceOrderFromShoppingCart(shoppingCartItems, customerId);
+
+        if (orderPlaced)
+        {
+            return Ok("Order placed");
+        }
+        else
+        {
+            return BadRequest("Order not placed");
+        }
+
+
     }
 
 

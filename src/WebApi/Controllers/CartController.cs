@@ -3,6 +3,7 @@ using Core.DTOs;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi.Controllers;
 
@@ -29,9 +30,9 @@ public class CartController : ControllerBase
 
         var items = _shoppingCart.GetAllItemsByCustomerId(userId, _catalogusManager);
 
-        if (items == null)
+        if (items.IsNullOrEmpty())
         {
-            return NotFound();
+            return NoContent();
         }
 
         return Ok(items);

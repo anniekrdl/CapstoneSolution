@@ -19,9 +19,13 @@ public class OrderManagerEF : IOrderManager
     {
         int orderId = 0;
 
+        // date of today
+        DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+
         //new order      
-        OrderEntity order = new OrderEntity(null, customerId, null, OrderStatus.AANGEMAAKT);
+        OrderEntity order = new OrderEntity(null, customerId, date, OrderStatus.AANGEMAAKT);
         _webshopContext.Orders.Add(order);
+        _webshopContext.SaveChanges();
 
 
         // find orderId
@@ -85,24 +89,33 @@ public class OrderManagerEF : IOrderManager
 
     public bool PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
     {
+        Console.WriteLine($"items {items.Count}");
         if (items.Count != 0)
         {
-
-
+            Console.WriteLine("items not null");
             if (customerId.HasValue)
             {
+                Console.WriteLine($"{customerId.Value} is customerid.Value");
                 int orderId = CreateOrderId(customerId.Value);
                 foreach (var item in items)
                 {
                     OrderItemEntity orderItem = new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, item.Product?.ToProductEntity());
 
+                    Console.WriteLine($"OrderItemEntity {orderItem.ProductId}");
+
                     _webshopContext.OrderItems.Add(orderItem);
+                    _webshopContext.SaveChanges();
 
                     OrderDTO? order = GetOrderById(orderId);
                     if (order != null)
                     {
                         order.UpdateOrderStatus(OrderStatusDTO.GEPLAATST);
                         UpdateOrder(order);
+                    }
+                    else
+                    {
+                        //Order is null, new order
+
                     }
 
                 }
