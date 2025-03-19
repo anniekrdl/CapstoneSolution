@@ -3,23 +3,18 @@ using Core.Enum;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
-
     private readonly ICatalogusManager _catalogusManager;
-
     public ProductsController(ICatalogusManager catalogusManager)
     {
         _catalogusManager = catalogusManager;
 
     }
-
-
 
     // GET /api/products?searchTerm={searchTerm}&sortMethod={sortMethod}&pageNumber={pageNumber}&pageSize={pageSize}
     [HttpGet]
@@ -31,9 +26,14 @@ public class ProductsController : ControllerBase
     {
         var products = _catalogusManager.SearchProduct(pageNumber, pageSize, searchTerm, sortMethod);
         //var products = _productService.GetProducts(searchTerm, sortMethod, pageNumber, pageSize);
-        return Ok(products);
+        var totalProducts = _catalogusManager.TotalProducts();
+        var response = new
+        {
+            Products = products,
+            TotalProducts = totalProducts
+        };
+        return Ok(response);
     }
-
 
     //get product with id /api/product/details/{id}
     [HttpGet("{id}")]
@@ -56,7 +56,4 @@ public class ProductsController : ControllerBase
         return Ok(categories);
     }
 
-
-
 }
-

@@ -6,6 +6,7 @@ namespace Logic.Interfaces;
 public interface ILoginManager
 {
     UserDTO? UserLogin(string UserName);
+    public UserDTO? GetLoggedInUserData(string UserName);
 
 }
 

@@ -16,6 +16,10 @@ public class LoginManager : ILoginManager
         _loginService = loginService;
     }
 
+    public UserDTO? GetLoggedInUserData(string UserName)
+    {
+        throw new NotImplementedException();
+    }
 
     public async Task<UserDTO?> UserLogin(string username)
     {

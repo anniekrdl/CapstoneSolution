@@ -2,6 +2,7 @@ using System;
 using System.Security.Claims;
 using Core.DTOs;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,7 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize(Policy = "AuthorizedUser")]
 public class CartController : ControllerBase
 {
 
@@ -23,17 +25,10 @@ public class CartController : ControllerBase
 
     }
 
-
-
     [HttpGet]
     public IActionResult GetItemsForUser()
     {
-
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (userIdClaim == null)
-        {
-            return BadRequest("User ID not found");
-        }
         var userId = int.Parse(userIdClaim);
 
         var items = _shoppingCart.GetAllItemsByCustomerId(userId, _catalogusManager);
@@ -45,25 +40,11 @@ public class CartController : ControllerBase
 
         return Ok(items);
 
-
     }
 
     [HttpPost]
     public IActionResult AddCartItem([FromBody] ShoppingCartItemDTO shoppingCartItem)
     {
-        if (User.Identity == null || !User.Identity.IsAuthenticated)
-        {
-            return Unauthorized();
-        }
-
-
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (userIdClaim == null || shoppingCartItem == null || shoppingCartItem.CustomerId != int.Parse(userIdClaim))
-        {
-            return BadRequest("Invalid request.");
-        }
-
 
         var isAdded = _shoppingCart.AddShoppingCartItem(shoppingCartItem);
         if (isAdded)
@@ -73,25 +54,11 @@ public class CartController : ControllerBase
 
         return BadRequest("Item not added");
 
-
-
     }
 
     [HttpDelete]
     public IActionResult DeleteCartItem([FromBody] ShoppingCartItemDTO shoppingCartItem)
     {
-
-        if (User.Identity == null || !User.Identity.IsAuthenticated)
-        {
-            return Unauthorized();
-        }
-
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (userIdClaim == null || shoppingCartItem == null || shoppingCartItem.CustomerId != int.Parse(userIdClaim))
-        {
-            return BadRequest("Invalid Request.");
-        }
 
         var isRemoved = _shoppingCart.RemoveShoppingCartItem(shoppingCartItem);
 
@@ -109,19 +76,6 @@ public class CartController : ControllerBase
     public IActionResult EditCartItem([FromBody] ShoppingCartItemDTO shoppingCartItem)
     {
 
-
-        if (User.Identity == null || !User.Identity.IsAuthenticated)
-        {
-            return Unauthorized();
-        }
-
-        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (userIdClaim == null || shoppingCartItem == null || shoppingCartItem.CustomerId != int.Parse(userIdClaim))
-        {
-            return BadRequest("Invalid Request.");
-        }
-
         var isChanged = _shoppingCart.EditShoppingCartItem(shoppingCartItem);
         if (isChanged)
         {
@@ -132,7 +86,5 @@ public class CartController : ControllerBase
             return BadRequest("Item not found in shopping cart");
         }
     }
-
-
 
 }

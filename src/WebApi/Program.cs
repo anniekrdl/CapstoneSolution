@@ -8,12 +8,23 @@ var builder = WebApplication.CreateBuilder(args);
 // Voeg services toe aan de container
 builder.Services.AddControllers();
 
+// Add CORS voor BlazorApp
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowBlazorApp",
+        builder => builder
+            .WithOrigins("http://localhost:5274") // Pas de URL aan naar de URL van je Blazor-app
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials());  // Dit zorgt ervoor dat cookies worden meegestuurd);
+});
+
 //add services to container
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+.Replace("{MyDatabasePassword}", builder.Configuration["ConnectionString:MyDatabasePassword"]);
 
 builder.Services.AddDbContext<WebshopContext>(options =>
     options.UseMySql(connectionString, MySqlServerVersion.AutoDetect(connectionString)));
-
 
 builder.Services.AddAuthentication("MyCookieAuth")
 .AddCookie("MyCookieAuth", options =>
@@ -23,6 +34,13 @@ builder.Services.AddAuthentication("MyCookieAuth")
     options.Cookie.Name = "UserLoginCookie";  // Naam van de cookie
     options.SlidingExpiration = true;  // Cookies verlopen na een periode van inactiviteit
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // Hoe lang de cookie geldig is
+});
+
+// Add authorization policies
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AuthorizedUser", policy =>
+        policy.RequireAuthenticatedUser());
 });
 
 // Add services to the container.
@@ -47,11 +65,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowBlazorApp");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
-

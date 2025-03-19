@@ -15,6 +15,20 @@ public class LoginManagerEF : ILoginManager
         _webshopContext = webshopContext;
         _customerManager = customerManager;
     }
+
+    //get user info
+    public UserDTO? GetLoggedInUserData(string UserName)
+    {
+        var customers = _customerManager.SearchCustomer(UserName);
+
+
+        if (customers.Count() > 0)
+        {
+            return customers.FirstOrDefault();
+        }
+        return null;
+
+    }
     public UserDTO? UserLogin(string UserName)
     {
         if (UserName == "admin")

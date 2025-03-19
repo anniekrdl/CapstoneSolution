@@ -3,12 +3,14 @@ using System.Security.Claims;
 using Core.DTOs;
 using Logic.Interfaces;
 using Logic.Managers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize("AuthorizedUser")]
 public class OrderController : ControllerBase
 {
 
@@ -20,87 +22,60 @@ public class OrderController : ControllerBase
 
     }
 
-
-
     [HttpGet]
     public IActionResult GetOrdersForUser()
     {
 
-        if (User.Identity != null && User.Identity.IsAuthenticated)
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-            var orders = _orderManager.GetOrdersByCustomerId(int.Parse(userId));
-            var result = new List<object>();
-
-            foreach (var order in orders)
-            {
-                if (order.Id != null)
-                {
-                    var orderItems = _orderManager.GetOrderItemsByOrderId(order.Id.Value);
-                    result.Add(new
-                    {
-                        Order = order,
-                        OrderItems = orderItems
-                    });
-                }
-            }
-
-            return Ok(result);
-
-        }
-        else
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
         {
             return Unauthorized();
         }
 
-    }
+        var orders = _orderManager.GetOrdersByCustomerId(int.Parse(userId));
+        var result = new List<object>();
 
+        foreach (var order in orders)
+        {
+            if (order.Id != null)
+            {
+                var orderItems = _orderManager.GetOrderItemsByOrderId(order.Id.Value);
+                result.Add(new
+                {
+                    Order = order,
+                    OrderItems = orderItems
+                });
+            }
+        }
+
+        return Ok(result);
+
+    }
 
     [HttpPost("new")]
     public IActionResult PlaceOrderForUser([FromBody] List<ShoppingCartItemDTO> shoppingCartItems)
     {
 
-        if (User.Identity != null && User.Identity.IsAuthenticated)
-        {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return Unauthorized();
-            }
-
-            int customerId = int.Parse(userId);
-
-            //post order from ShoppingCartItemDTO's 
-            var orderPlaced = _orderManager.PlaceOrderFromShoppingCart(shoppingCartItems, customerId);
-
-            if (orderPlaced)
-            {
-                return Ok("Order placed");
-            }
-            else
-            {
-                return BadRequest("Order not placed");
-            }
-
-        }
-        else
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (userId == null)
         {
             return Unauthorized();
         }
 
+        int customerId = int.Parse(userId);
 
+        //post order from ShoppingCartItemDTO's
+        var orderPlaced = _orderManager.PlaceOrderFromShoppingCart(shoppingCartItems, customerId);
 
-
+        if (orderPlaced)
+        {
+            return Ok("Order placed");
+        }
+        else
+        {
+            return BadRequest("Order not placed");
+        }
 
     }
-
-
-
-
 
 }

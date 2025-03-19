@@ -15,26 +15,26 @@ namespace WebApi.Controllers;
 [ApiController]
 public class UserController : ControllerBase
 {
-
     private readonly ILoginManager _loginManager;
     private readonly ICustomerManager _customerManager;
-
-
 
     public UserController(ILoginManager loginManager, ICustomerManager customerManager)
     {
         _loginManager = loginManager;
         _customerManager = customerManager;
-
     }
 
     [HttpGet]
     public IActionResult Login()
     {
-        return Ok("Login");
-
+        return Ok("Test name");
     }
 
+    [HttpGet("userinfo")]
+    public IActionResult GetLoggedInUserData()
+    {
+        return Ok(new { Name = User.Identity.Name });
+    }
 
     [HttpPost("login")]
     public async Task<IActionResult> LoginAttempt([FromBody] string username)
@@ -49,7 +49,7 @@ public class UserController : ControllerBase
             {
             // De gebruikersnaam van de gebruiker (dit is de naam die in de login wordt gebruikt)
             new Claim(ClaimTypes.Name, user.UserName),
-            
+
             // De unieke Id van de gebruiker (een numerieke identifier)
             new Claim(ClaimTypes.NameIdentifier, user.Id?.ToString() ?? string.Empty)
             };
@@ -115,7 +115,6 @@ public class UserController : ControllerBase
             if (customerChanged)
             {
                 return Ok("Customer changed");
-
             }
             else
             {
@@ -174,14 +173,10 @@ public class UserController : ControllerBase
             {
                 return BadRequest("Customer not Deleted");
             }
-
-
         }
         else
         {
             return Unauthorized();
         }
-
-
     }
 }

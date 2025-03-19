@@ -1,0 +1,79 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject ISessionService SessionService
+@using Core.DTOs
+@using Core.Enum
+@using BlazorApp.Services
+
+<PageTitle>Home</PageTitle>
+
+
+<div class="text-center">
+    <h1 class="display-4 fw-light mb-2">Bikepacking Webshop</h1>
+    <h3>Welkom @SessionService.CurrentCustomer?.Name</h3>
+
+    @if (SessionService.CurrentCustomer == null)
+    {
+        <LoginComponent CurrentCustomer="SessionService.CurrentCustomer" />
+    }
+    else
+    {
+        <p>Je bent ingelogd!</p>
+    }
+
+
+</div>
+
+
+@code
+{
+
+    private CustomerDTO? userInfo { get; set; }
+
+
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (SessionService.CurrentCustomer == null)
+        {
+            userInfo = SessionService.CurrentCustomer;
+        }
+
+        //await TestLogin();
+        //await testUserInfo();
+
+
+    }
+
+
+    public async Task TestLogin()
+    {
+        string loginData = "Jan123";
+
+        var response = await Http.PostAsJsonAsync("/api/user/login", loginData);
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Hier kun je de gebruiker doorverwijzen of de sessiecookie ontvangen
+            // De cookie wordt automatisch opgeslagen in de browser als de server deze terugstuurt
+            // De cookies worden automatisch meegestuurd bij toekomstige verzoeken'
+            Console.WriteLine($"response is successful {response.StatusCode} ");
+
+            userInfo = await response.Content.ReadFromJsonAsync<CustomerDTO>();
+            //Console.WriteLine($"user dto info {userInfo.UserName}");
+
+        }
+        else
+        {
+            // Toon foutmelding
+            Console.WriteLine("response is not successful");
+        }
+
+    }
+
+
+
+}
