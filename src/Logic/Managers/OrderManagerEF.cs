@@ -22,31 +22,13 @@ public class OrderManagerEF : IOrderManager
         // date of today
         DateOnly date = DateOnly.FromDateTime(DateTime.Now);
 
-        //new order      
+        //new order
         OrderEntity order = new OrderEntity(null, customerId, date, OrderStatus.AANGEMAAKT);
         _webshopContext.Orders.Add(order);
         _webshopContext.SaveChanges();
 
-
-        // find orderId
-        List<OrderDTO> foundOrders = GetOrdersByCustomerId(customerId);
-
-        foreach (OrderDTO foundOrder in foundOrders)
-        {
-            if (foundOrder.Id != null)
-            {
-
-                OrderDTO? order1 = GetOrderById(foundOrder.Id.Value);
-
-                if (order1 != null && order1.OrderStatus == OrderStatusDTO.AANGEMAAKT)
-                {
-                    orderId = foundOrder.Id.Value;
-                    break;
-                }
-
-            }
-
-        }
+        // Retrieve the orderId directly after saving
+        orderId = order.Id ?? 0;
 
         return orderId;
     }
@@ -87,52 +69,83 @@ public class OrderManagerEF : IOrderManager
                  .ToList();
     }
 
-    public bool PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
+    // public bool PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
+    // {
+    //     Console.WriteLine($"items {items.Count}");
+    //     if (items.Count != 0)
+    //     {
+    //         Console.WriteLine("items not null");
+    //         if (customerId.HasValue)
+    //         {
+    //             Console.WriteLine($"{customerId.Value} is customerid.Value");
+    //             int orderId = CreateOrderId(customerId.Value);
+    //             foreach (var item in items)
+    //             {
+    //                 OrderItemEntity orderItem = new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, null);
+
+    //                 Console.WriteLine($"OrderItemEntity {orderItem.ProductId}");
+
+    //                 _webshopContext.OrderItems.Add(orderItem);
+
+    //             }
+
+    //             _webshopContext.SaveChanges();
+
+    //             OrderDTO? order = GetOrderById(orderId);
+    //             if (order != null)
+    //             {
+    //                 order.UpdateOrderStatus(OrderStatusDTO.GEPLAATST);
+    //                 UpdateOrder(order);
+
+    //             }
+    //             else
+    //             {
+    //                 //Order is null, new order
+
+    //             }
+
+    //             return true;
+    //         }
+    //         else
+    //         {
+    //             return false;
+    //         }
+
+    //     }
+    //     else
+    //     {
+    //         //no items in winkelwagen
+    //         return false;
+    //     }
+    // }
+
+    public OrderDTO? PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
     {
-        Console.WriteLine($"items {items.Count}");
-        if (items.Count != 0)
+        if (!items.Any() || !customerId.HasValue) return null;
+
+        int orderId = CreateOrderId(customerId.Value);
+        Console.WriteLine($"Order ID: {orderId}");
+
+        var orderItems = items.Select(item => new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, null));
+        _webshopContext.OrderItems.AddRange(orderItems);
+        _webshopContext.SaveChanges();
+
+        var order = GetOrderById(orderId);
+        if (order == null) return null;
+
+        order.UpdateOrderStatus(OrderStatusDTO.GEPLAATST);
+
+        // Ensure the entity is tracked before updating
+        var trackedOrder = _webshopContext.Orders.FirstOrDefault(o => o.Id == order.Id);
+        if (trackedOrder != null)
         {
-            Console.WriteLine("items not null");
-            if (customerId.HasValue)
-            {
-                Console.WriteLine($"{customerId.Value} is customerid.Value");
-                int orderId = CreateOrderId(customerId.Value);
-                foreach (var item in items)
-                {
-                    OrderItemEntity orderItem = new OrderItemEntity(null, orderId, item.ProductId, item.NumberOfItems, item.Product?.ToProductEntity());
-
-                    Console.WriteLine($"OrderItemEntity {orderItem.ProductId}");
-
-                    _webshopContext.OrderItems.Add(orderItem);
-                    _webshopContext.SaveChanges();
-
-                    OrderDTO? order = GetOrderById(orderId);
-                    if (order != null)
-                    {
-                        order.UpdateOrderStatus(OrderStatusDTO.GEPLAATST);
-                        UpdateOrder(order);
-                    }
-                    else
-                    {
-                        //Order is null, new order
-
-                    }
-
-                }
-
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
+            trackedOrder.UpdateOrderStatus(OrderStatus.GEPLAATST);
+            _webshopContext.SaveChanges();
         }
-        else
-        {
-            //no items in winkelwagen
-            return false;
-        }
+
+        UpdateOrder(order);
+
+        return order;
     }
 
     public bool UpdateOrder(OrderDTO order)

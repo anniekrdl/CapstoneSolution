@@ -10,16 +10,10 @@ namespace Logic.Managers
         private readonly IOrderDatabaseService _orderDatabaseService;
         private readonly IOrderItemDatabaseService _orderItemDatabaseService;
 
-
-
-
         public OrderManager(IOrderDatabaseService orderDatabaseService, IOrderItemDatabaseService orderItemDatabaseService)
         {
             _orderDatabaseService = orderDatabaseService;
             _orderItemDatabaseService = orderItemDatabaseService;
-
-
-
 
         }
 
@@ -28,14 +22,13 @@ namespace Logic.Managers
             var order = await _orderDatabaseService.GetOrdersByOrderId(id);
             return order?.ToOrderDTO();
 
-
         }
 
         public async Task<int> CreateOrderId(int customerId)
         {
             int orderId = 0;
 
-            //new order      
+            //new order
             OrderEntity order = new OrderEntity(null, customerId, null, OrderStatus.AANGEMAAKT);
             await _orderDatabaseService.AddOrder(order);
 
@@ -54,7 +47,6 @@ namespace Logic.Managers
             }
 
             return orderId;
-
 
         }
 
@@ -90,7 +82,6 @@ namespace Logic.Managers
                     {
                         int orderId = await CreateOrderId(customerId.Value);
 
-
                         //Cannot convert to IProductItem??
                         foreach (var item in items)
                         {
@@ -107,12 +98,7 @@ namespace Logic.Managers
                                 await UpdateOrder(order);
                             }
 
-
                         }
-
-
-
-
 
                         return true;
 
@@ -122,7 +108,6 @@ namespace Logic.Managers
                         Console.WriteLine("customerId is null.");
                         return false;
                     }
-
 
                 }
                 catch (System.Exception)
@@ -137,8 +122,6 @@ namespace Logic.Managers
                 Console.WriteLine("\nJe winkelwagen is leeg.");
                 return false;
             }
-
-
 
         }
 
@@ -159,9 +142,7 @@ namespace Logic.Managers
                 return false;
             }
 
-
         }
-
 
         public async Task<bool> UpdateOrder(OrderDTO order)
         {
@@ -170,7 +151,6 @@ namespace Logic.Managers
 
             return await _orderDatabaseService.UpdateOrder(entity);
         }
-
 
         public async Task<List<OrderDTO>> GetOrdersByCustomerId(int customerId)
         {
@@ -195,10 +175,10 @@ namespace Logic.Managers
             throw new NotImplementedException();
         }
 
-        bool IOrderManager.PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
-        {
-            throw new NotImplementedException();
-        }
+        // bool IOrderManager.PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
+        // {
+        //     throw new NotImplementedException();
+        // }
 
         List<OrderDTO> IOrderManager.GetOrders()
         {
@@ -221,6 +201,11 @@ namespace Logic.Managers
         }
 
         bool IOrderManager.UpdateOrderStatus(OrderDTO order, OrderStatusDTO orderStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        OrderDTO? IOrderManager.PlaceOrderFromShoppingCart(List<ShoppingCartItemDTO> items, int? customerId)
         {
             throw new NotImplementedException();
         }

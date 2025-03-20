@@ -2,9 +2,8 @@
 @using Core.DTOs
 @using Core.Enum
 
-
-
 <div class="row g-5 d-flex justify-content-center">
+    <a href="/cart">Cart</a>
     @if (products != null)
     {
         @foreach (ProductDTO product in products)
@@ -26,13 +25,11 @@
 
                         <p class="card-text py-1 text-start" style="height: 6rem;">@product.Description</p>
 
-
-                        <a asp-action="Details" asp-route-itemid="@product.Id" type="submit" class="btn btn-primary">Details</a>
+                        <a type="submit" href="/Details/@product.Id" class="btn btn-primary">Details</a>
 
                     </div>
                 </div>
             </div>
-
 
         }
 
@@ -46,12 +43,7 @@
     </div>
     <span class="mb-5 mt-2 text-white">Pagina @pageNumber van @TotalPages</span>
 
-
-
 </div>
-
-
-
 
 @code
 {
@@ -64,16 +56,10 @@
     private int TotalPages;
     private int LastPage;
 
-
-
-
     protected override async Task OnInitializedAsync()
     {
 
-
         await LoadProducts();
-
-
 
     }
 
@@ -89,7 +75,6 @@
             products = response.Products;
             int totalProducts = response.TotalProducts;
             TotalPages = (int)Math.Ceiling(totalProducts / (double)pageSize);
-
 
         }
 
@@ -114,7 +99,6 @@
 
         await LoadProducts();
     }
-
 
     public class ProductPageDto
     {

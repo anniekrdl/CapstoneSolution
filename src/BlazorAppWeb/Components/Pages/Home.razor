@@ -1,0 +1,35 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
+@using Core.DTOs
+@using Core.Enum
+@using BlazorAppWeb.Services
+@using BlazorAppWeb.Components
+
+<PageTitle>Home</PageTitle>
+
+<div class="text-center">
+    <h1 class="display-4 fw-light mb-2">Bikepacking Webshop</h1>
+
+</div>
+
+@code
+{
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (SessionService.CurrentCustomer == null)
+        {
+            //NavigateTo login page
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+
+            NavigationManager.NavigateTo("/products");
+        }
+    }
+
+}

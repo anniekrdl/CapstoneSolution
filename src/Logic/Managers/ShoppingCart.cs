@@ -42,7 +42,6 @@ namespace Logic.Managers
             }
         }
 
-
         public async Task<ShoppingCartItemDTO?> SearchById(int Id, ICatalogusManager catalogusManager)
         {
             ShoppingCartItemEntity? shoppingCartItem = await _cartDatabaseService.SearchById(Id);
@@ -86,15 +85,12 @@ namespace Logic.Managers
                 return false;
             }
 
-
         }
 
         public async Task<List<ShoppingCartItemDTO>> GetAllItemsByCustomerId(int id, ICatalogusManager catalogusManager)
         {
 
-
             List<ShoppingCartItemEntity> shoppingCartItems = await _cartDatabaseService.GetAllShoppingCartItemsByCustomerId(id);
-
 
             foreach (ShoppingCartItemEntity item in shoppingCartItems)
             {
@@ -107,8 +103,6 @@ namespace Logic.Managers
                     item.setProduct(p.ToProductEntity());
 
                 }
-
-
 
             }
             return shoppingCartItems.Select(item => item.ToShoppingCartItemDTO()).ToList();
@@ -141,6 +135,11 @@ namespace Logic.Managers
         }
 
         public bool EditShoppingCartItem(ShoppingCartItemDTO shoppingCartItem)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RemoveShoppingCartItemById(int shoppingCartItemId, ICatalogusManager catalogusManager)
         {
             throw new NotImplementedException();
         }

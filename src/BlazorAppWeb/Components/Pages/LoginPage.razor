@@ -1,0 +1,64 @@
+﻿@page "/login"
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
+@using BlazorAppWeb.Services
+@using Core.DTOs
+
+<div class="container d-flex justify-content-center" style="min-height: 80vh">
+    <!-- Bootstrap form in het midden van het scherm -->
+    <div class="col-md-6">
+        <h2 class="text-center mb-4 text-dark">Login</h2>
+
+        <div class="mb-3">
+            <label for="Username" class="form-label w-100 text-center text-dark">Voer gebruikersnaam in:</label>
+            <input @bind="inputValue" placeholder="Gebruikersnaam" class="form-control"/>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="text-danger mt-2">@errorMessage</div>
+            }
+        </div>
+        <button @onclick="() => SubmitLogin()" class="btn btn-primary w-100">Inloggen</button>
+
+    </div>
+</div
+
+@code
+{
+    private string? inputValue;
+    private string? errorMessage;
+
+    private void OnClick()
+    {
+        // Actie bij button klik
+        Console.WriteLine("Button geklikt!");
+    }
+
+    private async Task SubmitLogin()
+    {
+        if (inputValue != null)
+        {
+            try{
+
+                var response = await Http.PostAsJsonAsync("/api/user/login", inputValue);
+
+                if (response.IsSuccessStatusCode){
+                    CustomerDTO? userInfo = await response.Content.ReadFromJsonAsync<CustomerDTO>();
+                    SessionService.CurrentCustomer = userInfo;
+                    NavigationManager.NavigateTo("/");
+
+                } else {
+                    errorMessage = "Gebruikersnaam niet gevonden";
+                    StateHasChanged();
+
+                }
+
+            }catch{
+
+            }
+
+        }
+
+    }
+}

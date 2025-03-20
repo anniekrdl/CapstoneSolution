@@ -3,10 +3,10 @@ namespace Core.DTOs
     public class ShoppingCartItemDTO
     {
         public int? Id { get; set; }
-        public int CustomerId { get; private set; }
-        public int ProductId { get; private set; }
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
         public ProductDTO? Product { get; set; }
-        public int NumberOfItems { get; private set; }
+        public int NumberOfItems { get; set; }
 
         public ShoppingCartItemDTO(int? id, int customerId, int productId, ProductDTO? product, int numberOfItems)
         {
@@ -22,8 +22,6 @@ namespace Core.DTOs
             Product = product;
 
         }
-
-
 
     }
 }

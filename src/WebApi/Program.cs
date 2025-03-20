@@ -13,7 +13,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowBlazorApp",
         builder => builder
-            .WithOrigins("http://localhost:5274") // Pas de URL aan naar de URL van je Blazor-app
+            .WithOrigins("https://localhost:5274") // Pas de URL aan naar de URL van je Blazor-app
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());  // Dit zorgt ervoor dat cookies worden meegestuurd);
@@ -29,11 +29,14 @@ builder.Services.AddDbContext<WebshopContext>(options =>
 builder.Services.AddAuthentication("MyCookieAuth")
 .AddCookie("MyCookieAuth", options =>
 {
-    options.LoginPath = "/User/Login";  // Login URL
+    options.LoginPath = "/login";  // Login URL
     options.AccessDeniedPath = "/AccessDenied";  // Toegang geweigerd URL
     options.Cookie.Name = "UserLoginCookie";  // Naam van de cookie
     options.SlidingExpiration = true;  // Cookies verlopen na een periode van inactiviteit
     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // Hoe lang de cookie geldig is
+    options.Cookie.SameSite = SameSiteMode.None; // Zorgt dat cookies cross-origin werken
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Vereist HTTPS (voor productie)
+
 });
 
 // Add authorization policies

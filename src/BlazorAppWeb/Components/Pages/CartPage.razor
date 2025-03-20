@@ -1,0 +1,164 @@
+﻿@page "/cart"
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
+@using BlazorAppWeb.Services
+@using Core.DTOs
+
+<div class="container d-flex justify-content-start flex-column w-75" style="min-height: 80vh; max-width: 900px;">
+    @if(ShoppingCartItems != null)
+    {
+        <button @onclick="() => PlaceOrder()" class="btn btn-primary w-25 mx-auto p-2 mb-4">Plaats bestelling</button>
+        <div class="text-end fs-5 fw-bold mb-3">
+            Totale kosten: @String.Format("€ {0:0.00}", ShoppingCartItems.Sum(item => (item.Product?.Price ?? 0) * item.NumberOfItems) / 100.0)
+        </div>
+        @foreach (ShoppingCartItemDTO item in ShoppingCartItems)
+        {
+            <div class="col-auto w-100">
+                <div class="card" style="margin-bottom: 10px;">
+
+                    <div class="card-body d-flex flex-row w-100 justify-content-between">
+                        <div class="d-flex flex-row">
+
+                            <img    src="@item.Product?.ImageUrl" class="card-img-top img-fluid" style="max-width: 12rem; object-fit: cover; margin-right: 15px;" alt="@item.Product?.Name"
+                            >
+                            <div class="d-flex flex-column">
+                                <div class="card-title text-start fs-4 fw-bold">@item.Product?.Name</div>
+                                <div class="card-text text-start fs-5">@String.Format("€ {0:0.00}", item.Product?.Price / 100.0)
+                                </div>
+
+                                <div class="card-text text-start fst-italic d-flex align-items-center">
+                                    <button class="btn btn-outline-secondary btn-sm me-2" @onclick="() => UpdateItemQuantity(item, item.NumberOfItems - 1)">-</button>
+                                    <p class="m-0">Aantal: @item.NumberOfItems</p>
+                                    <button class="btn btn-outline-secondary btn-sm ms-2" @onclick="() => UpdateItemQuantity(item, item.NumberOfItems + 1)">+</button>
+                                </div>
+
+                            </div
+
+                        </div>
+
+                        <div class="d-flex flex-column justify-content-center">
+                            <button class="btn btn-danger" style="max-height: 50px;" @onclick="() => RemoveItem(item.Id ?? -1)">Verwijderen</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    } else
+    {
+        <div class="mx-auto">Je winkelwagentje is leeg</div>
+    }
+
+    <a href="/orders" class="btn btn-primary w-50 mx-auto mt-4">Bekijk bestellingen</a>
+
+</div
+
+@code
+{
+    private List<ShoppingCartItemDTO>? ShoppingCartItems { get; set; }
+
+    protected override async Task OnInitializedAsync(){
+        await LoadItems();
+    }
+
+    private async Task LoadItems(){
+        try {
+
+            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+            if (loginResponse.IsSuccessStatusCode){
+
+                var response = await Http.GetFromJsonAsync<List<ShoppingCartItemDTO>>("/api/cart");
+
+                if (response != null){
+
+                    ShoppingCartItems = response;
+                    StateHasChanged();
+                }
+
+            }
+
+        } catch {
+
+        }
+
+    }
+
+    private async Task PlaceOrder()
+    {
+        await LoadItems();
+        List<ShoppingCartItemDTO> items = new List<ShoppingCartItemDTO>();
+        if (ShoppingCartItems != null){
+              foreach (ShoppingCartItemDTO itemD in ShoppingCartItems)
+              {
+                items.Add(new ShoppingCartItemDTO(
+                    itemD.Id,
+                    itemD.CustomerId,
+                    itemD.ProductId,
+                    null,
+                    itemD.NumberOfItems
+                ));
+
+            }
+
+        }
+
+        var response = await Http.PostAsJsonAsync<List<ShoppingCartItemDTO>>("/api/order/new", items);
+       if (response.IsSuccessStatusCode)
+        {
+            // Leeg de lijst na een succesvolle bestelling
+            ShoppingCartItems = null;
+            StateHasChanged(); // Forceer een her-rendering van de UI
+        }
+
+        await LoadItems();
+
+    }
+
+    private async Task RemoveItem(int CartItemId){
+        try {
+
+            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+            if (loginResponse.IsSuccessStatusCode){
+
+                var response = await Http.DeleteAsync($"api/cart/{CartItemId}");
+                if (response != null){
+
+                    ShoppingCartItems = ShoppingCartItems?.Where(item => item.Id != CartItemId).ToList();
+                    StateHasChanged();
+                }
+
+            }
+
+        } catch {
+
+        }
+
+    }
+
+    private async Task UpdateItemQuantity(ShoppingCartItemDTO CartItem, int NumberOfItems){
+
+        var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+            if (loginResponse.IsSuccessStatusCode){
+
+                //change item
+                CartItem.NumberOfItems = NumberOfItems;
+
+                var response = await Http.PutAsJsonAsync($"/api/cart", CartItem);
+                if (response != null){
+                    await LoadItems();
+                    StateHasChanged();
+
+                }
+
+            }
+
+    }
+
+}

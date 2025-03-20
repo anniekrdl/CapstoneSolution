@@ -56,11 +56,11 @@ public class CartController : ControllerBase
 
     }
 
-    [HttpDelete]
-    public IActionResult DeleteCartItem([FromBody] ShoppingCartItemDTO shoppingCartItem)
+    [HttpDelete("{cartItemId}")]
+    public IActionResult DeleteCartItem(int cartItemId)
     {
 
-        var isRemoved = _shoppingCart.RemoveShoppingCartItem(shoppingCartItem);
+        var isRemoved = _shoppingCart.RemoveShoppingCartItemById(cartItemId, _catalogusManager);
 
         if (isRemoved)
         {

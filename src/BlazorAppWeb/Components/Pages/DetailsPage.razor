@@ -1,0 +1,99 @@
+﻿@page "/Details/{Id}"
+@using Core.DTOs
+@inject HttpClient Http
+@inject ISessionService SessionService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<div class="container mt-5">
+    <!-- Product Image -->
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-center align-items-center" style="height: 500px;">
+            @if (Product != null)
+            {
+                <img src="@Product.ImageUrl" class="img-fluid rounded" alt="@Product.Name"
+                    style="object-fit: contain; max-height: 100%; max-width: 100%;">
+            }
+        </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    @if (Product != null)
+                    {
+
+                        <h1 class="card-title text-center">@Product.Name</h1>
+                        <h5 class="card-title text-center">@String.Format("€ {0:0.00}", @Product.Price / 100.0)</h5>
+
+                        <p class="card-text text-muted text-center mb-4">@Product.Description</p>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="javascript:history.back()" class="btn btn-secondary">Terug</a>
+                            <button @onclick="() => AddToCart(Product.Id)" class="btn btn-primary">Voeg toe
+                                aan winkelwagentje</button>
+
+                        </div>
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public string Id { get; set; }
+    private ProductDTO? Product { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Product = await Http.GetFromJsonAsync<ProductDTO>($"/api/products/{Id}");
+    }
+
+    private async Task AddToCart(int? productId)
+    {
+        // Voeg de productId toe aan je winkelwagentje
+        //ShoppingCart.AddItem(productId);
+        //login
+        var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+        if (loginResponse.IsSuccessStatusCode)
+        {
+            if (Product != null && SessionService.CurrentCustomer != null)
+            {
+
+                int? customerId = SessionService.CurrentCustomer.Id;
+
+                if (customerId != null)
+                {
+
+                    var shoppingCartItem = new ShoppingCartItemDTO(
+                    id: null,
+                    customerId: customerId ?? -1,
+                    productId: Product.Id ?? -1,
+                    product: null,
+                    numberOfItems: 1
+                    );
+
+                    //add to current cart
+                    var response = await Http.PostAsJsonAsync<ShoppingCartItemDTO>("/api/cart", shoppingCartItem);
+                    if (response != null)
+                    {
+                        Console.WriteLine($"response is {response.StatusCode}");
+                        NavigationManager.NavigateTo("/cart");
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+}

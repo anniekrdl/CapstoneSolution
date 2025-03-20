@@ -1,0 +1,21 @@
+@* @page "/cart"
+@inject HttpClient Http
+@using Core.DTOs
+@using Core.Enum
+@inject ISessionService SessionService
+
+<div class="row g-5 d-flex justify-content-center">
+    Hello
+</div>
+
+@code
+{
+    private List<ShoppingCartItemDTO> ShoppingCartItems { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // load all items
+        //ShoppingCartItems = Http.GetFromJsonAsync<ShoppingCartItemDTO>($"/api/cart");
+
+    }
+} *@

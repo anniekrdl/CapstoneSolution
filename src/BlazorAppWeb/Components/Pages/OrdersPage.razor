@@ -1,0 +1,89 @@
+@page "/orders"
+@inject HttpClient Http
+@inject ISessionService SessionService
+@using Core.DTOs
+@using System.Globalization
+
+@if (orderItemsWithOrder == null)
+{
+    <p>Loading orders...</p>
+}
+else if (!orderItemsWithOrder.Any())
+{
+    <p>No orders found.</p>
+}
+else
+{
+
+    @foreach (var orderWithItems in orderItemsWithOrder)
+    {
+        <div class="card mb-3 w-50 mx-auto">
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between">
+                    <div></div>
+                    <h5><strong>Status:</strong> @orderWithItems.Order.OrderStatus</h5>
+
+                </div>
+
+                <p class="card-text">
+
+                    <strong>Totaal Items:</strong> @orderWithItems.OrderItems.Count<br />
+                    <strong>Totaal Prijs:</strong> €@orderWithItems.TotalPrice.ToString("0.00")<br />
+                    <strong>Order Geplaatst:</strong> @orderWithItems.Order.Date?.ToString("yyyy-MM-dd")
+
+                </p>
+            </div>
+        </div>
+    }
+
+}
+
+@code
+{
+    private List<OrderWithItemsDTO>? orderItemsWithOrder { get; set; }
+
+    private async Task<float> CalculateTotalPrice(List<OrderItemDTO> orderItems)
+    {
+        float total = 0.0F;
+        foreach (OrderItemDTO itemDTO in orderItems)
+        {
+            var product = await Http.GetFromJsonAsync<ProductDTO>($"/api/products/{itemDTO.ProductId}");
+            total += (product.Price / 100.00F) * itemDTO.NumberOfItems;
+        }
+
+        return (float)Math.Round(total, 2);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        //login
+        var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+        if (loginResponse.IsSuccessStatusCode)
+        {
+            //get orders
+            var orderResponse = await Http.GetFromJsonAsync<List<OrderWithItemsDTO>>("api/order");
+            if (orderResponse != null)
+            {
+
+                foreach (var order in orderResponse)
+                {
+                    order.TotalPrice = (int)await CalculateTotalPrice(order.OrderItems);
+                }
+
+                orderItemsWithOrder = orderResponse;
+                Console.WriteLine($"order is null {orderItemsWithOrder.First().OrderItems.First().Product}");
+            }
+
+        }
+    }
+
+    public class OrderWithItemsDTO
+    {
+        public OrderDTO Order { get; set; } = null!;
+        public List<OrderItemDTO> OrderItems { get; set; } = new();
+        public float TotalPrice { get; set; }
+    }
+
+}

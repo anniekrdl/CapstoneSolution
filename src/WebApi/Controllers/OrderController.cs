@@ -65,11 +65,12 @@ public class OrderController : ControllerBase
         int customerId = int.Parse(userId);
 
         //post order from ShoppingCartItemDTO's
+
         var orderPlaced = _orderManager.PlaceOrderFromShoppingCart(shoppingCartItems, customerId);
 
-        if (orderPlaced)
+        if (orderPlaced != null)
         {
-            return Ok("Order placed");
+            return Ok(orderPlaced);
         }
         else
         {

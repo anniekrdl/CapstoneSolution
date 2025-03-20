@@ -1,5 +1,6 @@
 ﻿@inject HttpClient Http
 @inject ISessionService SessionService
+@inject NavigationManager NavigationManager
 @using Core.DTOs
 @using BlazorApp.Services
 
@@ -12,8 +13,6 @@
             <label for="Username" class="form-label w-100 text-center text-dark">Voer gebruikersnaam in:</label>
             <InputText @bind-Value="UserName" type="text"  class="form-control"/>
 
-
-
         </div>
         <button @onclick="() => SubmitLogin()" class="btn btn-primary w-100">Inloggen</button>
 
@@ -24,8 +23,8 @@
 {
     private string UserName = string.Empty;
 
-    [Parameter] public CustomerDTO CurrentCustomer { get; set; }
-
+    [Parameter]
+    public EventCallback<CustomerDTO> OnUserNameChange { get; set; }
 
     private async Task SubmitLogin()
     {
@@ -35,16 +34,17 @@
             var response = await Http.PostAsJsonAsync("/api/user/login", UserName);
             if (response.IsSuccessStatusCode)
             {
+
                 //TODO: Redirect
                 CustomerDTO? userInfo = await response.Content.ReadFromJsonAsync<CustomerDTO>();
                 if (userInfo != null)
                 {
-                     CurrentCustomer = userInfo;
+                    //CurrentCustomer = userInfo;
+
                     // Proceed with userInfo
                     SessionService.CurrentCustomer = userInfo;
-                    //reload home
-                    StateHasChanged();
-                    
+
+                    await OnUserNameChange.InvokeAsync(SessionService.CurrentCustomer);
 
                  }
                  else

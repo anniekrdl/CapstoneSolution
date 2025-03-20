@@ -1,0 +1,39 @@
+@page "/cart"
+@inject HttpClient Http
+@inject ISessionService SessionService
+@using Core.DTOs
+@using BlazorApp.Services
+
+<PageTitle>Cart</PageTitle>
+
+<h1>Cart coUNT @ItemCount</h1>
+<h2>Username @Username</h2>
+@if (customer != null)
+{
+
+    <h3>Customer: @customer.Name</h3>
+}
+else
+{
+
+    <h3>Customer null</h3>
+}
+
+@code
+{
+    private List<ShoppingCartItemDTO>? cartItemDTOs { get; set; }
+    private int? ItemCount;
+    private string Username;
+    CustomerDTO? customer { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        @* CustomerDTO? customerDTO = SessionService.CurrentCustomer;
+        customer = customerDTO;
+        Username = SessionService.CurrentCustomer.UserName;
+        var response = await Http.PostAsJsonAsync("/api/user/login", Username);
+        var items = await Http.GetFromJsonAsync<List<ShoppingCartItemDTO>>("api/cart");
+        ItemCount = items.Count; *@
+
+    }
+
+}

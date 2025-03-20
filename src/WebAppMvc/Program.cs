@@ -8,7 +8,6 @@ using WebAppMvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 //add services to container
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -25,7 +24,12 @@ builder.Services.AddAuthentication("MyCookieAuth")
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);  // Hoe lang de cookie geldig is
     });
 
-
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
+    options.Cookie.HttpOnly = true; // Make the cookie HTTP-only
+    options.Cookie.IsEssential = true; // Ensure the cookie is essential
+});
 
 //Add ProductDatabaseServiceEF
 builder.Services.AddTransient<ICatalogusManager, CatalogusManagerEF>();
@@ -36,7 +40,6 @@ builder.Services.AddSingleton<ISessionService, SessionService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 
 var app = builder.Build();
 
@@ -55,13 +58,13 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseSession(); // Ensure session middleware is used
+
 app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
-
 
 app.Run();

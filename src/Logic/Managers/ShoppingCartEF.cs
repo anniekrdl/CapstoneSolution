@@ -51,7 +51,6 @@ public class ShoppingCartEF : IShoppingCart
             .Where(item => item.CustomerId == id)
             .ToList();
 
-
         var itemDTOs = new List<ShoppingCartItemDTO>();
 
         foreach (var item in items)
@@ -61,7 +60,6 @@ public class ShoppingCartEF : IShoppingCart
             itemDTO.Product = product;
             itemDTOs.Add(itemDTO);
         }
-
 
         return itemDTOs;
 
@@ -75,6 +73,20 @@ public class ShoppingCartEF : IShoppingCart
         return result > 0;
     }
 
+    public bool RemoveShoppingCartItemById(int shoppingCartItemId, ICatalogusManager catalogusManager)
+    {
+        var entity = _webshopContext.ShoppingCartItems.Find(shoppingCartItemId); // ✅ Haal direct de entity op
+
+        if (entity != null)
+        {
+            _webshopContext.ShoppingCartItems.Remove(entity); // ✅ Verwijder de bestaande instantie
+            var result = _webshopContext.SaveChanges();
+            return result > 0;
+        }
+
+        return false;
+    }
+
     public ShoppingCartItemDTO? SearchById(int Id, ICatalogusManager catalogusManager)
     {
         var item = _webshopContext.ShoppingCartItems.FirstOrDefault(item => item.Id == Id);
@@ -84,7 +96,6 @@ public class ShoppingCartEF : IShoppingCart
         }
 
         return item.ToShoppingCartItemDTO();
-
 
     }
 }

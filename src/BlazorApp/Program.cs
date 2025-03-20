@@ -17,8 +17,6 @@ builder.Services.AddScoped(sp => new HttpClient
     DefaultRequestHeaders = { { "Accept", "application/json" } }
 });
 
-builder.Services.AddScoped<ISessionService, SessionService>();
-
-
+builder.Services.AddSingleton<ISessionService, SessionService>();
 
 await builder.Build().RunAsync();
