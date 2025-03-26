@@ -120,9 +120,9 @@
         var response = await Http.PostAsJsonAsync<List<ShoppingCartItemDTO>>("/api/order/new", items);
        if (response.IsSuccessStatusCode)
         {
-            // Leeg de lijst na een succesvolle bestelling
+
             ShoppingCartItems = null;
-            StateHasChanged(); // Forceer een her-rendering van de UI
+            StateHasChanged();
         }
 
         await LoadItems();
@@ -151,7 +151,7 @@
             }
 
         } catch {
-            // Handle errors silently
+            Console.WriteLine("Item not removed");
         }
 
     }
@@ -165,7 +165,6 @@
 
             if (loginResponse.IsSuccessStatusCode){
 
-                //change item
                 CartItem.NumberOfItems = NumberOfItems;
 
                 var response = await Http.PutAsJsonAsync($"/api/cart", CartItem);
