@@ -6,11 +6,13 @@
 <div class="text-center">
     <h1 class="display-4">Bikepacking Webshop</h1>
 
-
     @if (Model.LoggedInUser != null && Model.LoggedInUser.IsAdmin())
     {
         // button add product
-        <a asp-controller="Products" asp-action="Create" class="btn btn-primary w-25 my-4">Nieuw product toevoegen</a>
+        <div class="d-flex flex-row justify-content-evenly">
+            <a asp-controller="Products" asp-action="Create" class="btn btn-primary w-25 my-4">Nieuw product toevoegen</a>
+            <a asp-controller="Orders" asp-action="Index" class="btn btn-primary w-25 my-4">Order overzicht</a>
+        </div>
     }
     else
     {
@@ -18,14 +20,12 @@
 
     }
 
-
     <div class="d-flex justify-content-start align-items-center w-75 m-auto mb-3">
         <!-- Zoekbalk en Zoeken knop -->
         <form asp-controller="Products" asp-action="Index" method="get" class="d-flex col-12">
             <input type="text" name="search" asp-for="SearchTerm" class="form-control"
                 placeholder="Zoek een product..." />
             <button type="submit" class="btn btn-primary ms-2 me-5">Zoeken</button>
-
 
             <!-- De select naar het einde van de row -->
             <select name="sortmethod" asp-for="SelectedSortMethod" asp-items="Model.SortMethodsList"
@@ -35,11 +35,6 @@
             </select>
         </form>
     </div>
-
-
-
-
-
 
     <div class="row g-5 d-flex justify-content-center">
         @foreach (var product in Model.Products)
@@ -62,16 +57,12 @@
 
                         <p class="card-text py-1 text-start" style="height: 6rem;">@product.Description</p>
 
-
                         <a asp-action="Details" asp-route-itemid="@product.Id" type="submit"
                             class="btn btn-primary">Details</a>
 
                     </div>
                 </div>
             </div>
-
-
-
 
         }
 
@@ -86,12 +77,6 @@
         </div>
         <span class="mx-auto text-white">Pagina @Model.CurrentPage van @Model.TotalPages</span>
 
-
-
-
     </div>
-
-
-
 
 </div>

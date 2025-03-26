@@ -29,7 +29,7 @@ namespace Logic.Managers
             int orderId = 0;
 
             //new order
-            OrderEntity order = new OrderEntity(null, customerId, null, OrderStatus.AANGEMAAKT);
+            OrderEntity order = new OrderEntity(null, customerId, null, OrderStatusDTO.AANGEMAAKT);
             await _orderDatabaseService.AddOrder(order);
 
             // find orderId

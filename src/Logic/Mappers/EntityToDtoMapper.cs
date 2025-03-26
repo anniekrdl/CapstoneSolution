@@ -87,7 +87,7 @@ namespace Logic.Mappers
                 orderDTO.Id,
                 orderDTO.CustomerId,
                 orderDTO.Date,
-                (OrderStatus)orderDTO.OrderStatus
+                Enum.Parse<OrderStatusDTO>(orderDTO.OrderStatus.ToString())
 
             );
 

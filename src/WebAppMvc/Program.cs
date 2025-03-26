@@ -36,6 +36,7 @@ builder.Services.AddTransient<ICatalogusManager, CatalogusManagerEF>();
 builder.Services.AddTransient<ICategoryManager, CategoryManagerEF>();
 builder.Services.AddTransient<ILoginManager, LoginManagerEF>();
 builder.Services.AddTransient<ICustomerManager, CustomerManagerEF>();
+builder.Services.AddTransient<IOrderManager, OrderManagerEF>();
 builder.Services.AddSingleton<ISessionService, SessionService>();
 
 // Add services to the container.

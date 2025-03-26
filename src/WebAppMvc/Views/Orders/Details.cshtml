@@ -1,0 +1,66 @@
+@model WebAppMvc.ViewModels.OrderViewModel;
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>Order Details</h1>
+
+<div>
+
+@if (Model.OrderForClient != null)
+{
+        <div class="d-flex flex-row justify-content-between">
+            <div>
+                <p><strong>Klant Id:</strong> @Model.OrderForClient.Order.CustomerId</p>
+                <p><strong>Order Datum:</strong> @Model.OrderForClient.Order.Date.ToString()</p>
+                <p><strong>Totaal:</strong> €@(Model.OrderForClient.TotalPrice / 100.0)</p>
+            </div>
+            <div>
+                <div>OrderStatus: <strong>@Model.OrderForClient.Order.OrderStatus</strong></div>
+                @if (Model.PossibleStatus != null){
+                    <form class="pt-3" method="get">
+                        <input type="hidden" name="itemId" value="@Model.OrderForClient.Order.Id" />
+                        <select name="SelectedStatus" asp-for="SelectedStatus" asp-items="Model.PossibleStatus"
+                            class="form-control ms-5" style="max-width: 200px;" onchange="this.form.submit()">
+                            <option value="">OrderStatus wijzigen</option>
+                        </select>
+                    </form>
+
+                }
+
+            </div>
+
+        </div>
+
+        <div>
+            <h2>Order Items</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Aantal</th>
+                        <th>Prijs</th>
+                        <th>TotaalPrijs</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderForClient.OrderItems)
+                    {
+                        <tr>
+                            <td> <img src="@item.Product.ImageUrl" alt="@item.Product.Name" style="height: 50px; width: 80px;">
+                            </td>
+                            <td>@item.Product.Name</td>
+                            <td>@item.NumberOfItems</td>
+                            <td>€@(item.Product.Price / 100.0)</td>
+                            <td>€@((item.NumberOfItems * item.Product.Price) / 100.0)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+}
+
+    <a asp-action="Index" class="btn btn-primary">Terug</a>

@@ -1,3 +1,4 @@
+using System.Data.Entity;
 using Core.DTOs;
 using Data.EF;
 using Data.Models;
@@ -23,7 +24,7 @@ public class OrderManagerEF : IOrderManager
         DateOnly date = DateOnly.FromDateTime(DateTime.Now);
 
         //new order
-        OrderEntity order = new OrderEntity(null, customerId, date, OrderStatus.AANGEMAAKT);
+        OrderEntity order = new OrderEntity(null, customerId, date, OrderStatusDTO.AANGEMAAKT);
         _webshopContext.Orders.Add(order);
         _webshopContext.SaveChanges();
 
@@ -35,7 +36,7 @@ public class OrderManagerEF : IOrderManager
 
     public OrderDTO? GetOrderById(int id)
     {
-        var orders = _webshopContext.Orders.ToList();
+        var orders = _webshopContext.Orders.AsNoTracking().ToList();
         return orders.Where(o => o.Id == id)
                  .Select(o => o.ToOrderDTO())
                  .FirstOrDefault();
@@ -139,7 +140,7 @@ public class OrderManagerEF : IOrderManager
         var trackedOrder = _webshopContext.Orders.FirstOrDefault(o => o.Id == order.Id);
         if (trackedOrder != null)
         {
-            trackedOrder.UpdateOrderStatus(OrderStatus.GEPLAATST);
+            trackedOrder.UpdateOrderStatus(OrderStatusDTO.GEPLAATST);
             _webshopContext.SaveChanges();
         }
 
@@ -152,9 +153,18 @@ public class OrderManagerEF : IOrderManager
     {
         try
         {
-            OrderEntity entity = order.ToOrderEntity();
+            //find order instead of creating a new one
+            var trackedOrder = _webshopContext.Orders.FirstOrDefault(o => o.Id == order.Id);
 
-            _webshopContext.Update(entity);
+            if (trackedOrder == null)
+            {
+                Console.WriteLine($"Update mislukt: order {order.Id} niet gevonden.");
+                return false;
+
+            }
+
+            trackedOrder.UpdateOrderStatus(order.OrderStatus);
+
             _webshopContext.SaveChanges();
             return true;
 
@@ -184,4 +194,5 @@ public class OrderManagerEF : IOrderManager
         }
 
     }
+
 }

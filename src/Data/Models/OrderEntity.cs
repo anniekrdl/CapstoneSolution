@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.DTOs;
 
 namespace Data.Models
 {
@@ -21,16 +22,15 @@ namespace Data.Models
         [Required]
         public string OrderStatus { get; private set; }
 
-
         [NotMapped]
-        public OrderStatus OrderStatusEnum
+        public OrderStatusDTO OrderStatusEnum
         {
-            get => Enum.Parse<OrderStatus>(OrderStatus);
+            get => Enum.Parse<OrderStatusDTO>(OrderStatus);
             private set => OrderStatus = value.ToString();
         }
 
         public OrderEntity() { }
-        public OrderEntity(int? id, int customerId, DateOnly? date, OrderStatus orderStatus)
+        public OrderEntity(int? id, int customerId, DateOnly? date, OrderStatusDTO orderStatus)
         {
             Id = id;
             CustomerId = customerId;
@@ -39,16 +39,12 @@ namespace Data.Models
 
         }
 
-        public void UpdateOrderStatus(OrderStatus orderStatus)
+        public void UpdateOrderStatus(OrderStatusDTO orderStatus)
         {
             OrderStatusEnum = orderStatus;
         }
 
-
-
     }
-
-
 
     public enum OrderStatus
     {

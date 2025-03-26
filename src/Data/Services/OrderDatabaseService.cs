@@ -1,3 +1,4 @@
+using Core.DTOs;
 using Data.Interfaces;
 using Data.Models;
 namespace Data.Services
@@ -31,7 +32,7 @@ namespace Data.Services
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("klant_id"),
                     reader.GetDateOnly("datum"),
-                    Enum.Parse<OrderStatus>(reader.GetString("status"))
+                    Enum.Parse<OrderStatusDTO>(reader.GetString("status"))
                 );
 
                 orders.Add(order);
@@ -83,7 +84,7 @@ namespace Data.Services
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("klant_id"),
                     reader.GetDateOnly("datum"),
-                    Enum.Parse<OrderStatus>(reader.GetString("status"))
+                    Enum.Parse<OrderStatusDTO>(reader.GetString("status"))
                 );
 
                 orders.Add(order);
@@ -106,7 +107,6 @@ namespace Data.Services
 
             command.Parameters.AddWithValue("@id", Id);
 
-
             using var reader = await command.ExecuteReaderAsync();
             if (await reader.ReadAsync())
             {
@@ -114,7 +114,7 @@ namespace Data.Services
                     reader.GetInt32("bestelling_id"),
                     reader.GetInt32("klant_id"),
                     DateOnly.FromDateTime(reader.GetDateTime("datum")),
-                    Enum.Parse<OrderStatus>(reader.GetString("status"))
+                    Enum.Parse<OrderStatusDTO>(reader.GetString("status"))
                 ));
             }
 
@@ -124,7 +124,7 @@ namespace Data.Services
             }
             else
             {
-                //Lege lijst terug. Null voor error 
+                //Lege lijst terug. Null voor error
                 return null;
             }
         }
@@ -146,7 +146,6 @@ namespace Data.Services
                 command.Parameters.AddWithValue("@date", date);
                 command.Parameters.AddWithValue("@status", order.OrderStatus.ToString());
 
-
                 await command.ExecuteNonQueryAsync();
                 return true;
 
@@ -157,7 +156,6 @@ namespace Data.Services
 
                 return false;
             }
-
 
         }
 
@@ -186,11 +184,6 @@ namespace Data.Services
                 return false;
             }
         }
-
-
-
-
-
 
     }
 
