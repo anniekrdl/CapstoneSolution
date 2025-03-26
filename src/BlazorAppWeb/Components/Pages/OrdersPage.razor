@@ -6,11 +6,7 @@
 
 @if (orderItemsWithOrder == null)
 {
-    <p>Loading orders...</p>
-}
-else if (!orderItemsWithOrder.Any())
-{
-    <p>No orders found.</p>
+    <p>Geen orders gevonden</p>
 }
 else
 {
@@ -42,13 +38,18 @@ else
 {
     private List<OrderWithItemsDTO>? orderItemsWithOrder { get; set; }
 
+    // Calculate the price from Quantity and Product price
     private async Task<float> CalculateTotalPrice(List<OrderItemDTO> orderItems)
     {
         float total = 0.0F;
         foreach (OrderItemDTO itemDTO in orderItems)
         {
             var product = await Http.GetFromJsonAsync<ProductDTO>($"/api/products/{itemDTO.ProductId}");
-            total += (product.Price / 100.00F) * itemDTO.NumberOfItems;
+            if (product != null)
+            {
+                total += (product.Price / 100.00F) * itemDTO.NumberOfItems;
+            }
+
         }
 
         return (float)Math.Round(total, 2);
@@ -57,28 +58,32 @@ else
     protected override async Task OnInitializedAsync()
     {
 
-        //login
-        var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
-
-        if (loginResponse.IsSuccessStatusCode)
+        if (SessionService.CurrentCustomer != null)
         {
-            //get orders
-            var orderResponse = await Http.GetFromJsonAsync<List<OrderWithItemsDTO>>("api/order");
-            if (orderResponse != null)
-            {
 
-                foreach (var order in orderResponse)
+            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+            if (loginResponse.IsSuccessStatusCode)
+            {
+                var orderResponse = await Http.GetFromJsonAsync<List<OrderWithItemsDTO>>("api/order");
+                if (orderResponse != null)
                 {
-                    order.TotalPrice = (int)await CalculateTotalPrice(order.OrderItems);
+                    foreach (var order in orderResponse)
+                    {
+                        order.TotalPrice = (int)await CalculateTotalPrice(order.OrderItems);
+                    }
+
+                    orderItemsWithOrder = orderResponse;
+                    Console.WriteLine($"order is null {orderItemsWithOrder.First().OrderItems.First().Product}");
                 }
 
-                orderItemsWithOrder = orderResponse;
-                Console.WriteLine($"order is null {orderItemsWithOrder.First().OrderItems.First().Product}");
             }
 
         }
+
     }
 
+    // Class for combining the Order, OrderItems and TotalPrice
     public class OrderWithItemsDTO
     {
         public OrderDTO Order { get; set; } = null!;

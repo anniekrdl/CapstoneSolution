@@ -11,7 +11,6 @@ public class SessionService : ISessionService
         get => _currentCustomer;
         set
         {
-            Console.WriteLine($"SessionService: CurrentCustomer set to {value?.Name}");
             _currentCustomer = value;
         }
     }

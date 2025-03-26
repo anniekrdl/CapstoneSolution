@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@inject HttpClient Http
+@inject ISessionService SessionService
+@using BlazorAppWeb.Components.Pages
 
 <div class="page">
 
@@ -19,9 +22,15 @@
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
                         @* Nog logica toevoegen alleen weergeven wanneer ingelogd *@
-                        <a href="/cart" class="text-dark nav-link btn btn-link border-0 p-0 mx-5"><i
-                                class="fas fa-shopping-cart"></i></a>
-                        <button type="submit" class="text-dark nav-link btn btn-link border-0 p-0">Logout</button>
+
+                        @if (SessionService.CurrentCustomer != null)
+                        {
+                            <a href="/cart" class="text-dark nav-link btn btn-link border-0 p-0 mx-5"><i
+                                    class="fas fa-shopping-cart"></i></a>
+                            <LogoutComponent />
+
+                        }
+
                     </div>
                 </div>
             </nav>
@@ -38,3 +47,8 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code
+{
+
+}

@@ -47,8 +47,9 @@
 
 @code
 {
+    // Parameter from route
     [Parameter]
-    public string Id { get; set; }
+    public string? Id { get; set; }
     private ProductDTO? Product { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -56,37 +57,41 @@
         Product = await Http.GetFromJsonAsync<ProductDTO>($"/api/products/{Id}");
     }
 
+    // Place current product in the shopping cart.
     private async Task AddToCart(int? productId)
     {
-        // Voeg de productId toe aan je winkelwagentje
-        //ShoppingCart.AddItem(productId);
         //login
-        var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
-
-        if (loginResponse.IsSuccessStatusCode)
+        if (SessionService.CurrentCustomer != null)
         {
-            if (Product != null && SessionService.CurrentCustomer != null)
+
+            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+
+            if (loginResponse.IsSuccessStatusCode)
             {
-
-                int? customerId = SessionService.CurrentCustomer.Id;
-
-                if (customerId != null)
+                if (Product != null && SessionService.CurrentCustomer != null)
                 {
 
-                    var shoppingCartItem = new ShoppingCartItemDTO(
-                    id: null,
-                    customerId: customerId ?? -1,
-                    productId: Product.Id ?? -1,
-                    product: null,
-                    numberOfItems: 1
-                    );
+                    int? customerId = SessionService.CurrentCustomer.Id;
 
-                    //add to current cart
-                    var response = await Http.PostAsJsonAsync<ShoppingCartItemDTO>("/api/cart", shoppingCartItem);
-                    if (response != null)
+                    if (customerId != null)
                     {
-                        Console.WriteLine($"response is {response.StatusCode}");
-                        NavigationManager.NavigateTo("/cart");
+
+                        var shoppingCartItem = new ShoppingCartItemDTO(
+                        id: null,
+                        customerId: customerId ?? -1,
+                        productId: Product.Id ?? -1,
+                        product: null,
+                        numberOfItems: 1
+                        );
+
+                        //add to current cart
+                        var response = await Http.PostAsJsonAsync<ShoppingCartItemDTO>("/api/cart", shoppingCartItem);
+                        if (response != null)
+                        {
+                            Console.WriteLine($"response is {response.StatusCode}");
+                            NavigationManager.NavigateTo("/cart");
+                        }
+
                     }
 
                 }
@@ -96,4 +101,5 @@
         }
 
     }
+
 }

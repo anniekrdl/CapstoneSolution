@@ -61,33 +61,43 @@
 {
     private List<ShoppingCartItemDTO>? ShoppingCartItems { get; set; }
 
+    // Called when the component is initialized. Loads the shopping cart items for the current user.
     protected override async Task OnInitializedAsync(){
         await LoadItems();
     }
 
+    // Loads all shopping cart items for the currently logged-in user.
     private async Task LoadItems(){
         try {
 
-            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+            if (SessionService.CurrentCustomer?.UserName != null)
+            {
+                if (SessionService.CurrentCustomer?.UserName != null)
+                {
+                    var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
 
-            if (loginResponse.IsSuccessStatusCode){
+                    if (loginResponse.IsSuccessStatusCode){
 
-                var response = await Http.GetFromJsonAsync<List<ShoppingCartItemDTO>>("/api/cart");
+                        var response = await Http.GetFromJsonAsync<List<ShoppingCartItemDTO>>("/api/cart");
 
-                if (response != null){
+                        if (response != null){
 
-                    ShoppingCartItems = response;
-                    StateHasChanged();
+                            ShoppingCartItems = response;
+                            StateHasChanged();
+                        }
+
+                    }
                 }
 
             }
 
         } catch {
-
+            Console.WriteLine("Er is een fout opgetreden bij het laden van de winkelwagenitems.");
         }
 
     }
 
+    // Places an order for all items currently in the shopping cart.
     private async Task PlaceOrder()
     {
         await LoadItems();
@@ -119,10 +129,13 @@
 
     }
 
+    // Removes a specific item from the shopping cart by its ID.
     private async Task RemoveItem(int CartItemId){
         try {
 
-            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+            if (SessionService.CurrentCustomer != null){
+
+                var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
 
             if (loginResponse.IsSuccessStatusCode){
 
@@ -135,15 +148,20 @@
 
             }
 
-        } catch {
+            }
 
+        } catch {
+            // Handle errors silently
         }
 
     }
 
+    // Updates the quantity of a specific item in the shopping cart.
     private async Task UpdateItemQuantity(ShoppingCartItemDTO CartItem, int NumberOfItems){
 
-        var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
+        if (SessionService.CurrentCustomer != null){
+
+            var loginResponse = await Http.PostAsJsonAsync("/api/user/login", SessionService.CurrentCustomer.UserName);
 
             if (loginResponse.IsSuccessStatusCode){
 
@@ -158,6 +176,8 @@
                 }
 
             }
+
+        }
 
     }
 

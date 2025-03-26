@@ -2,6 +2,7 @@
 @inject HttpClient Http
 @using Core.DTOs
 @using Core.Enum
+@using Microsoft.AspNetCore.Mvc.Rendering
 @inject ISessionService SessionService
 @rendermode InteractiveServer
 
@@ -9,6 +10,23 @@
 
     @if (products != null)
     {
+        <div class="d-flex justify-content-center align-items-center w-100 py-4 m-auto mb-3">
+            <!-- Zoekbalk en Zoeken knop -->
+
+            <input type="text" name="search" @bind="searchTerm" placeholder="Zoek een product..." />
+            <button type="submit" @onclick="SearchItem" class="btn btn-primary ms-2 me-5">Zoeken</button>
+
+            <!-- De select naar het einde van de row -->
+            <select name="sortmethod" @onchange="OnSortMethodChange" class="form-control ms-5" style="max-width: 200px;">
+                @foreach (var sortMethodItem in SortMethodsList)
+                {
+                    <option value="@sortMethodItem.Value" selected="@(sortMethodItem.Value == sortMethod.ToString())">
+                        @sortMethodItem.Text
+                    </option>
+                }
+            </select>
+
+        </div>
         @foreach (ProductDTO product in products)
         {
             <div class="col-auto">
@@ -59,7 +77,14 @@
     private int pageNumber = 1;
     private int pageSize = 9;
     private int TotalPages;
-    private int LastPage;
+
+    public List<SelectListItem> SortMethodsList { get; set; } = new List<SelectListItem>
+{
+new SelectListItem { Value = SortMethods.NameAscending.ToString(), Text = "Alfabetisch oplopend" },
+new SelectListItem { Value = SortMethods.NameDescending.ToString(), Text = "Alfabetisch aflopend" },
+new SelectListItem { Value = SortMethods.PriceAscending.ToString(), Text = "Prijs oplopend" },
+new SelectListItem { Value = SortMethods.PriceDescending.ToString(), Text = "Prijs aflopend" }
+};
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,6 +93,17 @@
 
     }
 
+    // This method is called when the sort method changes
+    private async Task OnSortMethodChange(ChangeEventArgs e)
+    {
+        if (e.Value != null && e.Value.ToString() != null)
+        {
+            sortMethod = Enum.Parse<SortMethods>(e.Value.ToString()!);
+        }
+        await LoadProducts();
+    }
+
+    // Load all products with sortMethod and searchterm
     private async Task LoadProducts()
     {
         var response = await
@@ -77,13 +113,28 @@
 
         {
             products = response.Products;
+
             int totalProducts = response.TotalProducts;
             TotalPages = (int)Math.Ceiling(totalProducts / (double)pageSize);
+
+            Console.WriteLine($"pages {TotalPages} products {totalProducts} ");
 
         }
 
     }
 
+    // Load products with updated searchterm
+    private async Task SearchItem()
+    {
+        if (searchTerm != null)
+        {
+            pageNumber = 1;
+
+            await LoadProducts();
+        }
+    }
+
+    // Go to previous page
     private async Task PreviousPage()
     {
         if (pageNumber > 1)
@@ -93,6 +144,7 @@
         await LoadProducts();
     }
 
+    // go to next page
     private async Task NextPage()
     {
         Console.WriteLine("next page");
@@ -104,9 +156,10 @@
         await LoadProducts();
     }
 
+    // DTO class representing a page of products and the total count of products
     public class ProductPageDto
     {
-        public List<ProductDTO> Products { get; set; }
+        public List<ProductDTO>? Products { get; set; }
         public int TotalProducts { get; set; }
     }
 

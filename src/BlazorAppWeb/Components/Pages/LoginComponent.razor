@@ -27,43 +27,37 @@
     [Parameter]
     public EventCallback<CustomerDTO> OnUserNameChange { get; set; }
 
+    // login attempt with username from input
     private async Task SubmitLogin()
     {
         if (!string.IsNullOrEmpty(UserName))
         {
-            //TODO: Login
             var response = await Http.PostAsJsonAsync("/api/user/login", UserName);
             if (response.IsSuccessStatusCode)
             {
-
-                //TODO: Redirect
                 CustomerDTO? userInfo = await response.Content.ReadFromJsonAsync<CustomerDTO>();
                 if (userInfo != null)
                 {
-                    //CurrentCustomer = userInfo;
-
-                    // Proceed with userInfo
                     SessionService.CurrentCustomer = userInfo;
-
                     await OnUserNameChange.InvokeAsync(SessionService.CurrentCustomer);
 
-                 }
-                 else
-                 {
-                     // Handle null case
-                 }
+                }
+                else
+                {
+                    Console.WriteLine($"Geen gegevens gevonden voor gebruiker.");
+                }
 
             }
             else
             {
-                //TODO: Error
+                Console.WriteLine("Inloggen mislukt.");
 
             }
 
         }
         else
         {
-            //TODO: Error
+            Console.WriteLine("Gebruikernaam is leeg.");
 
         }
 

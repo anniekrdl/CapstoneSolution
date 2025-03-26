@@ -1,0 +1,35 @@
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+@inject ISessionService SessionService
+
+<button @onclick="Logout" class="btn ">
+    Logout
+</button>
+
+@code
+{
+    // Handles the logout process for the current user
+    private async Task Logout()
+    {
+        try
+        {
+            var response = await Http.PostAsync("/api/user/logout", null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                SessionService.CurrentCustomer = null;
+                NavigationManager.NavigateTo("/login", true);
+            }
+            else
+            {
+                Console.WriteLine($"Logout failed: {response.StatusCode}");
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}

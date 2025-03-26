@@ -26,7 +26,7 @@ public class ProductsController : ControllerBase
     {
         var products = _catalogusManager.SearchProduct(pageNumber, pageSize, searchTerm, sortMethod);
         //var products = _productService.GetProducts(searchTerm, sortMethod, pageNumber, pageSize);
-        var totalProducts = _catalogusManager.TotalProducts();
+        var totalProducts = _catalogusManager.TotalProducts(searchTerm);
         var response = new
         {
             Products = products,
